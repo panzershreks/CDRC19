@@ -1,6 +1,6 @@
 # File Information
 
-The `owid-covid-data.csv` data set are downloaded from the [owid/covid-19-data](https://github.com/owid/covid-19-data/blob/master/public/data/README.md) git repository.
+The `owid-covid-data.csv` data set is downloaded from the [owid/covid-19-data](https://github.com/owid/covid-19-data/blob/master/public/data/README.md) git repository.
 
 `get_latest_owid.ipynb` is a Jupyter notebook which imports the downloaded data set, and returns `owid_latest.csv` which contains only the most updated data.
 
