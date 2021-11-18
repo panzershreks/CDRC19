@@ -600,6 +600,6 @@ demo_data <- left_join(Population_Gapminder_HYDE_UN_df1, df18demo, by = "Entity"
 
 hc_dis_fw_ws_covid_env_demo_data <- left_join(hc_dis_fw_ws_covid_env_data, Environmental_data, by = "Entity")
 
-
+write.csv(hc_dis_fw_ws_covid_env_demo_data,"initial_final_df.csv", row.names = TRUE)
 
 
