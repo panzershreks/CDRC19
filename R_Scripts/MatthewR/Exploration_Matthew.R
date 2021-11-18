@@ -27,6 +27,11 @@ df_minus_continents <- df_minus_continents[-c(1)]
 missing_data_summary <- miss_var_summary(df_minus_continents)
 missing_data_summary
 
+# testing what happens when you omit all the NA's
+
+omit_df <- na.omit(df_minus_continents)
+
+# it's an empty dataframe, which means we have NA's in each row/column!
 
 
 
