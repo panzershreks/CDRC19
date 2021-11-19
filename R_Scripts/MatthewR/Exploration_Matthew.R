@@ -19,7 +19,7 @@ df_minus_continents <- df_minus_continents[-c(1)]
 
 # wrote this new and now our 'for now' final dataframe to a csv file.
 
-# write.csv(df_minus_continents,"country_variable_data_cleared.csv", row.names = TRUE)
+write.csv(df_minus_continents,"country_variable_data_cleared.csv", row.names = TRUE)
 
 # This shows that there is quite alot of missing data.
 # looks like all of the health data might be missing/got lost in the merge to the big dataframe.
