@@ -3,6 +3,10 @@
 library("ggplot2")
 library("tidyverse")
 library("readr")
+library(dplyr)
+library(naniar)
+library(car)
+library(visdat)
 
 
 # Firstly, have not included these datasets as no country data - just continents/world/regions etc!
@@ -71,7 +75,7 @@ food_water_df <- merge(d1, d2, by = "Entity", all = TRUE)
 World_Happiness_Report_2021_ <- read_csv("Working_Data/world_stats/World Happiness Report (2021).csv")
 
 ws2 <- World_Happiness_Report_2021_ %>% group_by(Entity) %>% slice_max(Year)
-ws2 <- subset(ws2, select=-c(Year))
+world_stats <- subset(ws2, select=-c(Year))
 
 # Covid Data
 
@@ -313,37 +317,138 @@ Health_Coverage_ILO_2014_ <- read_csv("Working_Data/healthcare/Health Coverage �
 updated_Health_Coverage_ILO_2014_ <- Health_Coverage_ILO_2014_ %>% group_by(Entity) %>% slice_max(Year)
 hc_4 <- subset(updated_Health_Coverage_ILO_2014_, select=-c(Year))
 
+Health_Expenditure_Tanzi_Schuknecht_2000_ <- read_csv("Working_Data/healthcare/Health Expenditure - Tanzi & Schuknecht (2000).csv")
+updated_Health_Expenditure_Tanzi_Schuknecht_2000_ <- Health_Expenditure_Tanzi_Schuknecht_2000_ %>% group_by(Entity) %>% slice_max(Year)
+hc_5 <- subset(updated_Health_Expenditure_Tanzi_Schuknecht_2000_, select=-c(Year))
 
 
+Health_Expenditure_and_Financing_OECDstat_2017_ <- read_csv("Working_Data/healthcare/Health Expenditure and Financing - OECDstat (2017).csv")
+updated_Health_Expenditure_and_Financing_OECDstat_2017_ <- Health_Expenditure_and_Financing_OECDstat_2017_ %>% group_by(Entity) %>% slice_max(Year)
+hc_6 <- subset(updated_Health_Expenditure_and_Financing_OECDstat_2017_, select=-c(Year))
+
+Health_expenditure_per_capita_World_Bank_WDI_2018_ <- read_csv("Working_Data/healthcare/Health expenditure per capita - World Bank WDI (2018).csv")
+updated_Health_expenditure_per_capita_World_Bank_WDI_2018_ <- Health_expenditure_per_capita_World_Bank_WDI_2018_ %>% group_by(Entity) %>% slice_max(Year)
+hc_7 <- subset(updated_Health_expenditure_per_capita_World_Bank_WDI_2018_, select=-c(Year))
+
+Health_expenditure_per_capita_PPP_World_Bank_2016_ <- read_csv("Working_Data/healthcare/Health expenditure per capita, PPP - World Bank (2016).csv")
+updated_Health_expenditure_per_capita_PPP_World_Bank_2016_ <- Health_expenditure_per_capita_PPP_World_Bank_2016_ %>% group_by(Entity) %>% slice_max(Year)
+hc_8 <- subset(updated_Health_expenditure_per_capita_PPP_World_Bank_2016_, select=-c(Year))
+
+Healthcare_Access_and_Quality_Index_IHME_2017_ <- read_csv("Working_Data/healthcare/Healthcare Access and Quality Index – IHME (2017).csv")
+updated_Healthcare_Access_and_Quality_Index_IHME_2017_ <- Healthcare_Access_and_Quality_Index_IHME_2017_ %>% group_by(Entity) %>% slice_max(Year)
+hc_9 <- subset(updated_Healthcare_Access_and_Quality_Index_IHME_2017_, select=-c(Year))
+
+Healthcare_capacity_OECD_2020_ <- read_csv("Working_Data/healthcare/Healthcare capacity (OECD, 2020).csv")
+updated_Healthcare_capacity_OECD_2020_ <- Healthcare_capacity_OECD_2020_ %>% group_by(Entity) %>% slice_max(Year)
+hc_10 <- subset(updated_Healthcare_capacity_OECD_2020_, select=-c(Year))
+
+Healthy_Life_Expectancy_IHME <- read_csv("Working_Data/healthcare/Healthy Life Expectancy - IHME.csv")
+updated_Healthy_Life_Expectancy_IHME <- Healthy_Life_Expectancy_IHME %>% group_by(Entity) %>% slice_max(Year)
+hc_11 <- subset(updated_Healthy_Life_Expectancy_IHME, select=-c(Year))
+
+Long_run_series_of_health_expenditure_World_Bank_WDI_2017_ <- read_csv("Working_Data/healthcare/Long-run series of health expenditure - World Bank (WDI) (2017).csv")
+updated_Long_run_series_of_health_expenditure_World_Bank_WDI_2017_ <- Long_run_series_of_health_expenditure_World_Bank_WDI_2017_ %>% group_by(Entity) %>% slice_max(Year)
+hc_12 <- subset(updated_Long_run_series_of_health_expenditure_World_Bank_WDI_2017_, select=-c(Year))
+
+OECD_Social_Spending_Health <- read_csv("Working_Data/healthcare/OECD Social Spending- Health.csv")
+updated_OECD_Social_Spending_Health <- OECD_Social_Spending_Health %>% group_by(Entity) %>% slice_max(Year)
+hc_13 <- subset(updated_OECD_Social_Spending_Health, select=-c(Year))
+
+OECD_Social_Spending_Old_Age <- read_csv("Working_Data/healthcare/OECD Social Spending- Old Age.csv")
+updated_OECD_Social_Spending_Old_Age <- OECD_Social_Spending_Old_Age %>% group_by(Entity) %>% slice_max(Year)
+hc_14 <- subset(updated_OECD_Social_Spending_Old_Age, select=-c(Year))
+
+Out_of_pocket_expenditure_per_capita_on_healthcare_WHO_Global_Health_Expenditure <- read_csv("Working_Data/healthcare/Out-of-pocket expenditure per capita on healthcare - WHO Global Health Expenditure.csv")
+updated_Out_of_pocket_expenditure_per_capita_on_healthcare_WHO_Global_Health_Expenditure <- Out_of_pocket_expenditure_per_capita_on_healthcare_WHO_Global_Health_Expenditure %>% group_by(Entity) %>% slice_max(Year)
+hc_15 <- subset(updated_Out_of_pocket_expenditure_per_capita_on_healthcare_WHO_Global_Health_Expenditure, select=-c(Year))
+
+Percentage_of_persons_without_health_insurance_Council_of_Economic_Advisers_and_National_Center_fo <- read_csv("Working_Data/healthcare/Percentage of persons without health insurance - Council of Economic Advisers and National Center fo.csv")
+updated_Percentage_of_persons_without_health_insurance_Council_of_Economic_Advisers_and_National_Center_fo <- Percentage_of_persons_without_health_insurance_Council_of_Economic_Advisers_and_National_Center_fo %>% group_by(Entity) %>% slice_max(Year)
+hc_16 <- subset(updated_Percentage_of_persons_without_health_insurance_Council_of_Economic_Advisers_and_National_Center_fo, select=-c(Year))
+
+Perceptions_of_spending_on_health_expenditure_IPSOS_2016_ <- read_csv("Working_Data/healthcare/Perceptions of spending on health expenditure - IPSOS (2016).csv")
+updated_Perceptions_of_spending_on_health_expenditure_IPSOS_2016_ <- Perceptions_of_spending_on_health_expenditure_IPSOS_2016_ %>% group_by(Entity) %>% slice_max(Year)
+hc_17 <- subset(updated_Perceptions_of_spending_on_health_expenditure_IPSOS_2016_, select=-c(Year))
+
+Public_expenditure_on_health_GDP_OWID_based_on_WHO_and_historical_estimates <- read_csv("Working_Data/healthcare/Public expenditure on health %GDP – OWID based on WHO and historical estimates.csv")
+updated_Public_expenditure_on_health_GDP_OWID_based_on_WHO_and_historical_estimates <- Public_expenditure_on_health_GDP_OWID_based_on_WHO_and_historical_estimates %>% group_by(Entity) %>% slice_max(Year)
+hc_18 <- subset(updated_Public_expenditure_on_health_GDP_OWID_based_on_WHO_and_historical_estimates, select=-c(Year))
+
+Total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors_OECD <- read_csv("Working_Data/healthcare/Total gross official disbursements for medical research and basic heath sectors - OECD.csv")
+updated_Total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors_OECD <- Total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors_OECD %>% group_by(Entity) %>% slice_max(Year)
+hc_19 <- subset(updated_Total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors_OECD, select=-c(Year))
+
+Vaccine_Coverage_and_Disease_Burden_WHO_2017_ <- read_csv("Working_Data/healthcare/Vaccine Coverage and Disease Burden - WHO (2017).csv")
+updated_Vaccine_Coverage_and_Disease_Burden_WHO_2017_ <- Vaccine_Coverage_and_Disease_Burden_WHO_2017_ %>% group_by(Entity) %>% slice_max(Year)
+hc_20 <- subset(updated_Vaccine_Coverage_and_Disease_Burden_WHO_2017_, select=-c(Year))
 
 
+h_hold_1 <- merge(hc_1, hc_2, by = "Entity", all = TRUE)
+h_hold_2 <- merge(hc_3, hc_4, by = "Entity", all = TRUE)
+h_hold_3 <- merge(hc_5, hc_6, by = "Entity", all = TRUE)
+h_hold_4 <- merge(hc_7, hc_8, by = "Entity", all = TRUE)
+h_hold_5 <- merge(hc_9, hc_10, by = "Entity", all = TRUE)
+h_hold_6 <- merge(hc_11, hc_12, by = "Entity", all = TRUE)
+h_hold_7 <- merge(hc_13, hc_14, by = "Entity", all = TRUE)
+h_hold_8 <- merge(hc_15, hc_16, by = "Entity", all = TRUE)
+h_hold_9 <- merge(hc_17, hc_18, by = "Entity", all = TRUE)
+h_hold_10 <- merge(hc_19, hc_20, by = "Entity", all = TRUE)
+
+h_hold_1_1 <- merge(h_hold_1, h_hold_2, by = "Entity", all = TRUE)
+h_hold_1_2 <- merge(h_hold_3, h_hold_4, by = "Entity", all = TRUE)
+h_hold_1_3 <- merge(h_hold_5, h_hold_6, by = "Entity", all = TRUE)
+h_hold_1_4 <- merge(h_hold_7, h_hold_8, by = "Entity", all = TRUE)
+h_hold_1_5 <- merge(h_hold_9, h_hold_10, by = "Entity", all = TRUE)
+
+h_hold_1_1_1 <- merge(h_hold_1_1, h_hold_1_2, by = "Entity", all = TRUE)
+h_hold_1_1_2 <- merge(h_hold_1_3, h_hold_1_4, by = "Entity", all = TRUE)
+
+h_hold_1 <- merge(h_hold_1_1_1, h_hold_1_1_2, by = "Entity", all = TRUE)
+
+healthcare_df <- merge(h_hold_1, h_hold_1_5, by = "Entity", all = TRUE)
+
+# We now bring the final dataframe together
+
+final_hold_1 <- merge(covid_df, demographic_df, by = "Entity", all = TRUE)
+final_hold_2 <- merge(disease_df, environment_df, by = "Entity", all = TRUE)
+final_hold_3 <- merge(food_water_df, economic_df, by = "Entity", all = TRUE)
+final_hold_4 <- merge(healthcare_df, world_stats, by = "Entity", all = TRUE)
+
+final_hold_1_1 <- merge(final_hold_1, final_hold_2, by = "Entity", all = TRUE)
+final_hold_1_2 <- merge(final_hold_3, final_hold_4, by = "Entity", all = TRUE)
+
+fully_merged_df <- merge(final_hold_1_1, final_hold_1_2, by = "Entity", all = TRUE)
+
+# Now remove the non-relevant data i.e. countries
+
+fully_merged_df <- fully_merged_df[-c(2,7,10,13,14,16,19,20,21,23,24,25,39,54,55,
+                                      56,59,61,65,66,67,68,69,70,71,72,73,74,79,80,81,83,99,
+                                      104,105,106,107,108,109,110,111,112,113,114,115,116,117, 118,119,120,122,126,132,133,134,135,136,
+                                      137,138,139,140,141,142,143,151,152,156,176,177,178,179,180,181,182,183,184,185,186,187,188,190,
+                                      193, 195, 196, 197,198,200, 203,204,205,224,226,227,228,229,230,231,232,233, 234, 235, 237, 238,
+                                      241, 242, 243,248,249,250, 251, 252, 253,254,255,256,272,277,278, 279, 280, 281,282,283,284,285,286,
+                                      287,288,294,306,311,312,313,316,317,318, 319,323, 324,325, 327,328, 329,341,342,346,375,376,377,
+                                      382,383,384, 385,386,387,388,391,392, 393,394, 395, 396,397,398,399,400,401,404, 405, 406, 407, 408,
+                                      409,410,412,413,415,432,443,444,446,447,449,450,451,457,463,464,465,467,468,469,470,471,472,473,474,
+                                      475,476,478,479, 480, 481,483,486), ]
 
 
+write.csv(fully_merged_df,"fully_merged_df.csv", row.names = TRUE)
 
 
+missing_data_summary <- miss_var_summary(fully_merged_df)
+missing_data_summary
 
+# 4 x 100 missing data.
+# For the fiscal measures and emergency investment healthcare - the most 
+# recent data for all the countries are NA's so the slice_max function 
+# doesn't wortk.
 
+# Same with emergency investment healthcare, and international support. 
+# So maybe need to go over these and use them in a slightly different way?
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Same with number confirmed polio cases. Just no reading for the latest year/so
+# slice max doesn't really work.
 
 
 
