@@ -4,6 +4,21 @@ library("ggplot2")
 library("tidyverse")
 library("readr")
 
+
+# Firstly, have not included these datasets as no country data - just continents/world/regions etc!
+
+Deaths_by_World_Region_WHO_2016_ <- read_csv("Working_Data/demographics/Deaths by World Region - WHO (2016).csv")
+Differences_in_population_estimates_OWID_based_on_UN_vs_US_Census_Bureau <- read_csv("Working_Data/demographics/Differences in population estimates - OWID based on UN vs US Census Bureau.csv")
+Global_child_mortality_since_1800_based_on_Gapminder_and_World_Bank_2019_ <- read_csv("Working_Data/demographics/Global child mortality (since 1800) - based on Gapminder and World Bank (2019).csv")
+Number_and_percentage_of_current_smokers_by_sex_American_Lung_Association_2011_ <- read_csv("Working_Data/demographics/Number and percentage of current smokers, by sex (American Lung Association (2011)).csv")
+GDP_per_capita_indexed_at_1950_Maddison_Project_Data_2018_ <- read_csv("Working_Data/economic/GDP per capita indexed at 1950 - Maddison Project Data (2018).csv")
+Wealth_total_by_component_for_various_country_groupings_World_Bank_2017_ <- read_csv("Working_Data/economic/Wealth (total) by component for various country groupings - World Bank (2017).csv")
+Wealth_per_capita_by_component_for_various_country_groupings_World_Bank_2017_ <- read_csv("Working_Data/economic/Wealth per capita by component for various country groupings - World Bank (2017).csv")
+World_GDP_in_2011_int_OWID_based_on_World_Bank_Maddison_2017_ <- read_csv("Working_Data/economic/World GDP in 2011 int $ – OWID based on World Bank + Maddison (2017).csv")
+Development_Health_Assistance_IHME <- read_csv("Working_Data/healthcare/Development Health Assistance - IHME.csv")
+
+# Now for merging the data from each category.
+
 # Disease Data
 
 Diabetes_Prevalence_NCD_RisC_2017_ <- read_csv("Working_Data/disease/Diabetes Prevalence - NCD RisC (2017).csv")
@@ -105,15 +120,6 @@ covid_df <- merge(c_h_2_1, c_h_2_2, by = "Entity", all = TRUE)
 
 # Demographic Data
 
-# Have not included these datasets as no country data - just continents.
-
-Deaths_by_World_Region_WHO_2016_ <- read_csv("Working_Data/demographics/Deaths by World Region - WHO (2016).csv")
-Differences_in_population_estimates_OWID_based_on_UN_vs_US_Census_Bureau <- read_csv("Working_Data/demographics/Differences in population estimates - OWID based on UN vs US Census Bureau.csv")
-Global_child_mortality_since_1800_based_on_Gapminder_and_World_Bank_2019_ <- read_csv("Working_Data/demographics/Global child mortality (since 1800) - based on Gapminder and World Bank (2019).csv")
-Number_and_percentage_of_current_smokers_by_sex_American_Lung_Association_2011_ <- read_csv("Working_Data/demographics/Number and percentage of current smokers, by sex (American Lung Association (2011)).csv")
-
-
-# Now these ones are included.
 
 Child_mortality_estimates_Gapminder_2015_ <- read_csv("Working_Data/demographics/Child mortality estimates - Gapminder (2015).csv")
 updated_Child_mortality_estimates_Gapminder_2015_ <- Child_mortality_estimates_Gapminder_2015_  %>% group_by(Entity) %>% slice_max(Year)
@@ -202,6 +208,142 @@ dhold1_1 <- merge(dhold1, dhold2, by = "Entity", all = TRUE)
 dhold1_2 <- merge(dhold3, dhold4, by = "Entity", all = TRUE)
 
 demographic_df <- merge(dhold1_1, dhold1_2, by = "Entity", all = TRUE)
+
+
+# Environmental Data
+
+Air_pollution_deaths_breakdown_by_age_IHME <- read_csv("Working_Data/environmental/Air pollution deaths breakdown by age - IHME.csv")
+updated_Air_pollution_deaths_breakdown_by_age_IHME <- Air_pollution_deaths_breakdown_by_age_IHME %>% group_by(Entity) %>% slice_max(Year)
+en_1 <- subset(updated_Air_pollution_deaths_breakdown_by_age_IHME, select=-c(Year))
+
+Deaths_attributed_to_air_pollution_Lelieveld_et_al_2019_ <- read_csv("Working_Data/environmental/Deaths attributed to air pollution (Lelieveld et al. 2019).csv")
+updated_Deaths_attributed_to_air_pollution_Lelieveld_et_al_2019_ <- Deaths_attributed_to_air_pollution_Lelieveld_et_al_2019_ %>% group_by(Entity) %>% slice_max(Year)
+en_2 <- subset(updated_Deaths_attributed_to_air_pollution_Lelieveld_et_al_2019_, select=-c(Year))
+
+environment_df <- merge(en_1, en_2, by = "Entity", all = TRUE)
+
+# Economic Data
+
+Average_monthly_incomes_or_consumption_by_decile_and_quintile_PovcalNet_2019_ <- read_csv("Working_Data/economic/Average monthly incomes or consumption by decile and quintile – PovcalNet (2019).csv")
+updated_Average_monthly_incomes_or_consumption_by_decile_and_quintile_PovcalNet_2019_ <- Average_monthly_incomes_or_consumption_by_decile_and_quintile_PovcalNet_2019_ %>% group_by(Entity) %>% slice_max(Year)
+ec_1 <- subset(updated_Average_monthly_incomes_or_consumption_by_decile_and_quintile_PovcalNet_2019_, select=-c(Year, welfare))
+
+Country_Income_Classification_World_Bank_2017_ <- read_csv("Working_Data/economic/Country Income Classification - World Bank (2017).csv")
+updated_Country_Income_Classification_World_Bank_2017_ <- Country_Income_Classification_World_Bank_2017_ %>% group_by(Entity) %>% slice_max(Year)
+ec_2 <- subset(updated_Country_Income_Classification_World_Bank_2017_, select=-c(Year))
+
+economic_inequality_gini_index <- read_csv("Working_Data/economic/economic-inequality-gini-index.csv")
+updated_economic_inequality_gini_index <- economic_inequality_gini_index %>% group_by(Entity) %>% slice_max(Year)
+ec_3 <- subset(updated_economic_inequality_gini_index, select=-c(Year, Code))
+
+GDP_growth_from_previous_year_2020_Q2_Eurostat_OECD_National_sources_ <- read_csv("Working_Data/economic/GDP growth from previous year, 2020 Q2 (Eurostat, OECD, National sources).csv")
+updated_GDP_growth_from_previous_year_2020_Q2_Eurostat_OECD_National_sources_ <- GDP_growth_from_previous_year_2020_Q2_Eurostat_OECD_National_sources_ %>% group_by(Entity) %>% slice_max(Year)
+ec_4 <- subset(updated_GDP_growth_from_previous_year_2020_Q2_Eurostat_OECD_National_sources_, select=-c(Year))
+
+GDP_per_capita_PPP_2011_WDI_2016_ <- read_csv("Working_Data/economic/GDP per capita PPP 2011 – WDI (2016).csv")
+updated_GDP_per_capita_PPP_2011_WDI_2016_ <- GDP_per_capita_PPP_2011_WDI_2016_ %>% group_by(Entity) %>% slice_max(Year)
+ec_5 <- subset(updated_GDP_per_capita_PPP_2011_WDI_2016_, select=-c(Year))
+
+GNP_by_country_2021 <- read_csv("Working_Data/economic/GNP by country 2021.csv")
+updated_GNP_by_country_2021 <- GNP_by_country_2021 %>% group_by(country)
+ec_6 <- subset(updated_GNP_by_country_2021, select=-c(rank))
+ec_6 <- rename(ec_6,Entity = country)
+
+Income_Inequality_World_Bank_2016_ <- read_csv("Working_Data/economic/Income Inequality - World Bank (2016).csv")
+updated_Income_Inequality_World_Bank_2016_ <- Income_Inequality_World_Bank_2016_ %>% group_by(Entity) %>% slice_max(Year)
+ec_7 <- subset(updated_Income_Inequality_World_Bank_2016_, select=-c(Year))
+
+Maddison_Project_Database_2020_Bolt_and_van_Zanden_2020_ <- read_csv("Working_Data/economic/Maddison Project Database 2020 (Bolt and van Zanden (2020)).csv")
+updated_Maddison_Project_Database_2020_Bolt_and_van_Zanden_2020_ <- Maddison_Project_Database_2020_Bolt_and_van_Zanden_2020_ %>% group_by(Entity) %>% slice_max(Year)
+ec_8 <- subset(updated_Maddison_Project_Database_2020_Bolt_and_van_Zanden_2020_, select=-c(Year))
+
+Measures_and_indicators_for_Poverty_PovcalNet_World_Bank_2017_ <- read_csv("Working_Data/economic/Measures and indicators for Poverty - PovcalNet (World Bank) (2017).csv")
+updated_Measures_and_indicators_for_Poverty_PovcalNet_World_Bank_2017_ <- Measures_and_indicators_for_Poverty_PovcalNet_World_Bank_2017_ %>% group_by(Entity) %>% slice_max(Year)
+ec_9 <- subset(updated_Measures_and_indicators_for_Poverty_PovcalNet_World_Bank_2017_, select=-c(Year))
+
+National_Poverty_Lines_Jolliffe_and_Prydz_2016_ <- read_csv("Working_Data/economic/National Poverty Lines - Jolliffe and Prydz (2016).csv")
+updated_National_Poverty_Lines_Jolliffe_and_Prydz_2016_ <- National_Poverty_Lines_Jolliffe_and_Prydz_2016_ %>% group_by(Entity) %>% slice_max(Year)
+ec_10 <- subset(updated_National_Poverty_Lines_Jolliffe_and_Prydz_2016_, select=-c(Year))
+
+OPHI_Multidimensional_Poverty_Index_Alkire_and_Robles_2016_ <- read_csv("Working_Data/economic/OPHI Multidimensional Poverty Index - Alkire and Robles (2016).csv")
+updated_OPHI_Multidimensional_Poverty_Index_Alkire_and_Robles_2016_ <- OPHI_Multidimensional_Poverty_Index_Alkire_and_Robles_2016_ %>% group_by(Entity) %>% slice_max(Year)
+ec_11 <- subset(updated_OPHI_Multidimensional_Poverty_Index_Alkire_and_Robles_2016_, select=-c(Year))
+
+PolcalNet_Global_Poverty_2017_ <- read_csv("Working_Data/economic/PolcalNet Global Poverty (2017).csv")
+updated_PolcalNet_Global_Poverty_2017_ <- PolcalNet_Global_Poverty_2017_ %>% group_by(Entity) %>% slice_max(Year)
+ec_12 <- subset(updated_PolcalNet_Global_Poverty_2017_, select=-c(Year))
+
+Poverty_rate_50_of_median_LIS_Key_Figures_2018_ <- read_csv("Working_Data/economic/Poverty rate (!50% of median) (LIS Key Figures, 2018).csv")
+updated_Poverty_rate_50_of_median_LIS_Key_Figures_2018_ <- Poverty_rate_50_of_median_LIS_Key_Figures_2018_ %>% group_by(Entity) %>% slice_max(Year)
+ec_13 <- subset(updated_Poverty_rate_50_of_median_LIS_Key_Figures_2018_, select=-c(Year))
+
+
+
+ec_hold1 <- merge(ec_1, ec_2, by = "Entity", all = TRUE)
+ec_hold2 <- merge(ec_3, ec_4, by = "Entity", all = TRUE)
+ec_hold3 <- merge(ec_5, ec_6, by = "Entity", all = TRUE)
+ec_hold4 <- merge(ec_7, ec_8, by = "Entity", all = TRUE)
+ec_hold5 <- merge(ec_9, ec_10, by = "Entity", all = TRUE)
+ec_hold6 <- merge(ec_11, ec_12, by = "Entity", all = TRUE)
+
+ec_hh_1 <- merge(ec_hold1, ec_hold2, by = "Entity", all = TRUE)
+ec_hh_2 <- merge(ec_hold3, ec_hold4, by = "Entity", all = TRUE)
+ec_hh_3 <- merge(ec_hold5, ec_hold6, by = "Entity", all = TRUE)
+
+ec_hh_1_1 <- merge(ec_hh_1, ec_hh_2, by = "Entity", all = TRUE)
+ec_hh_1_2 <- merge(ec_hh_3, ec_13, by = "Entity", all = TRUE)
+
+economic_df <- merge(ec_hh_1_1, ec_hh_1_2, by = "Entity", all = TRUE)
+
+# Healthcare Data
+
+Attitudes_to_Vaccines_Wellcome_Trust_2019_ <- read_csv("Working_Data/healthcare/Attitudes to Vaccines - Wellcome Trust (2019).csv")
+updated_Attitudes_to_Vaccines_Wellcome_Trust_2019_ <- Attitudes_to_Vaccines_Wellcome_Trust_2019_ %>% group_by(Entity) %>% slice_max(Year)
+hc_1 <- subset(updated_Attitudes_to_Vaccines_Wellcome_Trust_2019_, select=-c(Year))
+
+Clark_Flèche_Senik_Happiness_Inequality <- read_csv("Working_Data/healthcare/Clark, Flèche & Senik – Happiness Inequality.csv")
+updated_Clark_Flèche_Senik_Happiness_Inequality <- Clark_Flèche_Senik_Happiness_Inequality %>% group_by(Entity) %>% slice_max(Year)
+hc_2 <- subset(updated_Clark_Flèche_Senik_Happiness_Inequality, select=-c(Year))
+
+Disability_Adjusted_Life_Years_WHO_2015_ <- read_csv("Working_Data/healthcare/Disability Adjusted Life Years - WHO (2015).csv")
+updated_Disability_Adjusted_Life_Years_WHO_2015_ <- Disability_Adjusted_Life_Years_WHO_2015_ %>% group_by(Entity) %>% slice_max(Year)
+hc_3 <- subset(updated_Disability_Adjusted_Life_Years_WHO_2015_, select=-c(Year))
+
+Health_Coverage_ILO_2014_ <- read_csv("Working_Data/healthcare/Health Coverage – ILO (2014).csv")
+updated_Health_Coverage_ILO_2014_ <- Health_Coverage_ILO_2014_ %>% group_by(Entity) %>% slice_max(Year)
+hc_4 <- subset(updated_Health_Coverage_ILO_2014_, select=-c(Year))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
