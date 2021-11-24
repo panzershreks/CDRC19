@@ -39,20 +39,20 @@ fully_merged_df <- read_csv("Combined DataFrame Work/fully_merged_df.csv")
 
 fully_merged_df <- subset(fully_merged_df, select = -1)
 
-
-
+test_mean_df <- subset(fully_merged_df, select = c(1,13,54,58))
 test_mice_df <- subset(fully_merged_df, select = c(1,13,54,58))
+
+summary(test_mean_df)
 summary(test_mice_df)
 
 # Now we do mean imputation
 
-test_df$BMI[which(is.na(test_df$BMI))] = mean(test_df$BMI, na.rm = TRUE)
-test_df$Score[which(is.na(test_df$Score))] = mean(test_df$Score, na.rm = TRUE)
+test_mean_df$stringency_index[which(is.na(test_mean_df$stringency_index))] = mean(test_mean_df$stringency_index, na.rm = TRUE)
+test_mean_df$`Total confirmed deaths due to COVID-19`[which(is.na(test_mean_df$`Total confirmed deaths due to COVID-19`))] = mean(test_mean_df$`Total confirmed deaths due to COVID-19`, na.rm = TRUE)
+test_mean_df$`Total confirmed deaths due to COVID-19 per million people`[which(is.na(test_mean_df$`Total confirmed deaths due to COVID-19 per million people`))] = mean(test_mean_df$`Total confirmed deaths due to COVID-19 per million people`, na.rm = TRUE)
 
-test_mice_df$stringency_index[which(is.na(test_mice_df$stringency_index))] = mean(test_mice_df$stringency_index, na.rm = TRUE)
-test_mice_df$`Total confirmed deaths due to COVID-19`[which(is.na(test_mice_df$`Total confirmed deaths due to COVID-19`))] = mean(test_mice_df$`Total confirmed deaths due to COVID-19`, na.rm = TRUE)
-test_mice_df$`Total confirmed deaths due to COVID-19 per million people`[which(is.na(test_mice_df$`Total confirmed deaths due to COVID-19 per million people`))] = mean(test_mice_df$`Total confirmed deaths due to COVID-19 per million people`, na.rm = TRUE)
 
-# Now to try MICE.
+# Now to try MICE - but this doesn't work...
 
+covid_imputation <- mice(data = test_mice_df, m = 5, method = c("","pmm","pmm","pmm"), maxit = 20)
 
