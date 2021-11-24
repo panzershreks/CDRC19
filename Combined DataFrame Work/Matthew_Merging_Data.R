@@ -439,6 +439,11 @@ write.csv(fully_merged_df,"fully_merged_df.csv", row.names = TRUE)
 missing_data_summary <- miss_var_summary(fully_merged_df)
 missing_data_summary
 
+
+nrow(fully_merged_df)
+
+
+
 # 4 x 100 missing data.
 # For the fiscal measures and emergency investment healthcare - the most 
 # recent data for all the countries are NA's so the slice_max function 
