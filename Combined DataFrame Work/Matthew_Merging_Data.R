@@ -36,7 +36,7 @@ Percentage_deaths_attributable_to_risk_factors_IHME <- read_csv("Working_Data/di
 updated_Diabetes_Prevalence_NCD_RisC_2017_ <- Diabetes_Prevalence_NCD_RisC_2017_ %>% group_by(Entity) %>% slice_max(Year)
 d1 <- subset(updated_Diabetes_Prevalence_NCD_RisC_2017_, select=-c(Year))
 
-
+?slice_max
 updated_Diabetes_prevalence_relative_to_obesity_overweight_OWID_based_on_WHO_and_WDI <- Diabetes_prevalence_relative_to_obesity_overweight_OWID_based_on_WHO_and_WDI %>% group_by(Entity) %>% slice_max(Year)
 d2 <- subset(updated_Diabetes_prevalence_relative_to_obesity_overweight_OWID_based_on_WHO_and_WDI, select=-c(Year))
 
