@@ -7,6 +7,11 @@ library(dplyr)
 library(naniar)
 library(car)
 library(visdat)
+library("mice")
+
+fully_merged_df <- read_csv("Combined DataFrame Work/fully_merged_df.csv")
+fully_merged_df <- subset(fully_merged_df, select = -1)
+fully_merged_df <- clean_names(fully_merged_df)
 
 # Run the factor variable code first to make sure we have the factors!
 
@@ -32,3 +37,11 @@ write.csv(test_big_imp_df,"imp_maxit_5.csv", row.names = TRUE)
 
 missing_data_summary <- miss_var_summary(test_big_imp_df)
 missing_data_summary
+
+
+
+
+
+
+
+

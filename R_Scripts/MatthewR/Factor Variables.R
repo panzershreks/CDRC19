@@ -5,6 +5,7 @@ fully_merged_df <- subset(fully_merged_df, select = -1)
 fully_merged_df <- clean_names(fully_merged_df)
 
 
+
 # Here, we code in the factor variables.
 
 fully_merged_df$school_closures <- as.factor(fully_merged_df$school_closures)
