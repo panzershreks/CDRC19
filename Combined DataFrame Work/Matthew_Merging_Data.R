@@ -444,6 +444,17 @@ nrow(fully_merged_df)
 
 
 
+write.csv(covid_df,"covid_df.csv", row.names = TRUE)
+write.csv(demographic_df,"demographic_df.csv", row.names = TRUE)
+write.csv(disease_df,"disease_df.csv", row.names = TRUE)
+write.csv(economic_df,"economic_df.csv", row.names = TRUE)
+write.csv(environment_df,"environment_df.csv", row.names = TRUE)
+write.csv(food_water_df,"food_water_df.csv", row.names = TRUE)
+write.csv(healthcare_df,"healthcare_df.csv", row.names = TRUE)
+write.csv(world_stats,"world_stats.csv", row.names = TRUE)
+
+
+
 
 
 
