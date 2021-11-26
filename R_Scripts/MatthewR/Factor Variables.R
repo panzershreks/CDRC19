@@ -1,6 +1,7 @@
 # Here we define the factor variables.
 
-fully_merged_df
+
+fully_merged_df <- read_csv("Combined DataFrame Work/fully_merged_df.csv")
 fully_merged_df <- subset(fully_merged_df, select = -1)
 fully_merged_df <- clean_names(fully_merged_df)
 

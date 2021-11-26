@@ -37,8 +37,6 @@ test_mean_df$total_confirmed_deaths_due_to_covid_19_per_million_people[which(is.
 
 covid_imputation <- mice(data = test_mice_df, m = 5, method = c("","pmm","pmm","pmm"), maxit = 100)
 
-?mice
-
 covid_imputation$imp$stringency_index
 
 
@@ -64,3 +62,6 @@ fitm <- with(covid_imputation, lm(total_confirmed_deaths_due_to_covid_19_per_mil
 summary(fitm)
 
 summary(pool(fitm))
+
+
+
