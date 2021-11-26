@@ -433,7 +433,7 @@ fully_merged_df <- fully_merged_df[-c(2,7,10,13,14,16,19,20,21,23,24,25,39,54,55
                                       475,476,478,479, 480, 481,483,486), ]
 
 
-write.csv(fully_merged_df,"fully_merged_df.csv", row.names = TRUE)
+# write.csv(fully_merged_df,"fully_merged_df.csv", row.names = TRUE)
 
 
 missing_data_summary <- miss_var_summary(fully_merged_df)
@@ -441,6 +441,9 @@ missing_data_summary
 
 
 nrow(fully_merged_df)
+
+
+
 
 
 
