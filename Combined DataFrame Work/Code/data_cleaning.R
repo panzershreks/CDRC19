@@ -85,5 +85,13 @@ clean_economic <- clean_fully_merged_df[ , c(1, 57, 238:273)]
 clean_healthcare <- clean_fully_merged_df[ , c(1, 57, 274:349)]
 clean_world_stats <- clean_fully_merged_df[ , c(1, 57, 350)]
 
+#write.csv(clean_covid,"clean_covid.csv", row.names = TRUE)
+#write.csv(clean_demographic,"clean_demographic.csv", row.names = TRUE)
+#write.csv(clean_disease,"clean_disease.csv", row.names = TRUE)
+#write.csv(clean_enviroment,"clean_enviroment.csv", row.names = TRUE)
+#write.csv(clean_food_water,"clean_food_water.csv", row.names = TRUE)
+#write.csv(clean_economic,"clean_economic.csv", row.names = TRUE)
+#write.csv(clean_healthcare,"clean_healthcare.csv", row.names = TRUE)
+#write.csv(clean_world_stats,"clean_world_stats.csv", row.names = TRUE)
 
 
