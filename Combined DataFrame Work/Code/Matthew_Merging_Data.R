@@ -399,7 +399,7 @@ updated_Total_gross_official_disbursements_for_medical_research_and_basic_heath_
 hc_19 <- subset(updated_Total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors_OECD, select=-c(Year))
 
 Vaccine_Coverage_and_Disease_Burden_WHO_2017_ <- read_csv("Working_Data/healthcare/Vaccine Coverage and Disease Burden - WHO (2017).csv")
-updated_Vaccine_Coverage_and_Disease_Burden_WHO_2017_ <- Vaccine_Coverage_and_Disease_Burden_WHO_2017_ %>% group_by(Entity) %>% fill(everything(), .direction = "updown") %>% slice_max(Year)
+updated_Vaccine_Coverage_and_Disease_Burden_WHO_2017_ <- Vaccine_Coverage_and_Disease_Burden_WHO_2017_ %>% group_by(Entity) %>% fill(everything(), .direction = "updown")%>% slice_max(Year)
 hc_20 <- subset(updated_Vaccine_Coverage_and_Disease_Burden_WHO_2017_, select=-c(Year))
 
 
@@ -446,7 +446,16 @@ missing_data_summary
 
 # We now remove the contintents and non-geopgraphical entities (i.e. LEDC)
 
-
+# fully_merged_df <- fully_merged_df[-c(2,7,10,13,14,16,19,20,21,23,24,25,39,54,55,
+#                                       56,59,61,65,66,67,68,69,70,71,72,73,74,79,80,81,83,99,
+#                                       104,105,106,107,108,109,110,111,112,113,114,115,116,117, 118,119,120,122,126,132,133,134,135,136,
+#                                       137,138,139,140,141,142,143,151,152,156,176,177,178,179,180,181,182,183,184,185,186,187,188,190,
+#                                       193, 195, 196, 197,198,200, 203,204,205,224,226,227,228,229,230,231,232,233, 234, 235, 237, 238,
+#                                       241, 242, 243,248,249,250, 251, 252, 253,254,255,256,272,277,278, 279, 280, 281,282,283,284,285,286,
+#                                       287,288,294,306,311,312,313,316,317,318, 319,323, 324,325, 327,328, 329,341,342,346,375,376,377,
+#                                       382,383,384, 385,386,387,388,391,392, 393,394, 395, 396,397,398,399,400,401,404, 405, 406, 407, 408,
+#                                       409,410,412,413,415,432,443,444,446,447,449,450,451,457,463,464,465,467,468,469,470,471,472,473,474,
+#                                       475,476,478,479, 480, 481,483,486), ]
 
 # write.csv(fully_merged_df,"fully_merged_df.csv", row.names = TRUE)
 
