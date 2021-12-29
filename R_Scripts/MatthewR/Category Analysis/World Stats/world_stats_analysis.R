@@ -23,15 +23,16 @@ clean_world_stats <- subset(clean_world_stats, select = -1)
 summary(clean_world_stats)
 
 # We look at the missing data
+
 clean_world_stats_new_name <- clean_world_stats
 colnames(clean_world_stats_new_name) <- c("Country", "Total Confirmed Deaths per Million", "Life Satisfaction Indicator")
 missing_data_plot <- vis_miss(clean_world_stats_new_name, sort_miss = TRUE)
 miss_var_summary(clean_world_stats)
 
-ggsave(missing_data_plot, file="w_s_missing_data.png")
+# ggsave(missing_data_plot, file="w_s_missing_data.png")
 
 
-# Summary Statistics - this removes the missing values.
+# Summary Statistics showing relationship - this removes the missing values.
 
 summary_w_missing <- ggplot(data = clean_world_stats, aes(x = life_satisfaction_in_cantril_ladder_world_happiness_report_2019, y = total_confirmed_deaths_due_to_covid_19_per_million_people)) + 
   geom_point() +
@@ -54,6 +55,8 @@ world_stats_4 <- complete(world_stats_imputation, 4)
 world_stats_5 <- complete(world_stats_imputation, 5)
 
 world_stats_model <- with(world_stats_imputation, lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ life_satisfaction_in_cantril_ladder_world_happiness_report_2019))
+
+# This gives our linear model.
 
 summary(world_stats_model)
 summary(pool(world_stats_model))
@@ -87,15 +90,16 @@ ws_iumputed_summary <- grid.arrange(ws_mice_1, ws_mice_2, ws_mice_3, ws_mice_4, 
                                     bottom = "Life Satisfaction Indicator")
 
 
-ggsave(ws_iumputed_summary, file="w_s_imputed_sum.png")
+#ggsave(ws_iumputed_summary, file="w_s_imputed_sum.png")
   
+
+# We now do correlation plot - which isn't neccessary here as there's only two variables.
+
 
 numeric_dat <- world_stats_1[,2:3]
 M <- cor(numeric_dat)
 colnames(M) <- c("Deaths", "Life Sat")
 rownames(M) <- c("Deaths", "Life Sat")
-
-
 
 #png(height = 6.83, width = 6.08, units = "in",res = 1000, file = "w_s_correlation_plot.png")
 corrplot(M, method = 'square', order = 'AOE', addCoef.col = 'black', tl.pos = 'd',

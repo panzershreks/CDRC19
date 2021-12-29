@@ -35,19 +35,117 @@ food_water_imputation <- mice(data = clean_food_water, m = 5, method = c("cart")
 
 food_water_imputation$loggedEvents
 
+# We have that there are a few constant/collinear columns, so we will now deal with them
+# by removing them.
+
+food_water_1 <- complete(food_water_imputation, 1)
+food_water_2 <- complete(food_water_imputation, 2)
+food_water_3 <- complete(food_water_imputation, 3)
+food_water_4 <- complete(food_water_imputation, 4)
+food_water_5 <- complete(food_water_imputation, 5)
+
+# now to proceed we will remove columns but we will from now on work with only
+# food_water_1 data.
+
+working_food <- food_water_1
+
+working_food <- subset(working_food, select = -c(6,7,8))
+
+# There is now no missing data:
+
+miss_var_summary(working_food)
+
+# Now we want to look at the correlation between the variables.
+
+#numeric_variables <- working_food[]
+
+Mcor <- working_food[,2:16]
+view(Mcor)
+
+
+vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Correlation Matrix")
+
+cor_data_frame <- round(cor(Mcor),2)
+# write.csv(cor_data_frame,"food_wat_correlation.csv", row.names = TRUE)
+
+# write up observations about this.
 
 
 
+# Now you want to use VIF - we will remove the largest valued variable each time
+# until we have that all the values are under five.
 
+full_model <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ cost_of_calorie_sufficient_diet_2017_usd_per_day + cost_of_nutrient_adequate_diet_2017_usd_per_day +
+                 cost_of_healthy_diet_2017_usd_per_day + calorie_sufficient_diet_cost_percent_of_average_food_expenditure +
+                 nutrient_adequate_diet_cost_percent_of_average_food_expenditure + healthy_diet_cost_percent_of_average_food_expenditure +
+                 calorie_sufficient_diet_cost_percent_cannot_afford + nutrient_adequate_diet_cost_percent_cannot_afford + healthy_diet_cost_percent_cannot_afford +
+                 calorie_sufficient_diet_cost_number_cannot_afford + nutrient_adequate_diet_cost_number_cannot_afford +
+                 healthy_diet_cost_number_cannot_afford + population_with_access_to_improved_sanitation_y +
+                 population_without_access_to_improved_sanitation_y, data = working_food)
 
+vif(full_model)
 
+# We then remove healthy_diet_cost_number_cannot_afford
 
+fw1 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ cost_of_calorie_sufficient_diet_2017_usd_per_day + cost_of_nutrient_adequate_diet_2017_usd_per_day +
+                   cost_of_healthy_diet_2017_usd_per_day + calorie_sufficient_diet_cost_percent_of_average_food_expenditure +
+                   nutrient_adequate_diet_cost_percent_of_average_food_expenditure + healthy_diet_cost_percent_of_average_food_expenditure +
+                   calorie_sufficient_diet_cost_percent_cannot_afford + nutrient_adequate_diet_cost_percent_cannot_afford + healthy_diet_cost_percent_cannot_afford +
+                   calorie_sufficient_diet_cost_number_cannot_afford + nutrient_adequate_diet_cost_number_cannot_afford +
+                   population_with_access_to_improved_sanitation_y +
+                   population_without_access_to_improved_sanitation_y, data = working_food)
 
+vif(fw1)
 
+# We then remove population_without_access_to_improved_sanitation_y
 
+fw2 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ cost_of_calorie_sufficient_diet_2017_usd_per_day + cost_of_nutrient_adequate_diet_2017_usd_per_day +
+            cost_of_healthy_diet_2017_usd_per_day + calorie_sufficient_diet_cost_percent_of_average_food_expenditure +
+            nutrient_adequate_diet_cost_percent_of_average_food_expenditure + healthy_diet_cost_percent_of_average_food_expenditure +
+            calorie_sufficient_diet_cost_percent_cannot_afford + nutrient_adequate_diet_cost_percent_cannot_afford + healthy_diet_cost_percent_cannot_afford +
+            calorie_sufficient_diet_cost_number_cannot_afford + nutrient_adequate_diet_cost_number_cannot_afford +
+            population_with_access_to_improved_sanitation_y, data = working_food)
 
+vif(fw2)
 
+# We then remove healthy_diet_cost_percent_of_average_food_expenditure 
 
+fw3 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ cost_of_calorie_sufficient_diet_2017_usd_per_day + cost_of_nutrient_adequate_diet_2017_usd_per_day +
+            cost_of_healthy_diet_2017_usd_per_day + calorie_sufficient_diet_cost_percent_of_average_food_expenditure +
+            nutrient_adequate_diet_cost_percent_of_average_food_expenditure +
+            calorie_sufficient_diet_cost_percent_cannot_afford + nutrient_adequate_diet_cost_percent_cannot_afford + healthy_diet_cost_percent_cannot_afford +
+            calorie_sufficient_diet_cost_number_cannot_afford + nutrient_adequate_diet_cost_number_cannot_afford +
+            population_with_access_to_improved_sanitation_y, data = working_food)
 
+vif(fw3)
 
+# We then remove nutrient_adequate_diet_cost_percent_cannot_afford 
 
+fw4 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ cost_of_calorie_sufficient_diet_2017_usd_per_day + cost_of_nutrient_adequate_diet_2017_usd_per_day +
+            cost_of_healthy_diet_2017_usd_per_day + calorie_sufficient_diet_cost_percent_of_average_food_expenditure +
+            nutrient_adequate_diet_cost_percent_of_average_food_expenditure +
+            calorie_sufficient_diet_cost_percent_cannot_afford + healthy_diet_cost_percent_cannot_afford +
+            calorie_sufficient_diet_cost_number_cannot_afford + nutrient_adequate_diet_cost_number_cannot_afford +
+            population_with_access_to_improved_sanitation_y, data = working_food)
+
+vif(fw4)
+
+# We then remove calorie_sufficient_diet_cost_percent_of_average_food_expenditure
+
+fw5 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ cost_of_calorie_sufficient_diet_2017_usd_per_day + cost_of_nutrient_adequate_diet_2017_usd_per_day +
+            cost_of_healthy_diet_2017_usd_per_day +
+            nutrient_adequate_diet_cost_percent_of_average_food_expenditure +
+            calorie_sufficient_diet_cost_percent_cannot_afford + healthy_diet_cost_percent_cannot_afford +
+            calorie_sufficient_diet_cost_number_cannot_afford + nutrient_adequate_diet_cost_number_cannot_afford +
+            population_with_access_to_improved_sanitation_y, data = working_food)
+
+vif(fw5)
+
+# We now have all the values under five, so we can say all these variables deserve to be in the model.
+
+# Now we will ues the step function to find significant variables.
+
+step_fw5 <- step(fw5)
+summary(step_fw5)
+plot(step_fw5)
