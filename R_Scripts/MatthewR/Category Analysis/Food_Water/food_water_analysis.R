@@ -28,6 +28,17 @@ missing_table
 # write.csv(missing_table, file = "f_w_missing.csv", row.names = TRUE)
 
 
+# We now want to do imputation
+
+set.seed(100)
+food_water_imputation <- mice(data = clean_food_water, m = 5, method = c("cart"), maxit = 100)
+
+food_water_imputation$loggedEvents
+
+
+
+
+
 
 
 
