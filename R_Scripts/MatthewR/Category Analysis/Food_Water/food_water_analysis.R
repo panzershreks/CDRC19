@@ -60,11 +60,15 @@ miss_var_summary(working_food)
 #numeric_variables <- working_food[]
 
 Mcor <- working_food[,2:16]
-view(Mcor)
 
+f_w_cor_matrix <- vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Correlation Matrix")
 
 vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
   ggtitle("Correlation Matrix")
+
+#ggsave(f_w_cor_matrix, file="f_w_cor_matrix.png")
+# screenshotted it as it didn't work on the output.
 
 cor_data_frame <- round(cor(Mcor),2)
 # write.csv(cor_data_frame,"food_wat_correlation.csv", row.names = TRUE)
