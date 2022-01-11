@@ -43,6 +43,7 @@ disease_5 <- complete(disease_imputation, 5)
 # we will from now on work with only the first imputed version of events.
 
 working_disease <- disease_1
+write.csv(working_disease, file = "working_disease.csv", row.names = TRUE)
 
 # There is still some missing data -
 
@@ -52,7 +53,6 @@ nrow(working_disease)
 working_disease <- na.omit(working_disease)
 miss_var_summary(working_disease)
 nrow(working_disease)
-
 
 
 # now do correlation between values

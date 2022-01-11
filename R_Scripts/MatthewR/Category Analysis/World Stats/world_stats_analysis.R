@@ -39,7 +39,7 @@ summary_w_missing <- ggplot(data = clean_world_stats, aes(x = life_satisfaction_
   ggtitle("Life Satisfaction Indicator and Covid Death Rates") + labs(x="Life Satisfaction Indicator", y = "Total Confirmed Deaths due to Covid-19 per Million People") + 
   geom_smooth(method = "lm", se = FALSE) + theme(text = element_text(size=12))
 
-ggsave(summary_w_missing, file="w_s_summary_stat_w_missing.png")
+# ggsave(summary_w_missing, file="w_s_summary_stat_w_missing.png")
 
 # We now do the MICE imputation.
 # We use set seed to give us the same result when we run our code again.
@@ -48,11 +48,15 @@ ggsave(summary_w_missing, file="w_s_summary_stat_w_missing.png")
 set.seed(100)
 world_stats_imputation <- mice(data = clean_world_stats, m = 5, method = c("cart"), maxit = 100)
 
+
+
 world_stats_1 <- complete(world_stats_imputation, 1)
 world_stats_2 <- complete(world_stats_imputation, 2)
 world_stats_3 <- complete(world_stats_imputation, 3)
 world_stats_4 <- complete(world_stats_imputation, 4)
 world_stats_5 <- complete(world_stats_imputation, 5)
+
+# write.csv(world_stats_1, file = "world_stats_1.csv", row.names = TRUE)
 
 world_stats_model <- with(world_stats_imputation, lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ life_satisfaction_in_cantril_ladder_world_happiness_report_2019))
 

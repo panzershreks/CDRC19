@@ -45,11 +45,13 @@ food_water_4 <- complete(food_water_imputation, 4)
 food_water_5 <- complete(food_water_imputation, 5)
 
 # now to proceed we will remove columns but we will from now on work with only
-# food_water_1 data.
+# food_water_1 data - 6,7,8 are collinear columns.
 
 working_food <- food_water_1
 
 working_food <- subset(working_food, select = -c(6,7,8))
+
+# write.csv(working_food,"working_food.csv", row.names = TRUE)
 
 # There is now no missing data:
 
@@ -153,3 +155,4 @@ vif(fw5)
 step_fw5 <- step(fw5)
 summary(step_fw5)
 plot(step_fw5)
+
