@@ -175,3 +175,19 @@ xyplot(temp_healthcare_d1, total_confirmed_deaths_due_to_covid_19_per_million_pe
 
 # We want to see is that the shape of the magenta points (imputed) matches the shape of the blue points (observed)
 
+# Density plot
+densityplot(temp_healthcare_d1)
+
+#Strip plot (returns empty plots)
+stripplot(temp_healthcare_d1, pch = 20, cex = 1.2)
+
+# Compute correlation 
+corr_data <- completed_healthcare_d1[,2:31]
+
+healthcare_corr <- vis_cor(corr_data) + theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Correlation Matrix")
+
+healthcare_corr_df <- round(cor(corr_data),2)
+
+write.csv(healthcare_corr_df,"healthcare_correlation_df.csv", row.names = TRUE)
+
