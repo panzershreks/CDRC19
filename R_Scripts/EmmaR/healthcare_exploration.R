@@ -2,8 +2,8 @@ library(readr)
 library(mice)
 library(VIM)
 library(janitor)
+library(car)
 
-install.packages('car')
 # Import data 
 
 clean_healthcare <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_healthcare.csv")
