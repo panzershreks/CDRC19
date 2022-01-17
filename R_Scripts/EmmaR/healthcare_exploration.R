@@ -3,6 +3,7 @@ library(mice)
 library(VIM)
 library(janitor)
 
+install.packages('car')
 # Import data 
 
 clean_healthcare <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_healthcare.csv")
@@ -189,5 +190,41 @@ healthcare_corr <- vis_cor(corr_data) + theme(axis.text.x = element_text(angle =
 
 healthcare_corr_df <- round(cor(corr_data),2)
 
-write.csv(healthcare_corr_df,"healthcare_correlation_df.csv", row.names = TRUE)
+#write.csv(healthcare_corr_df,"healthcare_correlation_df.csv", row.names = TRUE)
 
+# Linear models 
+
+all_healthcare_model <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+  share_of_people_who_disagree_vaccines_are_important_for_children_to_have+
+  share_of_people_who_agree_vaccines_are_safe+
+  share_of_people_who_disagree_vaccines_are_safe+
+  share_of_people_who_agree_vaccines_are_effective+
+  share_of_people_who_disagree_vaccines_are_effective+
+  share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+  all_causes_disability_adjusted_life_years_who_2015+
+  share_of_population_covered_by_health_insurance_ilo_2014+
+  current_health_expenditure_per_capita_ppp_current_international+
+  health_expenditure_per_capita_ppp_world_bank_2016+
+  haq_index_ihme_2017+
+  healthy_life_expectancy_ihme+
+  life_expectancy_ihme+
+  years_lived_with_disability_ihme+
+  out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+  public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+  total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+  bcg_immunization_coverage_among_1_year_olds_who_2017+
+  hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+  dtp3_immunization_coverage_among_1_year_olds_who_2017+
+  polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+  measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+  number_of_confirmed_tetanus_cases_who_2017+
+  number_confirmed_polio_cases_who_2017+
+  number_of_confirmed_pertussis_cases_who_2017+
+  number_of_confirmed_measles_cases_who_2017+
+  number_of_confirmed_diphtheria_cases_who_2017+
+  estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+  estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, data = completed_healthcare_d1)
+
+summary(all_healthcare_model)
+
+vif(all_healthcare_model)
