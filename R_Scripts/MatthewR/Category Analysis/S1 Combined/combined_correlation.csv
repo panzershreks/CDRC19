@@ -1,0 +1,7 @@
+"","total_confirmed_deaths_due_to_covid_19_per_million_people.x","cardiovascular_diseases_ihme_2017","kidney_disease_ihme_2017","prevalence_of_obesity_male_who_2019","healthy_diet_cost_percent_cannot_afford","life_satisfaction_in_cantril_ladder_world_happiness_report_2019"
+"total_confirmed_deaths_due_to_covid_19_per_million_people.x",1,-0.3,-0.02,0.39,-0.37,0.35
+"cardiovascular_diseases_ihme_2017",-0.3,1,0.29,-0.15,0.31,-0.44
+"kidney_disease_ihme_2017",-0.02,0.29,1,0.14,0.07,-0.24
+"prevalence_of_obesity_male_who_2019",0.39,-0.15,0.14,1,-0.64,0.51
+"healthy_diet_cost_percent_cannot_afford",-0.37,0.31,0.07,-0.64,1,-0.56
+"life_satisfaction_in_cantril_ladder_world_happiness_report_2019",0.35,-0.44,-0.24,0.51,-0.56,1
