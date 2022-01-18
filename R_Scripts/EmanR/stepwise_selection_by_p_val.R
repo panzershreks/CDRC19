@@ -34,4 +34,18 @@ backwards_step <- function(data, response_var, p_val){
 
 # Example with dummy data
 eg_df <- airquality
-backwards_step(eg_df, "Solar.R", 0.15)
+backwards_step(eg_df, "Solar.R", 0.05)
+
+#issues with factor variables
+
+fac_df <- eg_df
+fac_df$Month <- factor(fac_df$Month)
+levels(fac_df$Month) <- c("May", "Jun", "Jul", "Aug", "Sep")
+
+backwards_step(fac_df, "Solar.R", 0.15)
+lm(Solar.R~., fac_df)
+
+drop1(lm(Solar.R~., fac_df))
+
+
+
