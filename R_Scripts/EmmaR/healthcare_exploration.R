@@ -228,3 +228,13 @@ all_healthcare_model <- lm(total_confirmed_deaths_due_to_covid_19_per_million_pe
 summary(all_healthcare_model)
 
 vif(all_healthcare_model)
+
+# Create an empty list 
+mod_summaries <- list()
+
+# for loop to run multiple linear regression models 
+
+
+
+
+
