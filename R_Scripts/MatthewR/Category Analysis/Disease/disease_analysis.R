@@ -31,9 +31,6 @@ disease_imputation <- mice(data = clean_disease, m = 5, method = c("cart"), maxi
 
 disease_imputation$loggedEvents
 
-# We have that there are a few constant/collinear columns, so we will now deal with them
-# by removing them.
-
 disease_1 <- complete(disease_imputation, 1)
 disease_2 <- complete(disease_imputation, 2)
 disease_3 <- complete(disease_imputation, 3)

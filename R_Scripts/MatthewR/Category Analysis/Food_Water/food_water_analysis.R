@@ -33,6 +33,8 @@ missing_table
 set.seed(100)
 food_water_imputation <- mice(data = clean_food_water, m = 5, method = c("cart"), maxit = 100)
 
+
+
 food_water_imputation$loggedEvents
 
 # We have that there are a few constant/collinear columns, so we will now deal with them
@@ -151,7 +153,7 @@ vif(fw5)
 # We now have all the values under five, so we can say all these variables deserve to be in the model.
 
 # Now we will ues the step function to find significant variables.
-
+?step
 step_fw5 <- step(fw5)
 summary(step_fw5)
 plot(step_fw5)
