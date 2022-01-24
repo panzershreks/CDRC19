@@ -77,8 +77,16 @@ cor_data_frame <- round(cor(Mcor),2)
 # write.csv(cor_data_frame,"food_wat_correlation.csv", row.names = TRUE)
 
 
-#
+# We will now use VIF and do the imputation.
 
+full_model_im_1 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ cost_of_calorie_sufficient_diet_2017_usd_per_day + cost_of_nutrient_adequate_diet_2017_usd_per_day +
+                   cost_of_healthy_diet_2017_usd_per_day + calorie_sufficient_diet_cost_percent_of_average_food_expenditure +
+                   nutrient_adequate_diet_cost_percent_of_average_food_expenditure + healthy_diet_cost_percent_of_average_food_expenditure +
+                   calorie_sufficient_diet_cost_percent_cannot_afford + nutrient_adequate_diet_cost_percent_cannot_afford + healthy_diet_cost_percent_cannot_afford +
+                   calorie_sufficient_diet_cost_number_cannot_afford + nutrient_adequate_diet_cost_number_cannot_afford +
+                   healthy_diet_cost_number_cannot_afford + population_with_access_to_improved_sanitation_y +
+                   population_without_access_to_improved_sanitation_y, data = working_food_1)
+vif(full_model_im_1)
 
 
 
