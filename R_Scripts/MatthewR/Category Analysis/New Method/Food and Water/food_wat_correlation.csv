@@ -1,0 +1,16 @@
+"","total_confirmed_deaths_due_to_covid_19_per_million_people","cost_of_calorie_sufficient_diet_2017_usd_per_day","cost_of_nutrient_adequate_diet_2017_usd_per_day","cost_of_healthy_diet_2017_usd_per_day","calorie_sufficient_diet_cost_percent_of_average_food_expenditure","nutrient_adequate_diet_cost_percent_of_average_food_expenditure","healthy_diet_cost_percent_of_average_food_expenditure","calorie_sufficient_diet_cost_percent_cannot_afford","nutrient_adequate_diet_cost_percent_cannot_afford","healthy_diet_cost_percent_cannot_afford","calorie_sufficient_diet_cost_number_cannot_afford","nutrient_adequate_diet_cost_number_cannot_afford","healthy_diet_cost_number_cannot_afford","population_with_access_to_improved_sanitation_y","population_without_access_to_improved_sanitation_y"
+"total_confirmed_deaths_due_to_covid_19_per_million_people",1,-0.07,0.02,-0.19,-0.23,-0.25,-0.28,-0.22,-0.36,-0.41,-0.1,-0.08,-0.09,0.05,-0.08
+"cost_of_calorie_sufficient_diet_2017_usd_per_day",-0.07,1,0.46,0.5,0.4,0.19,0.17,0.34,0.28,0.28,0.21,0.05,0.05,0.05,0.03
+"cost_of_nutrient_adequate_diet_2017_usd_per_day",0.02,0.46,1,0.57,0.04,0.15,-0.02,-0.02,0.07,-0.03,-0.04,-0.07,-0.07,-0.05,-0.08
+"cost_of_healthy_diet_2017_usd_per_day",-0.19,0.5,0.57,1,0.33,0.32,0.33,0.13,0.24,0.31,-0.01,-0.02,0,-0.02,-0.03
+"calorie_sufficient_diet_cost_percent_of_average_food_expenditure",-0.23,0.4,0.04,0.33,1,0.87,0.89,0.68,0.69,0.66,0.18,0.08,0.07,-0.01,0.07
+"nutrient_adequate_diet_cost_percent_of_average_food_expenditure",-0.25,0.19,0.15,0.32,0.87,1,0.94,0.52,0.69,0.63,0.12,0.07,0.05,-0.03,0.06
+"healthy_diet_cost_percent_of_average_food_expenditure",-0.28,0.17,-0.02,0.33,0.89,0.94,1,0.52,0.66,0.65,0.11,0.08,0.06,-0.02,0.07
+"calorie_sufficient_diet_cost_percent_cannot_afford",-0.22,0.34,-0.02,0.13,0.68,0.52,0.52,1,0.72,0.61,0.48,0.08,0.03,-0.08,0.02
+"nutrient_adequate_diet_cost_percent_cannot_afford",-0.36,0.28,0.07,0.24,0.69,0.69,0.66,0.72,1,0.94,0.36,0.2,0.15,-0.07,0.12
+"healthy_diet_cost_percent_cannot_afford",-0.41,0.28,-0.03,0.31,0.66,0.63,0.65,0.61,0.94,1,0.32,0.24,0.21,-0.03,0.16
+"calorie_sufficient_diet_cost_number_cannot_afford",-0.1,0.21,-0.04,-0.01,0.18,0.12,0.11,0.48,0.36,0.32,1,0.33,0.26,0.06,0.24
+"nutrient_adequate_diet_cost_number_cannot_afford",-0.08,0.05,-0.07,-0.02,0.08,0.07,0.08,0.08,0.2,0.24,0.33,1,0.98,0.47,0.94
+"healthy_diet_cost_number_cannot_afford",-0.09,0.05,-0.07,0,0.07,0.05,0.06,0.03,0.15,0.21,0.26,0.98,1,0.61,0.98
+"population_with_access_to_improved_sanitation_y",0.05,0.05,-0.05,-0.02,-0.01,-0.03,-0.02,-0.08,-0.07,-0.03,0.06,0.47,0.61,1,0.69
+"population_without_access_to_improved_sanitation_y",-0.08,0.03,-0.08,-0.03,0.07,0.06,0.07,0.02,0.12,0.16,0.24,0.94,0.98,0.69,1

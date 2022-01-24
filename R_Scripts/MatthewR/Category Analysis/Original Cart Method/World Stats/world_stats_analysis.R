@@ -48,7 +48,7 @@ summary_w_missing <- ggplot(data = clean_world_stats, aes(x = life_satisfaction_
 set.seed(100)
 world_stats_imputation <- mice(data = clean_world_stats, m = 5, method = c("cart"), maxit = 100)
 
-
+world_stats_imputation$loggedEvents
 
 world_stats_1 <- complete(world_stats_imputation, 1)
 world_stats_2 <- complete(world_stats_imputation, 2)

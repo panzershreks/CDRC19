@@ -33,7 +33,7 @@ missing_table
 set.seed(100)
 food_water_imputation <- mice(data = clean_food_water, m = 5, method = c("cart"), maxit = 100)
 
-
+?mice
 
 food_water_imputation$loggedEvents
 
