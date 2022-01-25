@@ -87,6 +87,28 @@ disease_5 <- subset(disease_5, select = -1)
 
 # now want to combine them all and then select only sig. ones.
 
+holding_1 <- merge(disease_1,food_1,by = "entity")
+big_1 <- merge(holding_1, world_stats_1, by = "entity")
+write.csv(big_1, file = "big_1.csv", row.names = TRUE)
+
+holding_2 <- merge(disease_2,food_2,by = "entity")
+big_2 <- merge(holding_2, world_stats_2, by = "entity")
+write.csv(big_2, file = "big_2.csv", row.names = TRUE)
+
+holding_3 <- merge(disease_3,food_3,by = "entity")
+big_3 <- merge(holding_3, world_stats_3, by = "entity")
+write.csv(big_3, file = "big_3.csv", row.names = TRUE)
+
+holding_4 <- merge(disease_4,food_4,by = "entity")
+big_4 <- merge(holding_4, world_stats_4, by = "entity")
+write.csv(big_4, file = "big_4.csv", row.names = TRUE)
+
+holding_5 <- merge(disease_5,food_5,by = "entity")
+big_5 <- merge(holding_5, world_stats_5, by = "entity")
+write.csv(big_5, file = "big_5.csv", row.names = TRUE)
+
+
+# Now we want to keep only the columns which are significant.
 
 
 
