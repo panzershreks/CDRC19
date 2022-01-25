@@ -61,6 +61,13 @@ world_stats_3 <- complete(world_stats_imputation, 3)
 world_stats_4 <- complete(world_stats_imputation, 4)
 world_stats_5 <- complete(world_stats_imputation, 5)
 
+write.csv(world_stats_1, file = "world_stats_1.csv", row.names = TRUE)
+write.csv(world_stats_2, file = "world_stats_2.csv", row.names = TRUE)
+write.csv(world_stats_3, file = "world_stats_3.csv", row.names = TRUE)
+write.csv(world_stats_4, file = "world_stats_4.csv", row.names = TRUE)
+write.csv(world_stats_5, file = "world_stats_5.csv", row.names = TRUE)
+
+
 # We can now do something slightly different to the other data categories as we only have one significant variable.
 # We can pool together all the results as follows:
 

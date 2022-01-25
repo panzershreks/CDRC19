@@ -58,6 +58,16 @@ disease_4 <- complete(disease_imputation, 4)
 disease_5 <- complete(disease_imputation, 5)
 
 
+write.csv(disease_1,"disease_1.csv", row.names = TRUE)
+write.csv(disease_2,"disease_2.csv", row.names = TRUE)
+write.csv(disease_3,"disease_3.csv", row.names = TRUE)
+write.csv(disease_4,"disease_4.csv", row.names = TRUE)
+write.csv(disease_5,"disease_5.csv", row.names = TRUE)
+
+
+
+
+
 # We will now do model selection using the VIF function.
 #write.csv(disease_1,"disease_for_rows.csv", row.names = TRUE)
 
