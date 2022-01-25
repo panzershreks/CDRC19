@@ -111,8 +111,25 @@ write.csv(big_5, file = "big_5.csv", row.names = TRUE)
 # Now we want to keep only the columns which are significant.
 
 
+# Life Satisfaction = 47
+# healthy diet cost percent cannot afford  = 40
+# crude_diabetes_prevalence_male = 5
+# cardiovascular_diseases_ihme_2017 = 14
+# meningitis_ihme_2017 = 22
+# prevalence_of_obesity_male_who_2019 = 26
 
 
+significant_variables_1 <- subset(big_1, select = c(1,2, 5,14,22,26,40,47))
+significant_variables_2 <- subset(big_2, select = c(1,2, 5,14,22,26,40,47))
+significant_variables_3 <- subset(big_3, select = c(1,2, 5,14,22,26,40,47))
+significant_variables_4 <- subset(big_4, select = c(1,2, 5,14,22,26,40,47))
+significant_variables_5 <- subset(big_5, select = c(1,2, 5,14,22,26,40,47))
+
+write.csv(significant_variables_1, file = "significant_variables_1.csv", row.names = TRUE)
+write.csv(significant_variables_2, file = "significant_variables_2.csv", row.names = TRUE)
+write.csv(significant_variables_3, file = "significant_variables_3.csv", row.names = TRUE)
+write.csv(significant_variables_4, file = "significant_variables_4.csv", row.names = TRUE)
+write.csv(significant_variables_5, file = "significant_variables_5.csv", row.names = TRUE)
 
 
 
