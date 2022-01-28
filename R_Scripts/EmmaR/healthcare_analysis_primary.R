@@ -28,12 +28,6 @@ for (i in 1:78){
   } 
 }
 
-for (i in 1:78){
-  if (missing_table$pct_miss[i] <= 50){
-    print(missing_table$variable[i]) 
-  } 
-}
-
 
 # Dropping data below
 # Following have more than 50% of missing data (and another reason for dropping data) 
@@ -64,7 +58,7 @@ drop <- c("percentage_of_persons_without_health_insurance_percent", #including s
           "old_age",
           "how_much_we_think_we_spend_on_health_expenditure_ipsos_2016",
           "how_much_we_actually_spend_on_health_expenditure_ipsos_2016",
-          "hospital_beds_number_oecd", # including hospital_beds_per_1_000_population_oecd) 
+          "hospital_beds_number_oecd") # including hospital_beds_per_1_000_population_oecd
 
 
 ### The following data has over 50% of missing data but has been decided to keep ###
@@ -87,6 +81,34 @@ drop <- c("percentage_of_persons_without_health_insurance_percent", #including s
 # psychiatrists_per_1_000_population_oecd
 # psychiatric_care_beds_per_1_000_population_oecd
 # hospital_beds_per_1_000_population_oecd
+
+
+# Create 'healthcare_d1' without variables with > 50% missing data + justified reason for removing
+healthcare_d1 <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
+
+# Imputation of missing data in healthcare_d1
+
+# MICE with PMM method 
+
+set.seed(100)
+temp_healthcare_d1 <- mice(data = healthcare_d1, m = 5, method = c("pmm"), maxit=100)
+summary(temp_healthcare_d1)
+
+completed_healthcare_d1 <- complete(temp_healthcare_d1,1)
+
+# Plot with imputed data
+densityplot(temp_healthcare_d1)
+
+# Compute correlation 
+
+# Compute correlation 
+
+corr_data <- completed_healthcare_d1[,2:51]  
+
+healthcare_corr <- vis_cor(corr_data) + theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Correlation Matrix")
+
+healthcare_corr_df <- round(cor(corr_data),2)
 
 
 
