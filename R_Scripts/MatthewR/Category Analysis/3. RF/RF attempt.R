@@ -24,15 +24,26 @@ Height <- c(1:99,NA)
 df <- data.frame(Name, Age, Height)
 missForest(df,ntree = 100)
 
-clean_food_water <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_food_water.csv")
-clean_food_water <- clean_names(clean_food_water)
-clean_food_water <- subset(clean_food_water, select = -c(1,2))
-
-set.seed(100)
-missForest(clean_food_water, ntree = 100,xtrue = TRUE)
 
 
+# Now we are going to try Random Forests for the World Stats Data
 
-?missForest
+clean_disease <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_disease.csv")
+clean_disease <- clean_names(clean_disease)
+clean_disease <- subset(clean_disease, select = -c(1,2))
+
+# no_rows_missing <- clean_disease[-c(56,126), ] 
+
+missForest(as.matrix(clean_disease))
+
+
+
+
+
+
+
+
+
+
 
 
