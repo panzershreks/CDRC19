@@ -27,6 +27,19 @@ food_data <- food_rf$ximp
 food_data <- as.data.frame.matrix(food_data)
 # write.csv(food_data,"food_rf.csv", row.names = TRUE)
 
+Mcor <- food_data[,1:18]
+f_w_cor_matrix <- vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Correlation Matrix")
+
+vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Correlation Matrix")
+
+
+
+
+
+
+
 full_model_1 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
                      cost_of_calorie_sufficient_diet_2017_usd_per_day + 
                      cost_of_nutrient_adequate_diet_2017_usd_per_day +  
