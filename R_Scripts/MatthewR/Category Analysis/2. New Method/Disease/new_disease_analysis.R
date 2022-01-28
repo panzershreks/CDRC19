@@ -65,9 +65,6 @@ write.csv(disease_4,"disease_4.csv", row.names = TRUE)
 write.csv(disease_5,"disease_5.csv", row.names = TRUE)
 
 
-
-
-
 # We will now do model selection using the VIF function.
 #write.csv(disease_1,"disease_for_rows.csv", row.names = TRUE)
 
