@@ -28,7 +28,6 @@ for (i in 1:78){
   } 
 }
 
-
 # Dropping data below
 # Following have more than 50% of missing data (and another reason for dropping data) 
 
@@ -83,15 +82,19 @@ drop <- c("percentage_of_persons_without_health_insurance_percent", #including s
 # hospital_beds_per_1_000_population_oecd
 
 
-
 # Create 'healthcare_d1' without variables with > 50% missing data + justified reason for removing
-healthcare_primary <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
+healthcare_mice <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
 
 # Imputation of missing data in healthcare_d1 using MICE with CART method
-
 set.seed(100)
 
-temp_healthcare_primary <- mice(data = healthcare_primary, m = 5, method = c("cart"), maxit=100)
+healthcare_mice <- subset(healthcare_mice, select = -1)
+
+healthcare_mice_temp <- mice(data = healthcare_mice, m = 5, maxit = 100, method = "midastouch")
+
+help(mice)
+
+colnames(healthcare_mice)
 
 summary(temp_healthcare_primary)
 
@@ -148,6 +151,7 @@ healthcare_corr_df <- round(cor(corr_data),2)
 # Remove any variables with corr = 1
 
 # VIF 
+
 
 
 
