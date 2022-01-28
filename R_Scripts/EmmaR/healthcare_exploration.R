@@ -5,11 +5,9 @@ library(janitor)
 library(car)
 library(MuMIn)
 library(readr)
-
-install.packages('naniar')
-load.package(naniar)
+library(ggplot2)
 library(naniar)
-
+library(visdat)
 
 
 # Import data 
@@ -23,6 +21,7 @@ summary(clean_healthcare)
 
 missing_table <- miss_var_summary(clean_healthcare, sort_miss = TRUE)
 missing_table <- data.frame(missing_table)
+missing_table
 
 for (i in 1:78){
   if (missing_table$pct_miss[i] > 50){
@@ -30,7 +29,7 @@ for (i in 1:78){
   } 
 }
 
-                                                           
+# Below is 'dropping' all the data that is missing                                                            
 drop <- c("percentage_of_persons_without_health_insurance_percent",
           "standard_deviation_of_life_satisfaction",
           "public_expenditure_on_health_tanzi_schuktnecht_2000",
@@ -747,4 +746,7 @@ full_healthcare_model2 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_
      hospital_beds_number_oecd+
      public_expenditure_on_health_per_capita_in_developing_countries_ppp_world_bank_wdi_2017,
      data = completed_healthcare_d2)
+vif(full_healthcare_model2)
+
+
 
