@@ -95,10 +95,33 @@ temp_healthcare_primary <- mice(data = healthcare_primary, m = 5, method = c("ca
 
 summary(temp_healthcare_primary)
 
-completed_healthcare_primary <- complete(temp_healthcare_primary,1)
+completed_healthcare_primary1 <- complete(temp_healthcare_primary,1)
+completed_healthcare_primary2 <- complete(temp_healthcare_primary,2)
+completed_healthcare_primary3 <- complete(temp_healthcare_primary,3)
+completed_healthcare_primary4 <- complete(temp_healthcare_primary,4)
+completed_healthcare_primary5 <- complete(temp_healthcare_primary,5)
 
-missing_table2 <- miss_var_summary(completed_healthcare_primary, sort_miss = TRUE)
+missing_table1 <- miss_var_summary(completed_healthcare_primary1, sort_miss = TRUE)
+missing_table1 <- data.frame(missing_table1)
+missing_table1
+
+missing_table2 <- miss_var_summary(completed_healthcare_primary2, sort_miss = TRUE)
 missing_table2 <- data.frame(missing_table2)
+
+missing_table3 <- miss_var_summary(completed_healthcare_primary3, sort_miss = TRUE)
+missing_table3 <- data.frame(missing_table3)
+missing_table3
+
+missing_table4 <- miss_var_summary(completed_healthcare_primary4, sort_miss = TRUE)
+missing_table4 <- data.frame(missing_table4)
+missing_table4
+
+missing_table5 <- miss_var_summary(completed_healthcare_primary5, sort_miss = TRUE)
+missing_table5 <- data.frame(missing_table5)
+missing_table5
+
+temp_healthcare_primary
+
 
 temp_healthcare_primary2 <- mice(data = completed_healthcare_primary, m = 5, method = c("cart"), maxit=100)
 
@@ -108,7 +131,7 @@ missing_table3 <- miss_var_summary(completed_healthcare_primary2, sort_miss = TR
 missing_table3 <- data.frame(missing_table3)
 missing_table3
 
-
+completed_healthcare_primary2
 
 # Plot with imputed data
 densityplot(temp_healthcare_primary)
