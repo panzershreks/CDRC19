@@ -21,11 +21,15 @@ clean_world_stats <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_wor
 clean_world_stats <- clean_names(clean_world_stats)
 clean_world_stats <- subset(clean_world_stats, select = -c(1,2))
 
-take_rows_away <- clean_world_stats[-c(49,55,68,89,106,119,125,131,143,144,145,152,157,172,174,178,187,194), ] 
+# Rows with fully NA values:
+# take_rows_away <- clean_world_stats[-c(49,55,68,89,106,119,125,131,143,144,145,152,157,172,174,178,187,194), ] 
+
 
 world_stats_rf <- missForest(as.matrix(clean_world_stats))
 
 world_stats_data <- world_stats_rf$ximp
+
+
 
 
 
