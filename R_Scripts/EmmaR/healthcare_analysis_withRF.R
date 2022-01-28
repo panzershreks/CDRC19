@@ -118,3 +118,530 @@ View(healthcare_corr)
 healthcare_rf_completed <- subset(healthcare_rf_completed, select = -c(32, 33))
 
 # VIF 
+
+healthcare_rf_csv <- write.csv(healthcare_rf_completed,"healthcare_rf_csv", row.names = TRUE)
+
+healthcare_rf_model_full <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                              share_of_people_who_disagree_vaccines_are_important_for_children_to_have+
+                              share_of_people_who_agree_vaccines_are_safe+
+                              share_of_people_who_disagree_vaccines_are_safe+
+                              share_of_people_who_agree_vaccines_are_effective+
+                              share_of_people_who_disagree_vaccines_are_effective+
+                              share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                              all_causes_disability_adjusted_life_years_who_2015+
+                              share_of_population_covered_by_health_insurance_ilo_2014+
+                              current_health_expenditure_per_capita_ppp_current_international+
+                              health_expenditure_per_capita_ppp_world_bank_2016+
+                              haq_index_ihme_2017+
+                              beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                              beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                              beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                              acute_care_beds_per_1_000_population_oecd+
+                              dentists_per_100_000_population_oecd+
+                              for_profit_privately_owned_hospitals_per_million_population_oecd+
+                              general_hospitals_per_million_population_oecd+
+                              hospitals_per_million_population_oecd+
+                              long_term_care_beds_per_1_000_population_oecd+
+                              long_term_care_beds_per_1_000_population_aged_65_oecd+
+                              midwives_per_1_000_live_births_oecd+
+                              not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                              nurses_per_1_000_population_oecd+
+                              physicians_per_1_000_population_oecd+
+                              psychiatric_care_beds_per_1_000_population_oecd+
+                              psychiatrists_per_1_000_population_oecd+
+                              publicly_owned_hospitals_per_million_population_oecd+
+                              surgical_specialists_per_1_000_population_oecd+
+                              hospital_beds_per_1_000_population_oecd+
+                              out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                              public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                              total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                              bcg_immunization_coverage_among_1_year_olds_who_2017+
+                              hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                              dtp3_immunization_coverage_among_1_year_olds_who_2017+
+                              polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+                              measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                              number_of_confirmed_tetanus_cases_who_2017+
+                              number_confirmed_polio_cases_who_2017+
+                              number_of_confirmed_pertussis_cases_who_2017+
+                              number_of_confirmed_measles_cases_who_2017+
+                              number_of_confirmed_diphtheria_cases_who_2017+
+                              estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                              estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                            data = healthcare_rf_completed)
+
+vif(healthcare_rf_model_full)
+
+#create vector of VIF values
+vif_values_full <- vif(healthcare_rf_model_full)
+
+max(vif_values_full)
+
+# current_health_expenditure_per_capita_ppp_current_international removed
+
+healthcare_rf_model1 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                                 share_of_people_who_disagree_vaccines_are_important_for_children_to_have+
+                                 share_of_people_who_agree_vaccines_are_safe+
+                                 share_of_people_who_disagree_vaccines_are_safe+
+                                 share_of_people_who_agree_vaccines_are_effective+
+                                 share_of_people_who_disagree_vaccines_are_effective+
+                                 share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                                 all_causes_disability_adjusted_life_years_who_2015+
+                                 share_of_population_covered_by_health_insurance_ilo_2014+
+                                 health_expenditure_per_capita_ppp_world_bank_2016+
+                                 haq_index_ihme_2017+
+                                 beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                                 beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                                 beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                                 acute_care_beds_per_1_000_population_oecd+
+                                 dentists_per_100_000_population_oecd+
+                                 for_profit_privately_owned_hospitals_per_million_population_oecd+
+                                 general_hospitals_per_million_population_oecd+
+                                 hospitals_per_million_population_oecd+
+                                 long_term_care_beds_per_1_000_population_oecd+
+                                 long_term_care_beds_per_1_000_population_aged_65_oecd+
+                                 midwives_per_1_000_live_births_oecd+
+                                 not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                                 nurses_per_1_000_population_oecd+
+                                 physicians_per_1_000_population_oecd+
+                                 psychiatric_care_beds_per_1_000_population_oecd+
+                                 psychiatrists_per_1_000_population_oecd+
+                                 publicly_owned_hospitals_per_million_population_oecd+
+                                 surgical_specialists_per_1_000_population_oecd+
+                                 hospital_beds_per_1_000_population_oecd+
+                                 out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                                 public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                                 total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                                 bcg_immunization_coverage_among_1_year_olds_who_2017+
+                                 hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                                 dtp3_immunization_coverage_among_1_year_olds_who_2017+
+                                 polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+                                 measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                                 number_of_confirmed_tetanus_cases_who_2017+
+                                 number_confirmed_polio_cases_who_2017+
+                                 number_of_confirmed_pertussis_cases_who_2017+
+                                 number_of_confirmed_measles_cases_who_2017+
+                                 number_of_confirmed_diphtheria_cases_who_2017+
+                                 estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                                 estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                               data = healthcare_rf_completed)
+
+vif(healthcare_rf_model1)
+
+#create vector of VIF values
+vif_values1 <- vif(healthcare_rf_model1)
+
+max(vif_values1)
+
+# dtp3_immunization_coverage_among_1_year_olds_who_2017 removed
+
+healthcare_rf_model2 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_important_for_children_to_have+
+                             share_of_people_who_agree_vaccines_are_safe+
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             haq_index_ihme_2017+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model2)
+
+#create vector of VIF values
+vif_values2 <- vif(healthcare_rf_model2)
+
+max(vif_values2)
+
+# long_term_care_beds_per_1_000_population_oecd removed 
+
+healthcare_rf_model3 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_important_for_children_to_have+
+                             share_of_people_who_agree_vaccines_are_safe+
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             haq_index_ihme_2017+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model3)
+
+#create vector of VIF values
+vif_values3 <- vif(healthcare_rf_model3)
+
+max(vif_values3)
+
+# share_of_people_who_agree_vaccines_are_safe removed  
+
+healthcare_rf_model4 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_important_for_children_to_have+
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             haq_index_ihme_2017+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model4)
+
+#create vector of VIF values
+vif_values4 <- vif(healthcare_rf_model4)
+
+max(vif_values4)
+
+# hospitals_per_million_population_oecd removed
+
+healthcare_rf_model5 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_important_for_children_to_have+
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             haq_index_ihme_2017+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model5)
+
+#create vector of VIF values
+vif_values5 <- vif(healthcare_rf_model5)
+
+max(vif_values5)
+
+# share_of_people_who_agree_vaccines_are_important_for_children_to_have removed 
+
+healthcare_rf_model6 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             haq_index_ihme_2017+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             polio_pol3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model6)
+
+#create vector of VIF values
+vif_values6 <- vif(healthcare_rf_model6)
+
+max(vif_values6)
+
+# polio_pol3_immunization_coverage_among_1_year_olds_who_2017 removed
+
+healthcare_rf_model7 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             haq_index_ihme_2017+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_publicly_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model7)
+
+#create vector of VIF values
+vif_values7 <- vif(healthcare_rf_model7)
+
+max(vif_values7)
+
+# beds_in_publicly_owned_hospitals_per_1_000_population_oecd removed
+
+healthcare_rf_model8 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             haq_index_ihme_2017+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model8)
+
+#create vector of VIF values
+vif_values8 <- vif(healthcare_rf_model8)
+
+max(vif_values8)
+
+# haq_index_ihme_2017 removed
+
+healthcare_rf_model9 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                             share_of_people_who_disagree_vaccines_are_safe+
+                             share_of_people_who_agree_vaccines_are_effective+
+                             share_of_people_who_disagree_vaccines_are_effective+
+                             share_of_people_who_agree_vaccines_are_important_for_children_to_have+
+                             all_causes_disability_adjusted_life_years_who_2015+
+                             share_of_population_covered_by_health_insurance_ilo_2014+
+                             health_expenditure_per_capita_ppp_world_bank_2016+
+                             beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+
+                             acute_care_beds_per_1_000_population_oecd+
+                             dentists_per_100_000_population_oecd+
+                             for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             general_hospitals_per_million_population_oecd+
+                             long_term_care_beds_per_1_000_population_aged_65_oecd+
+                             midwives_per_1_000_live_births_oecd+
+                             not_for_profit_privately_owned_hospitals_per_million_population_oecd+
+                             nurses_per_1_000_population_oecd+
+                             physicians_per_1_000_population_oecd+
+                             psychiatric_care_beds_per_1_000_population_oecd+
+                             psychiatrists_per_1_000_population_oecd+
+                             publicly_owned_hospitals_per_million_population_oecd+
+                             surgical_specialists_per_1_000_population_oecd+
+                             hospital_beds_per_1_000_population_oecd+
+                             out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+
+                             public_expenditure_on_health_percent_gdp_owid_extrapolated_series+
+                             total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors+
+                             bcg_immunization_coverage_among_1_year_olds_who_2017+
+                             hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017+
+                             measles_mcv_immunization_coverage_among_1_year_olds_who_2017+
+                             number_of_confirmed_tetanus_cases_who_2017+
+                             number_confirmed_polio_cases_who_2017+
+                             number_of_confirmed_pertussis_cases_who_2017+
+                             number_of_confirmed_measles_cases_who_2017+
+                             number_of_confirmed_diphtheria_cases_who_2017+
+                             estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017+
+                             estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017, 
+                           data = healthcare_rf_completed)
+
+vif(healthcare_rf_model9)
+
+#create vector of VIF values
+vif_values9 <- vif(healthcare_rf_model9)
+
+max(vif_values9)
+
+# hospital_beds_per_1_000_population_oecd removed 
