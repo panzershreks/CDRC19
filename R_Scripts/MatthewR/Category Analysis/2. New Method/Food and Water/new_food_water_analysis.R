@@ -47,15 +47,6 @@ food_water_3 <- complete(food_water_imputation, 3)
 food_water_4 <- complete(food_water_imputation, 4)
 food_water_5 <- complete(food_water_imputation, 5)
 
-write.csv(food_water_1,"food_water_1.csv", row.names = TRUE)
-write.csv(food_water_2,"food_water_2.csv", row.names = TRUE)
-write.csv(food_water_3,"food_water_3.csv", row.names = TRUE)
-write.csv(food_water_4,"food_water_4.csv", row.names = TRUE)
-write.csv(food_water_5,"food_water_5.csv", row.names = TRUE)
-
-
-
-
 
 # now to proceed we will remove columns but we will from now on work with only
 # food_water_1 data - 6,7,8 are collinear columns.
@@ -74,6 +65,16 @@ working_food_4 <- subset(working_food_4, select = -c(6,7,8))
 
 working_food_5 <- food_water_5
 working_food_5 <- subset(working_food_5, select = -c(6,7,8))
+
+
+write.csv(working_food_1,"food_water_1.csv", row.names = TRUE)
+write.csv(working_food_2,"food_water_2.csv", row.names = TRUE)
+write.csv(working_food_3,"food_water_3.csv", row.names = TRUE)
+write.csv(working_food_4,"food_water_4.csv", row.names = TRUE)
+write.csv(working_food_5,"food_water_5.csv", row.names = TRUE)
+
+
+
 
 
 
