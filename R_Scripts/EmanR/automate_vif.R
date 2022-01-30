@@ -5,7 +5,7 @@ library(car)
 #' @param resp_var str of response variable
 #' @param expl_var list of str of explanatory variables
 #' @param vif_max num for max VIF allowed (not GVIF)
-#' @return ??
+#' @return list of str of explanatory variables after dropping
 gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
     gvif_max <- vif_max ^ 0.5
     lm_formula <- lm_formula_paster(resp_var, expl_var)
@@ -24,6 +24,7 @@ gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
 #' helper function for gvif_drop
 #' @param resp_var str of response variable
 #' @param expl_var list of str of explanatory variables
+#' @return str of formula using the variables provided
 lm_formula_paster <- function(resp_var, expl_var) {
     form <- paste0(resp_var, "~")
     for (var in head(expl_var, -1)) {
