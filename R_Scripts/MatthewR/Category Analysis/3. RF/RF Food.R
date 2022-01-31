@@ -201,6 +201,8 @@ vif(f_8)
 step_food <- step(f_8)
 summary(step_food)
 
+plot(step_food)
+
 
 
 
