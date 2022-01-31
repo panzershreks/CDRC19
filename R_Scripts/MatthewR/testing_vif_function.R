@@ -16,8 +16,10 @@ library("janitor")
 library(corrplot)
 library('missForest')
 library(readr)
+library(olsrr)
 
-# Function written by Eman:
+
+# or here is Andy's one which should work for non-categorical data, which is good for me:
 
 #' Iteratively drop variables based on GVIF
 #' @param resp_var str of response variable
@@ -28,28 +30,14 @@ gvif_drop <- function(resp_var, expl_var, data, vif_max=5) {
   gvif_max <- vif_max ^ 0.5
   lm_formula <- lm_formula_paster(resp_var, expl_var)
   model <- lm(lm_formula, data)
-  vif_mod <- vif(model)
-  while (max(vif_mod[,3]) > gvif_max) {
-    expl_var <- expl_var[-(which.max(vif_mod[,3]))]
+  vif_mod <- ols_vif_tol(model)
+  while (max(vif_mod$VIF) > gvif_max) {
+    expl_var <- expl_var[-(which.max(vif_mod$VIF))]
     lm_formula <- lm_formula_paster(resp_var, expl_var)
     model <- lm(lm_formula, data)
-    vif_mod <- vif(model)
+    vif_mod <- ols_vif_tol(model)
   }
   return (expl_var)
-}
-
-#' create a lm formula from list of variables
-#' helper function for gvif_drop
-#' @param resp_var str of response variable
-#' @param expl_var list of str of explanatory variables
-#' @return str of formula using the variables provided
-lm_formula_paster <- function(resp_var, expl_var) {
-  form <- paste0(resp_var, "~")
-  for (var in head(expl_var, -1)) {
-    form <- paste0(form, var, "+")
-  }
-  form <- paste0(form, tail(expl, 1))
-  return (form)
 }
 
 clean_food_water <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_food_water.csv")
