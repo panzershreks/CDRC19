@@ -47,7 +47,7 @@ cp_4 <- ggplot(data = clean_world_stats[151:193,], aes(x = entity , y = total_co
 covid_summary_plot <- grid.arrange(cp_1, cp_2, cp_3, cp_4, left = "Total Confirmed Deaths due to Covid-19 per Million People", 
                                    top = textGrob("Covid-19 Death Data", gp=gpar(col="red", fontface = "bold", fontsize = 15)))
 
-# ggsave(covid_summary_plot, filename = "death_summary.png", height = 8, width = 14, units = "in")
+ggsave(covid_summary_plot, filename = "death_summary.png", height = 8, width = 14, units = "in")
 
 
 
