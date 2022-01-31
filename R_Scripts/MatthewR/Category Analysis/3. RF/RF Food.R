@@ -36,10 +36,6 @@ vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) +
 
 
 
-
-
-
-
 full_model_1 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
                      cost_of_calorie_sufficient_diet_2017_usd_per_day + 
                      cost_of_nutrient_adequate_diet_2017_usd_per_day +  
