@@ -25,16 +25,19 @@ missing_table
 
 # write.csv(missing_table, file = "enviroment_missing.csv", row_names = TRUE)
 # We now want to do imputation
-
-#set_seed(100)
-#enviroment_imputation <- mice(data = clean_enviroment, m = 5, method = c("cart"), maxit = 100)
-# summary(enviroment_imputation)
+#load("~/Documents/University/YEAR 4/ALL YEAR/MATHEMATICAL PROJECT/ANALYSIS/CDRC19/enviroment_imputation.Rdata")
+set.seed(100)
+enviroment_imputation <- mice(data = clean_enviroment, m = 5, method = c("pmm"), maxit = 100)
+summary(enviroment_imputation)
 # enviroment_imputation$loggedEvents
 enviroment_1 <- complete(enviroment_imputation, 1)
 enviroment_2 <- complete(enviroment_imputation, 2)
 enviroment_3 <- complete(enviroment_imputation, 3)
 enviroment_4 <- complete(enviroment_imputation, 4)
 enviroment_5 <- complete(enviroment_imputation, 5)
+
+save(enviroment_imputation, file = "enviroment_imputation.Rdata")
+load(file = "enviroment_imputation.Rdata")
 
 working_enviroment <- enviroment_1
 # write.csv(working_enviroment, file = "working_enviroment.csv", row_names = TRUE)
@@ -57,9 +60,10 @@ cor_data_frame <- round(cor(Mcor),2)
 # write.csv(cor_data_frame,"enviroment_correlation.csv", row_names = TRUE)
 # saving imputations
 #save(enviroment_imputation, file = "enviroment_imputation.Rdata")
-load(file = "enviroment_imputation.Rdata")
+#load(file = "enviroment_imputation.Rdata")
 # Now you want to use VIF - we will remove the largest valued variable each time
 # until we have that all the values are under five_
+
 full_model <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ indoor_10_to_14_years 
                  + indoor_15_to_19_years
                  + indoor_20_to_24_years 
@@ -109,7 +113,8 @@ full_model <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ ind
                  + deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths 
                  + deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths 
                  + deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = working_enviroment)
-vif(full_model)
+#vif(full_model)
+
 # remove outdoor_50_to_54_years 
 vif_1 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ indoor_10_to_14_years 
             + indoor_15_to_19_years
@@ -1371,4 +1376,9 @@ vif(vif_42)
 step_enviroment <- step(vif_42)
 summary(step_enviroment)
 plot(step_enviroment)
+# final model after step gives formula of:
+# lm(formula = total_confirmed_deaths_due_to_covid_19_per_million_people ~ yll_rates_from_all_air_pollution_per_100_000 
+# + deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths 
+# + deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = working_enviroment)
+
 

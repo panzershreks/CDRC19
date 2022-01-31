@@ -1,0 +1,484 @@
+rf_enviroment_fm_1 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_40_to_44_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_50_to_54_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_65_to_69_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_35_to_39_years+
+                           outdoor_40_to_44_years+
+                           outdoor_45_to_49_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_55_to_59_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           excess_mortality_from_all_anthropogenic_pollution+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_1)
+max(vif(rf_enviroment_fm_1))
+# do VIF and remove indoor_65_to_69_years
+rf_enviroment_fm_2 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_40_to_44_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_50_to_54_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_35_to_39_years+
+                           outdoor_40_to_44_years+
+                           outdoor_45_to_49_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_55_to_59_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           excess_mortality_from_all_anthropogenic_pollution+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_2)
+max(vif(rf_enviroment_fm_2))
+# do VIF and remove outdoor_35_to_39_years
+rf_enviroment_fm_3 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_40_to_44_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_50_to_54_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_40_to_44_years+
+                           outdoor_45_to_49_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_55_to_59_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           excess_mortality_from_all_anthropogenic_pollution+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_3)
+max(vif(rf_enviroment_fm_3))
+# do VIF and remove indoor_50_to_54_years
+rf_enviroment_fm_4 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_40_to_44_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_40_to_44_years+
+                           outdoor_45_to_49_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_55_to_59_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           excess_mortality_from_all_anthropogenic_pollution+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_4)
+max(vif(rf_enviroment_fm_4))
+# do VIF and remove outdoor_45_to_49_years
+rf_enviroment_fm_5 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_40_to_44_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_40_to_44_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_55_to_59_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           excess_mortality_from_all_anthropogenic_pollution+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_5)
+max(vif(rf_enviroment_fm_5))
+# do VIF and remove excess_mortality_from_all_anthropogenic_pollution 
+rf_enviroment_fm_6 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_40_to_44_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_40_to_44_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_55_to_59_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_6)
+max(vif(rf_enviroment_fm_6))
+# do VIF and remove outdoor_55_to_59_years
+rf_enviroment_fm_7 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_40_to_44_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_40_to_44_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_7)
+max(vif(rf_enviroment_fm_7))
+# do VIF and remove indoor_40_to_44_years
+rf_enviroment_fm_8 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_40_to_44_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_60_to_64_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_8)
+max(vif(rf_enviroment_fm_8))
+# do VIF and remove outdoor_60_to_64_years
+rf_enviroment_fm_9 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                           indoor_10_to_14_years+
+                           indoor_15_to_19_years+
+                           indoor_20_to_24_years+
+                           indoor_25_to_29_years+
+                           indoor_30_to_34_years+
+                           indoor_35_to_39_years+
+                           indoor_45_to_49_years+
+                           indoor_5_to_9_years+
+                           indoor_55_to_59_years+
+                           indoor_60_to_64_years+
+                           indoor_70_to_74_years+
+                           indoor_75_to_79_years+
+                           indoor_80_years+
+                           indoor_under_5s+
+                           outdoor_10_to_14_years+
+                           outdoor_15_to_19_years+
+                           outdoor_20_to_24_years+
+                           outdoor_25_to_29_years+
+                           outdoor_30_to_34_years+
+                           outdoor_40_to_44_years+
+                           outdoor_5_to_9_years+
+                           outdoor_50_to_54_years+
+                           outdoor_65_to_69_years+
+                           outdoor_70_to_74_years+
+                           outdoor_75_to_79_years+
+                           outdoor_80_years+
+                           outdoor_under_5s+
+                           excess_mortality_from_air_pollution_all_sources+
+                           excess_mortality_from_fossil_fuels+
+                           total_years_life_lost_from_air_pollution_all_sources+
+                           total_years_life_lost_from_fossil_fuels+
+                           total_years_life_lost_from_all_anthropogenic_pollution+
+                           death_rates_from_all_air_pollution_per_100_000+
+                           death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                           yll_rates_from_all_air_pollution_per_100_000+
+                           yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                           yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                           deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                           deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                           deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_9)
+max(vif(rf_enviroment_fm_9))
+# do VIF and remove total_years_life_lost_from_fossil_fuels
+rf_enviroment_fm_10 <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+                            indoor_10_to_14_years+
+                            indoor_15_to_19_years+
+                            indoor_20_to_24_years+
+                            indoor_25_to_29_years+
+                            indoor_30_to_34_years+
+                            indoor_35_to_39_years+
+                            indoor_45_to_49_years+
+                            indoor_5_to_9_years+
+                            indoor_55_to_59_years+
+                            indoor_60_to_64_years+
+                            indoor_70_to_74_years+
+                            indoor_75_to_79_years+
+                            indoor_80_years+
+                            indoor_under_5s+
+                            outdoor_10_to_14_years+
+                            outdoor_15_to_19_years+
+                            outdoor_20_to_24_years+
+                            outdoor_25_to_29_years+
+                            outdoor_30_to_34_years+
+                            outdoor_40_to_44_years+
+                            outdoor_5_to_9_years+
+                            outdoor_50_to_54_years+
+                            outdoor_65_to_69_years+
+                            outdoor_70_to_74_years+
+                            outdoor_75_to_79_years+
+                            outdoor_80_years+
+                            outdoor_under_5s+
+                            excess_mortality_from_air_pollution_all_sources+
+                            excess_mortality_from_fossil_fuels+
+                            total_years_life_lost_from_air_pollution_all_sources+
+                            total_years_life_lost_from_all_anthropogenic_pollution+
+                            death_rates_from_all_air_pollution_per_100_000+
+                            death_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                            death_rates_from_all_anthropogenic_air_pollution_per_100_000+
+                            yll_rates_from_all_air_pollution_per_100_000+
+                            yll_rates_from_air_pollution_from_fossil_fuels_per_100_000+
+                            yll_rates_from_anthropogenic_air_pollution_per_100_000+
+                            deaths_from_fossil_pollution_as_a_share_of_total_air_pollution_deaths+
+                            deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths+
+                            deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+vif(rf_enviroment_fm_10)
+max(vif(rf_enviroment_fm_10))
