@@ -99,7 +99,10 @@ vif(final_model)
 step_food <- step(final_model)
 summary(step_food)
 
+# We now plot our model assumptions:
 
+par(mfrow = c(2, 2))
+plot(step_food)
 
 
 

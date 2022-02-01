@@ -81,10 +81,10 @@ vif(final_model)
 step_disease <- step(final_model)
 summary(step_disease)
 
+# We now plot our model assumptions:
 
-
-
-
+par(mfrow = c(2, 2))
+plot(step_disease)
 
 
 
