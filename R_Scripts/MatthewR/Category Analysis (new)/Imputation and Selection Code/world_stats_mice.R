@@ -47,10 +47,10 @@ summary_w_missing <- ggplot(data = clean_world_stats, aes(x = life_satisfaction_
 clean_world_stats_new_name <- clean_world_stats
 colnames(clean_world_stats_new_name) <- c("Country", "Total Confirmed Deaths per Million", "Life Satisfaction Indicator")
 missing_data_plot <- vis_miss(clean_world_stats_new_name, sort_miss = TRUE) +theme(axis.text.x = element_text(angle = 90))
-# miss_var_summary(clean_world_stats)
+miss_var_summary(clean_world_stats)
 # missing_data_plot
 
-ggsave(missing_data_plot, file="w_s_missing_data.png")
+# ggsave(missing_data_plot, file="w_s_missing_data.png")
 
 
 # We now want to impute the missing data, we set seed to make results reproducable.
@@ -66,11 +66,11 @@ world_stats_3 <- complete(world_stats_imputation, 3)
 world_stats_4 <- complete(world_stats_imputation, 4)
 world_stats_5 <- complete(world_stats_imputation, 5)
 
-write.csv(world_stats_1, file = "world_stats_1.csv", row.names = TRUE)
-write.csv(world_stats_2, file = "world_stats_2.csv", row.names = TRUE)
-write.csv(world_stats_3, file = "world_stats_3.csv", row.names = TRUE)
-write.csv(world_stats_4, file = "world_stats_4.csv", row.names = TRUE)
-write.csv(world_stats_5, file = "world_stats_5.csv", row.names = TRUE)
+#write.csv(world_stats_1, file = "world_stats_1.csv", row.names = TRUE)
+#write.csv(world_stats_2, file = "world_stats_2.csv", row.names = TRUE)
+#write.csv(world_stats_3, file = "world_stats_3.csv", row.names = TRUE)
+#write.csv(world_stats_4, file = "world_stats_4.csv", row.names = TRUE)
+#write.csv(world_stats_5, file = "world_stats_5.csv", row.names = TRUE)
 
 
 # We can now do something slightly different to the other data categories as we only have one significant variable.
@@ -79,6 +79,7 @@ write.csv(world_stats_5, file = "world_stats_5.csv", row.names = TRUE)
 world_stats_model <- with(world_stats_imputation, lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ life_satisfaction_in_cantril_ladder_world_happiness_report_2019))
 
 summary(pool(world_stats_model))
+
 
 # The following code allows us to visualise the imputed data and how each dataset differs.
 
