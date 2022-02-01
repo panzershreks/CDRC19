@@ -136,37 +136,29 @@ step(final_model_covid)
 summary(final_model_covid)
 plot(final_model_covid)
 
-#Call: without the 4 very correlated ones removed
-# take out highly correlated variables
-# 4 taken out are weekly_cases, weekly_deaths, case_fatality_rate_of_covid_19 and days_since_the_total_confirmed_cases_of_covid_19_reached_100
 #lm(formula = total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
-#     stringency_index + debt_relief + containment_index + population_with_access_to_improved_sanitation_x + 
+#     debt_relief + population_without_access_to_improved_sanitation_x + 
 #     total_confirmed_deaths_due_to_covid_19 + daily_new_confirmed_cases_of_covid_19_per_million_people + 
-#     daily_new_confirmed_deaths_due_to_covid_19_per_million_people + 
 #     total_confirmed_cases_of_covid_19_per_million_people + 
-#     days_since_the_total_confirmed_cases_of_covid_19_reached_100 + 
-#     case_fatality_rate_of_covid_19 + days_since_30_daily_new_confirmed_cases_recorded + 
-#    days_since_10_daily_new_confirmed_deaths_recorded + daily_new_confirmed_cases_of_covid_19_rolling_3_day_average_right_aligned + 
-#    days_since_daily_new_confirmed_deaths_due_to_covid_19_per_million_people_rolling_7_day_average_right_aligned_reached_0_01 + 
-#    doubling_days_of_total_confirmed_deaths_3_day_period + 
-#    weekly_case_growth + weekly_cases_per_million_people + 
-#    biweekly_deaths_per_million_people + case_fatality_rate_of_covid_19_short_term, 
-#  data = covid_data)
+#     case_fatality_rate_of_covid_19_only_observations_with_100_cases + 
+#     days_since_50_daily_new_confirmed_cases_recorded + days_since_10_daily_new_confirmed_deaths_recorded + 
+#     weekly_case_growth + weekly_death_growth + biweekly_case_growth + 
+#     biweekly_deaths_per_million_people + case_fatality_rate_of_covid_19_short_term, 
+#   data = covid_data)
 
-#lm(formula = total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
-#debt_relief + population_without_access_to_improved_sanitation_x + 
-#  total_confirmed_deaths_due_to_covid_19 + daily_new_confirmed_cases_of_covid_19_per_million_people + 
-#  total_confirmed_cases_of_covid_19_per_million_people + 
-#  case_fatality_rate_of_covid_19_only_observations_with_100_cases + 
-#  days_since_10_daily_new_confirmed_deaths_recorded + weekly_case_growth + 
-#  weekly_death_growth + biweekly_deaths_per_million_people + 
-#  case_fatality_rate_of_covid_19_short_term, data = covid_data)
+#"case_fatality_rate_of_covid_19_only_observations_with_100_case" not combining to dataset so binding it instead
+covid_data_variables_1 <- subset(covid_data, select = c("debt_relief","population_without_access_to_improved_sanitation_x", 
+                                                        "total_confirmed_deaths_due_to_covid_19", "daily_new_confirmed_cases_of_covid_19_per_million_people", 
+                                                        "total_confirmed_cases_of_covid_19_per_million_people",
+                                                      "days_since_50_daily_new_confirmed_cases_recorded","days_since_10_daily_new_confirmed_deaths_recorded", 
+                                                      "weekly_case_growth","weekly_death_growth","biweekly_case_growth", 
+                                                      "biweekly_deaths_per_million_people","case_fatality_rate_of_covid_19_short_term"))
+covid_data_variables_2 <- subset(covid_data, select = c(20))
+covid_data_variables <- cbind(covid_data_variables_1, covid_data_variables_2)
+write.csv(covid_data_variables, file = "rf_covid_data_variables.csv", row.names = TRUE)
 
-#final_model_after_step <- lm(total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
-#                               debt_relief + population_without_access_to_improved_sanitation_x + 
-#                               total_confirmed_deaths_due_to_covid_19 + daily_new_confirmed_cases_of_covid_19_per_million_people + 
-#                               total_confirmed_cases_of_covid_19_per_million_people + 
-#                               case_fatality_rate_of_covid_19_only_observations_with_100_cases + 
-#                               days_since_10_daily_new_confirmed_deaths_recorded + weekly_case_growth + 
-#                               weekly_death_growth + biweekly_deaths_per_million_people + 
-#                               case_fatality_rate_of_covid_19_short_term, data = covid_data)
+
+
+
+                            
+                            

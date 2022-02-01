@@ -90,3 +90,12 @@ plot(final_model_env)
 #lm(formula = total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
 #yll_rates_from_all_air_pollution_per_100_000 + deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths + 
 #  deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
+
+enviroment_data_variables <- subset(enviroment_data, select = c("yll_rates_from_all_air_pollution_per_100_000", "deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths", 
+                                 "deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths"))
+
+write.csv(enviroment_data_variables, file = "rf_enviroment_data_variables.csv", row.names = TRUE)
+
+
+
+
