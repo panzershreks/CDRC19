@@ -42,7 +42,7 @@ clean_combined_f_ws <- cbind(clean_food_water, clean_world_stats)
 
 food_missing_vis <- vis_miss(clean_combined_f_ws, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
 # ggsave(food_missing_vis, file="food_missing_vis.png", height = 8, width = 8)
-
+food_missing_vis
 
 # We now impute our missing data using random forests.
 
