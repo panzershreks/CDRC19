@@ -47,6 +47,10 @@ Mcor <- disease_data
 dis_cor_matrix <- vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
   ggtitle("Correlation Matrix")
 
+CorMatrix <- round(cor(disease_data),2)
+#write.csv(CorMatrix,"disease_cor.csv", row.names = TRUE)
+
+
 #dis_cor_matrix
 
 # # We now will use a function we have written to carry out VIF to 

@@ -68,6 +68,11 @@ f_ws_cor_matrix <- vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90))
 f_ws_cor_matrix
 
 
+CorMatrix <- round(cor(food_data),2)
+#write.csv(CorMatrix,"food_cor_rf.csv", row.names = TRUE)
+
+summary(food_data$nutrient_adequate_diet_cost_percent_of_1_20_poverty_line)
+
 # We now will use a function we have written to carry out VIF to 
 # find what variables we should use in our model.
 
