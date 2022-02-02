@@ -29,10 +29,6 @@ missing_table <- miss_var_summary(clean_healthcare, sort_miss = TRUE)
 missing_table <- data.frame(missing_table)
 View(missing_table)
 
-# Missing plot - does not look very readable
-# healthcare_missing <- vis_miss(clean_healthcare, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
-# healthcare_missing
-
 # View variables with more than 50% of missing data
 for (i in 1:78){
   if (missing_table$pct_miss[i] > 50){
@@ -96,12 +92,17 @@ drop <- c("percentage_of_persons_without_health_insurance_percent", #including s
 
 
 # Create 'healthcare_d1' without variables with > 50% missing data + justified reason for removing
-healthcare_rf <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
-healthcare_rf <- subset(healthcare_rf, select = -1)
+healthcare_sub <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
+healthcare_sub <- subset(healthcare_sub, select = -1)
+
+# Missing plot - does not look very readable
+healthcare_missing <- vis_miss(healthcare_sub, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
+healthcare_missing
+
 
 set.seed(100)
 
-healthcare_rf <- as.matrix(healthcare_rf)
+healthcare_rf <- as.matrix(healthcare_sub)
 healthcare_rf_temp <- missForest(healthcare_rf, maxiter = 5)
 
 healthcare_rf_completed <- healthcare_rf_temp$ximp
