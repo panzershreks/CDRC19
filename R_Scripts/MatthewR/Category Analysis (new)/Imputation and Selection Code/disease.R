@@ -87,13 +87,16 @@ par(mfrow = c(2, 2))
 plot(step_disease)
 
 
+# Summary Statistics
+
+summary(disease_data$prevalence_of_obesity_male_who_2019)
+summary(disease_data$prevalence_of_obesity_female_who_2019)
 
 
+# Comparison of Male and Female Obesity
 
-
-
-
-
-
+obesity_plot <- ggplot(aes(prevalence_of_obesity_male_who_2019,prevalence_of_obesity_female_who_2019),data = disease_data) + geom_point() + 
+  ggtitle("Obesity Prevelance") + xlab("Prevelance of Obesity in Males") + ylab("Prevelance of Obesity in Females") + geom_smooth(method = "lm")
+# ggsave(obesity_plot, file="obesity_plot.png", height = 6, width = 8)
 
 
