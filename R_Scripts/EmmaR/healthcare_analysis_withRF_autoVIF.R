@@ -106,7 +106,7 @@ healthcare_corr_df <- round(cor(corr_data),2)
 
 View(healthcare_corr_df)
 
-write.csv(healthcare_corr_df,"healthcare_corr.csv", row.names = TRUE)
+# write.csv(healthcare_corr_df,"healthcare_corr.csv", row.names = TRUE)
 
 healthcare_corr <- read_csv("R_Scripts/EmmaR/healthcare_corr.csv")
 View(healthcare_corr)
@@ -119,7 +119,9 @@ healthcare_rf_completed <- subset(healthcare_rf_completed, select = -c(32, 33))
 
 # Automated VIF function 
 
-gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
+# Using score threshold of 5 
+
+gvif_drop <- function(resp_var, expl_var, data, vif_max=5) {
   gvif_max <- vif_max ^ 0.5
   lm_formula <- lm_formula_paster(resp_var, expl_var)
   model <- lm(lm_formula, data)
@@ -219,6 +221,24 @@ summary(step_healthcare)
 
 par(mfrow = c(2, 2))
 plot(step_healthcare)
+
+# Dataframe with all significant variables 
+
+healthcare_sigvars <- subset(healthcare_rf_completed, select = c("share_of_people_who_disagree_vaccines_are_important_for_children_to_have", 
+                                                                 "share_of_people_who_disagree_vaccines_are_safe",
+                                                                 "share_of_people_who_agree_vaccines_are_effective", 
+                                                                 "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd",
+                                                                 "general_hospitals_per_million_population_oecd", 
+                                                                 "psychiatric_care_beds_per_1_000_population_oecd", 
+                                                                 "publicly_owned_hospitals_per_million_population_oecd", 
+                                                                 "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure", 
+                                                                 "bcg_immunization_coverage_among_1_year_olds_who_2017", 
+                                                                 "number_of_confirmed_pertussis_cases_who_2017", 
+                                                                 "number_of_confirmed_diphtheria_cases_who_2017")
+                                                                 
+)
+
+write.csv(healthcare_sigvars, file = "healthcare_sigvars", row.names = TRUE)
 
 
 

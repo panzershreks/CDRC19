@@ -106,7 +106,7 @@ healthcare_corr_df <- round(cor(corr_data),2)
 
 View(healthcare_corr_df)
 
-write.csv(healthcare_corr_df,"healthcare_corr.csv", row.names = TRUE)
+# write.csv(healthcare_corr_df,"healthcare_corr.csv", row.names = TRUE)
 
 healthcare_corr <- read_csv("R_Scripts/EmmaR/healthcare_corr.csv")
 View(healthcare_corr)
@@ -997,11 +997,5 @@ max(vif_values17)
 step_healthcare_rf <- step(healthcare_rf_model17)
 summary(healthcare_rf_model17)
 
-# Run automated VIF function 
 
-# Check if same variables 
-
-# Add variables to dataframe 
-
-# Residuals plot 
 
