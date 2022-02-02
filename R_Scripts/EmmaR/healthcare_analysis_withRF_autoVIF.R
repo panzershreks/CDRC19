@@ -27,7 +27,11 @@ summary(clean_healthcare)
 
 missing_table <- miss_var_summary(clean_healthcare, sort_miss = TRUE)
 missing_table <- data.frame(missing_table)
-missing_table
+View(missing_table)
+
+# Missing plot - does not look very readable
+# healthcare_missing <- vis_miss(clean_healthcare, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
+# healthcare_missing
 
 # View variables with more than 50% of missing data
 for (i in 1:78){
@@ -110,6 +114,7 @@ corr_data <- healthcare_rf_completed[,2:50]
 
 healthcare_corr <- vis_cor(corr_data) + theme(axis.text.x = element_text(angle = 90)) + 
   ggtitle("Correlation Matrix")
+healthcare_corr
 
 healthcare_corr_df <- round(cor(corr_data),2)
 
