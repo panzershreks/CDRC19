@@ -246,7 +246,7 @@ healthcare_sigvars_missing <- subset(clean_healthcare, select = c("share_of_peop
 View(healthcare_sigvars_missing)
 
 # Including variables that are significant at and 5% and greater than level, with missing values 
-write.csv(healthcare_sigvars_missing, file = "healthcare_sigvars_missing", row.names = TRUE)
+write.csv(healthcare_sigvars_missing, file = "healthcare_sigvars_missing.csv", row.names = TRUE)
 
 # Impute only significant variables 
 
@@ -261,7 +261,7 @@ healthcare_sigvars_completed <- data.frame(healthcare_sigvars_completed)
 View(healthcare_sigvars_completed)
 
 # Including variables that are significant at and 5% and greater than level, with imputed values
-write.csv(healthcare_sigvars_completed, file = "healthcare_sigvars_completed", row.names = TRUE)
+write.csv(healthcare_sigvars_completed, file = "healthcare_sigvars_completed.csv", row.names = TRUE)
 
 
 
