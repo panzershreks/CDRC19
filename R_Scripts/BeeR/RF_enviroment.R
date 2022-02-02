@@ -27,7 +27,7 @@ enviroment_rf <- missForest(as.matrix(clean_enviroment))
 enviroment_data <- enviroment_rf$ximp
 enviroment_data <- as.data.frame.matrix(enviroment_data)
 
-write.csv(enviroment_data, file = "rf_enviroment_data.csv", row.names = TRUE)
+# write.csv(enviroment_data, file = "rf_enviroment_data.csv", row.names = TRUE)
 resp_var_env <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 expl_var_env <- c("indoor_10_to_14_years", "indoor_15_to_19_years", "
   indoor_20_to_24_years", "
@@ -91,11 +91,14 @@ plot(final_model_env)
 #yll_rates_from_all_air_pollution_per_100_000 + deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths + 
 #  deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths, data = enviroment_data)
 
-enviroment_data_variables <- subset(enviroment_data, select = c("yll_rates_from_all_air_pollution_per_100_000", "deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths", 
-                                 "deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths"))
+# only include variables with significance level 0.05 of more... these include:
+# "deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths", "yll_rates_from_anthropogenic_air_pollution_per_100_000"
+enviroment_imputed_data_variables <- subset(enviroment_data, select = c("deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths", "yll_rates_from_anthropogenic_air_pollution_per_100_000"))
+write.csv(enviroment_data_variables, file = "rf_enviroment_imputed_data_variables.csv", row.names = TRUE)
 
-write.csv(enviroment_data_variables, file = "rf_enviroment_data_variables.csv", row.names = TRUE)
+# now another dataset with the significant variables from the data before it was imputed
 
-
+enviroment_clean_data_variables <- subset(clean_enviroment, select = c("deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths", "yll_rates_from_anthropogenic_air_pollution_per_100_000"))
+write.csv(clean_enviroment, file = "rf_enviroment_clean_data_variables.csv", row.names = TRUE)
 
 
