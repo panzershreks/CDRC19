@@ -12,8 +12,15 @@ library(missForest)
 
 # Import data 
 clean_healthcare <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_healthcare.csv")
+
+# Remove first column 
 clean_healthcare <- subset(clean_healthcare, select = -1)
+
+clean_healthcare <- clean_healthcare[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
+                                                          145, 151, 156, 171,173,177,178, 186,193), ]
 clean_healthcare <- clean_names(clean_healthcare)
+
+View(clean_healthcare)
 
 # View missing data
 summary(clean_healthcare)
@@ -87,6 +94,8 @@ drop <- c("percentage_of_persons_without_health_insurance_percent", #including s
 # Create 'healthcare_d1' without variables with > 50% missing data + justified reason for removing
 healthcare_rf <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
 healthcare_rf <- subset(healthcare_rf, select = -1)
+
+set.seed(100)
 
 healthcare_rf <- as.matrix(healthcare_rf)
 healthcare_rf_temp <- missForest(healthcare_rf, maxiter = 5)
@@ -222,23 +231,32 @@ summary(step_healthcare)
 par(mfrow = c(2, 2))
 plot(step_healthcare)
 
-# Dataframe with all significant variables 
+# Dataframe with all significant variables (before imputation)
 
-healthcare_sigvars <- subset(healthcare_rf_completed, select = c( "share_of_people_who_agree_vaccines_are_effective", 
-                                                                  "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd",
-                                                                 "general_hospitals_per_million_population_oecd", 
-                                                                 "psychiatric_care_beds_per_1_000_population_oecd", 
-                                                                 "publicly_owned_hospitals_per_million_population_oecd", 
-                                                                 "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure", 
-                                                                 "bcg_immunization_coverage_among_1_year_olds_who_2017", 
-                                                                 "number_of_confirmed_pertussis_cases_who_2017")) 
+healthcare_sigvars_missing <- subset(clean_healthcare, select = c("share_of_people_who_disagree_vaccines_are_important_for_children_to_have",
+                                                          "share_of_people_who_disagree_vaccines_are_safe", 
+                                                          "share_of_people_who_agree_vaccines_are_effective", 
+                                                          "general_hospitals_per_million_population_oecd", 
+                                                          "not_for_profit_privately_owned_hospitals_per_million_population_oecd", 
+                                                          "psychiatric_care_beds_per_1_000_population_oecd", 
+                                                          "publicly_owned_hospitals_per_million_population_oecd", 
+                                                          "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure")) 
 
 
-View(healthcare_sigvars)
+View(healthcare_sigvars_missing)
 
 # Including variables that are significant at and 5% and greater than level 
-write.csv(healthcare_sigvars, file = "healthcare_sigvars", row.names = TRUE)
+write.csv(healthcare_sigvars_missing, file = "healthcare_sigvars_missing", row.names = TRUE)
 
+# Impute only significant variables 
+
+healthcare_sigvars <- as.matrix(healthcare_sigvars_missing)
+
+healthcare_sigvars_temp <- missForest(healthcare_sigvars, maxiter = 5)
+
+healthcare_sigvars_completed <- healthcare_sigvars_temp$ximp
+
+healthcare_sigvars_completed <- data.frame(healthcare_sigvars_completed)
 
 
 
