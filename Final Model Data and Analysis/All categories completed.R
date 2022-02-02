@@ -37,6 +37,8 @@ all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_co
   
 View(all_categories_complete)
 
+
+
 # Automated VIF function 
 
 # Using score threshold of 5 
