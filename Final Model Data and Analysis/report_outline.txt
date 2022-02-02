@@ -21,7 +21,7 @@ imputation
 
 model selection
   - stepwise selection, forward? backward? AIC? BIC?
-    - category A
+    - category A (mention correlation between variables in imputed datasets at this point
     - category B
 
 robustness?
