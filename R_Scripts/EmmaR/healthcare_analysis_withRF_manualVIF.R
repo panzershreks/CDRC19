@@ -997,5 +997,11 @@ max(vif_values17)
 step_healthcare_rf <- step(healthcare_rf_model17)
 summary(healthcare_rf_model17)
 
+# Run automated VIF function 
 
+# Check if same variables 
+
+# Add variables to dataframe 
+
+# Residuals plot 
 
