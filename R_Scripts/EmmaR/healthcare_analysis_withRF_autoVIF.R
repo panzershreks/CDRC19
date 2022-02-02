@@ -27,7 +27,7 @@ summary(clean_healthcare)
 
 missing_table <- miss_var_summary(clean_healthcare, sort_miss = TRUE)
 missing_table <- data.frame(missing_table)
-missing_table
+View(missing_table)
 
 # View variables with more than 50% of missing data
 for (i in 1:78){
@@ -92,12 +92,17 @@ drop <- c("percentage_of_persons_without_health_insurance_percent", #including s
 
 
 # Create 'healthcare_d1' without variables with > 50% missing data + justified reason for removing
-healthcare_rf <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
-healthcare_rf <- subset(healthcare_rf, select = -1)
+healthcare_sub <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
+healthcare_sub <- subset(healthcare_sub, select = -1)
+
+# Missing plot - does not look very readable
+healthcare_missing <- vis_miss(healthcare_sub, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
+healthcare_missing
+
 
 set.seed(100)
 
-healthcare_rf <- as.matrix(healthcare_rf)
+healthcare_rf <- as.matrix(healthcare_sub)
 healthcare_rf_temp <- missForest(healthcare_rf, maxiter = 5)
 
 healthcare_rf_completed <- healthcare_rf_temp$ximp
@@ -109,7 +114,8 @@ healthcare_rf_completed <- data.frame(healthcare_rf_completed)
 corr_data <- healthcare_rf_completed[,2:50]  
 
 healthcare_corr <- vis_cor(corr_data) + theme(axis.text.x = element_text(angle = 90)) + 
-  ggtitle("Correlation Matrix")
+  ggtitle("Healthcare Variables Correlation Plot")
+healthcare_corr
 
 healthcare_corr_df <- round(cor(corr_data),2)
 
@@ -245,8 +251,8 @@ healthcare_sigvars_missing <- subset(clean_healthcare, select = c("share_of_peop
 
 View(healthcare_sigvars_missing)
 
-# Including variables that are significant at and 5% and greater than level 
-write.csv(healthcare_sigvars_missing, file = "healthcare_sigvars_missing", row.names = TRUE)
+# Including variables that are significant at and 5% and greater than level, with missing values 
+write.csv(healthcare_sigvars_missing, file = "healthcare_sigvars_missing.csv", row.names = TRUE)
 
 # Impute only significant variables 
 
@@ -258,6 +264,10 @@ healthcare_sigvars_completed <- healthcare_sigvars_temp$ximp
 
 healthcare_sigvars_completed <- data.frame(healthcare_sigvars_completed)
 
+View(healthcare_sigvars_completed)
+
+# Including variables that are significant at and 5% and greater than level, with imputed values
+write.csv(healthcare_sigvars_completed, file = "healthcare_sigvars_completed.csv", row.names = TRUE)
 
 
 
