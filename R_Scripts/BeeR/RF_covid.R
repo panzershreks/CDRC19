@@ -85,7 +85,7 @@ covid_rf <- missForest(as.matrix(rf_clean_covid))
 covid_data <- covid_rf$ximp
 covid_data <- as.data.frame.matrix(covid_data)
 
-write.csv(covid_data, file = "rf_covid_data.csv", row.names = TRUE)
+#write.csv(covid_data, file = "rf_covid_data.csv", row.names = TRUE)
 
 # take out highly correlated variables
 # 4 taken out are weekly_cases, weekly_deaths, case_fatality_rate_of_covid_19 and days_since_the_total_confirmed_cases_of_covid_19_reached_100
@@ -145,18 +145,32 @@ plot(final_model_covid)
 #     weekly_case_growth + weekly_death_growth + biweekly_case_growth + 
 #     biweekly_deaths_per_million_people + case_fatality_rate_of_covid_19_short_term, 
 #   data = covid_data)
+# 
+# only include variables with significance level 0.05 of more... these include:
+# "case_fatality_rate_of_covid_19_short_term", "biweekly_deaths_per_million_people", "weekly_cases_per_million_people",
+# "weekly_case_growth", "doubling_days_of_total_confirmed_deaths_3_day_period", "days_since_10_daily_new_confirmed_deaths_recorded", "case_fatality_rate_of_covid_19_only_observations_with_100_cases",
+# "days_since_30_daily_new_confirmed_cases_recorded", "total_confirmed_deaths_due_to_covid_19", "daily_new_confirmed_cases_of_covid_19_per_million_people"                                                                 
+#  "daily_new_confirmed_deaths_due_to_covid_19_per_million_people", "total_confirmed_cases_of_covid_19_per_million_people"
+# "population_with_access_to_improved_sanitation_x", "debt_relief", "stringency_index"
 
 #"case_fatality_rate_of_covid_19_only_observations_with_100_case" not combining to dataset so binding it instead
-covid_data_variables_1 <- subset(covid_data, select = c("debt_relief","population_without_access_to_improved_sanitation_x", 
-                                                        "total_confirmed_deaths_due_to_covid_19", "daily_new_confirmed_cases_of_covid_19_per_million_people", 
-                                                        "total_confirmed_cases_of_covid_19_per_million_people",
-                                                      "days_since_50_daily_new_confirmed_cases_recorded","days_since_10_daily_new_confirmed_deaths_recorded", 
-                                                      "weekly_case_growth","weekly_death_growth","biweekly_case_growth", 
-                                                      "biweekly_deaths_per_million_people","case_fatality_rate_of_covid_19_short_term"))
-covid_data_variables_2 <- subset(covid_data, select = c(20))
-covid_data_variables <- cbind(covid_data_variables_1, covid_data_variables_2)
-write.csv(covid_data_variables, file = "rf_covid_data_variables.csv", row.names = TRUE)
+covid_imputed_data_variables <- subset(covid_data, select = c("case_fatality_rate_of_covid_19_short_term", "biweekly_deaths_per_million_people", "weekly_cases_per_million_people",
+                                                        "weekly_case_growth", "doubling_days_of_total_confirmed_deaths_3_day_period", "days_since_10_daily_new_confirmed_deaths_recorded", "case_fatality_rate_of_covid_19_only_observations_with_100_cases",
+                                                        "days_since_30_daily_new_confirmed_cases_recorded", "total_confirmed_deaths_due_to_covid_19", "daily_new_confirmed_cases_of_covid_19_per_million_people",                                                                 
+                                                        "daily_new_confirmed_deaths_due_to_covid_19_per_million_people", "total_confirmed_cases_of_covid_19_per_million_people",
+                                                        "population_with_access_to_improved_sanitation_x", "debt_relief", "stringency_index"))
 
+write.csv(covid_data_variables, file = "rf_covid_imputed_data_variables.csv", row.names = TRUE)
+
+# now another dataset with the significant variables from the data before it was imputed
+
+covid_clean_data_variables <- subset(clean_covid, select = c("case_fatality_rate_of_covid_19_short_term", "biweekly_deaths_per_million_people", "weekly_cases_per_million_people",
+                                                              "weekly_case_growth", "doubling_days_of_total_confirmed_deaths_3_day_period", "days_since_10_daily_new_confirmed_deaths_recorded", "case_fatality_rate_of_covid_19_only_observations_with_100_cases",
+                                                              "days_since_30_daily_new_confirmed_cases_recorded", "total_confirmed_deaths_due_to_covid_19", "daily_new_confirmed_cases_of_covid_19_per_million_people",                                                                 
+                                                              "daily_new_confirmed_deaths_due_to_covid_19_per_million_people", "total_confirmed_cases_of_covid_19_per_million_people",
+                                                              "population_with_access_to_improved_sanitation_x", "debt_relief", "stringency_index"))
+
+write.csv(clean_covid, file = "rf_covid_clean_data_variables.csv", row.names = TRUE)
 
 
 
