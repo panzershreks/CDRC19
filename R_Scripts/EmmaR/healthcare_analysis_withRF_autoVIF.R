@@ -224,20 +224,19 @@ plot(step_healthcare)
 
 # Dataframe with all significant variables 
 
-healthcare_sigvars <- subset(healthcare_rf_completed, select = c("share_of_people_who_disagree_vaccines_are_important_for_children_to_have", 
-                                                                 "share_of_people_who_disagree_vaccines_are_safe",
-                                                                 "share_of_people_who_agree_vaccines_are_effective", 
-                                                                 "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd",
+healthcare_sigvars <- subset(healthcare_rf_completed, select = c( "share_of_people_who_agree_vaccines_are_effective", 
+                                                                  "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd",
                                                                  "general_hospitals_per_million_population_oecd", 
                                                                  "psychiatric_care_beds_per_1_000_population_oecd", 
                                                                  "publicly_owned_hospitals_per_million_population_oecd", 
                                                                  "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure", 
                                                                  "bcg_immunization_coverage_among_1_year_olds_who_2017", 
-                                                                 "number_of_confirmed_pertussis_cases_who_2017", 
-                                                                 "number_of_confirmed_diphtheria_cases_who_2017")
-                                                                 
-)
+                                                                 "number_of_confirmed_pertussis_cases_who_2017")) 
 
+
+View(healthcare_sigvars)
+
+# Including variables that are significant at and 5% and greater than level 
 write.csv(healthcare_sigvars, file = "healthcare_sigvars", row.names = TRUE)
 
 

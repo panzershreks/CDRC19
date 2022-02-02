@@ -997,5 +997,6 @@ max(vif_values17)
 step_healthcare_rf <- step(healthcare_rf_model17)
 summary(healthcare_rf_model17)
 
+step_healthcare_rf
 
 
