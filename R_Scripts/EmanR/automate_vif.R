@@ -10,7 +10,7 @@ gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
   gvif_max <- vif_max ^ 0.5
   lm_formula <- lm_formula_paster(resp_var, expl_var)
   model <- lm(lm_formula, data)
-  vif_mod <- vif(model)
+  vif_mod <- car::vif(model)
   try(gvif <- vif_mod, silent = TRUE)
   try(gvif <- vif_mod[,3], silent = TRUE)
   if (is.null(dim(vif_mod))) {
@@ -20,7 +20,7 @@ gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
     expl_var <- expl_var[-(which.max(gvif))]
     lm_formula <- lm_formula_paster(resp_var, expl_var)
     model <- lm(lm_formula, data)
-    vif_mod <- vif(model)
+    vif_mod <- car::vif(model)
     try(gvif <- vif_mod, silent = TRUE)
     try(gvif <- vif_mod[,3], silent = TRUE)
     if (is.null(dim(vif_mod))) {
