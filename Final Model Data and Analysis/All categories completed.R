@@ -99,6 +99,5 @@ par(mfrow = c(2, 2))
 plot(step_all_categories)
 
 
-
 ## Combining missing dataframes & random forest imputation 
 
