@@ -7,6 +7,55 @@ library(ggplot2)
 library('missForest')
 library(car)
 
+library(datasets)
+library(car)
+
+# VIF Code for Later
+
+#' Iteratively drop variables based on GVIF
+#' @param resp_var str of response variable
+#' @param expl_var list of str of explanatory variables
+#' @param vif_max num for max VIF allowed (not GVIF)
+#' @return list of str of explanatory variables after dropping
+gvif_drop <- function(resp_var, expl_var, data, vif_max=5) {
+  gvif_max <- vif_max ^ 0.5
+  lm_formula <- lm_formula_paster(resp_var, expl_var)
+  model <- lm(lm_formula, data)
+  vif_mod <- vif(model)
+  try(gvif <- vif_mod, silent = TRUE)
+  try(gvif <- vif_mod[,3], silent = TRUE)
+  if (is.null(dim(vif_mod))) {
+    gvif_max <- vif_max
+  }
+  while (max(gvif) > gvif_max) {
+    expl_var <- expl_var[-(which.max(gvif))]
+    lm_formula <- lm_formula_paster(resp_var, expl_var)
+    model <- lm(lm_formula, data)
+    vif_mod <- vif(model)
+    try(gvif <- vif_mod, silent = TRUE)
+    try(gvif <- vif_mod[,3], silent = TRUE)
+    if (is.null(dim(vif_mod))) {
+      gvif_max <- vif_max
+    }
+  }
+  return (expl_var)
+}
+
+#' create a lm formula from list of variables
+#' helper function for gvif_drop
+#' @param resp_var str of response variable
+#' @param expl_var list of str of explanatory variables
+#' @return str of formula using the variables provided
+lm_formula_paster <- function(resp_var, expl_var) {
+  form <- paste0(resp_var, "~")
+  for (var in head(expl_var, -1)) {
+    form <- paste0(form, var, "+")
+  }
+  form <- paste0(form, tail(expl_var, 1))
+  return (form)
+}
+
+
 
 # Matthew's Data
 
@@ -34,9 +83,9 @@ econ_significant_pre_random_forest <- subset(econ_significant_pre_random_forest,
 
 # Bee Covid Data
 
-rf_covid_clean_data_variables <- read_csv("Final Model Data and Analysis/Categories with Missing/rf_covid_clean_data_variables.csv")
-rf_covid_clean_data_variables <- clean_names(rf_covid_clean_data_variables)
-rf_covid_clean_data_variables <- subset(rf_covid_clean_data_variables, select = -1)
+covid_clean_data_variables <- read_csv("Final Model Data and Analysis/Categories with Missing/covid_clean_data_variables.csv")
+covid_clean_data_variables <- clean_names(covid_clean_data_variables)
+covid_clean_data_variables <- subset(covid_clean_data_variables, select = -1)
 
 # Bee Environment Data
 
@@ -47,9 +96,9 @@ rf_enviroment_clean_data_variables <- subset(rf_enviroment_clean_data_variables,
 
 # We now want to combine these dataframes into one big dataframe.
 
-all_cat_with_missing <- cbind(matthew_sig_var_w_missing, econ_significant_pre_random_forest, healthcare_sigvars_missing, Not_Completed_data_demorgraphic_, rf_covid_clean_data_variables, rf_enviroment_clean_data_variables)
+all_cat_with_missing <- cbind(matthew_sig_var_w_missing, econ_significant_pre_random_forest, healthcare_sigvars_missing, Not_Completed_data_demorgraphic_, covid_clean_data_variables, rf_enviroment_clean_data_variables)
 
-# write.csv(all_cat_with_missing,"all_cat_with_missing.csv", row.names = TRUE)
+write.csv(all_cat_with_missing,"all_cat_with_missing.csv", row.names = TRUE)
 
 
 # We will now inspect the missing data in the combined significant variables.
@@ -71,30 +120,26 @@ vis_miss(all_cat_imputed, sort_miss = TRUE) + theme(axis.text.x = element_text(a
 # We will now do model selection, and we begin by using VIF
 
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
-expl <- c("age_standardised_diabetes_prevalence_male",
-          "cardiovascular_diseases_ihme_2017",
+expl <- c("age_standardised_diabetes_prevalence_male","cardiovascular_diseases_ihme_2017",
           "meningitis_ihme_2017","prevalence_of_obesity_female_who_2019",
-          "healthy_diet_cost_percent_cannot_afford",
-          "income_classification_world_bank_2017","gdp_growth_from_previous_year_2020_q2",
-          "gdp","national_poverty_lines_jolliffe_and_prydz_2016",
+          "healthy_diet_cost_percent_cannot_afford","income_classification_world_bank_2017",
+          "gdp_growth_from_previous_year_2020_q2","gdp",
+          "national_poverty_lines_jolliffe_and_prydz_2016",
           "percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016",
           "multidimensional_poverty_headcount_ratio_alkire_and_robles_2016",
           "share_of_people_who_disagree_vaccines_are_important_for_children_to_have",
-          "share_of_people_who_disagree_vaccines_are_safe",
-          "share_of_people_who_agree_vaccines_are_effective",
+          "share_of_people_who_disagree_vaccines_are_safe","share_of_people_who_agree_vaccines_are_effective",
           "general_hospitals_per_million_population_oecd",
           "not_for_profit_privately_owned_hospitals_per_million_population_oecd",
           "psychiatric_care_beds_per_1_000_population_oecd",
           "publicly_owned_hospitals_per_million_population_oecd",
           "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure",
-          "infant_mortality_rate","case_fatality_rate_of_covid_19_short_term",
-          "biweekly_deaths_per_million_people","weekly_cases_per_million_people",
-          "weekly_case_growth","doubling_days_of_total_confirmed_deaths_3_day_period",
+          "infant_mortality_rate","case_fatality_rate_of_covid_19_short_term","biweekly_deaths_per_million_people",
+          "weekly_cases_per_million_people","weekly_case_growth","doubling_days_of_total_confirmed_deaths_3_day_period",
           "days_since_10_daily_new_confirmed_deaths_recorded",
           "case_fatality_rate_of_covid_19_only_observations_with_100_cases",
-          "days_since_30_daily_new_confirmed_cases_recorded","total_confirmed_deaths_due_to_covid_19",
+          "days_since_30_daily_new_confirmed_cases_recorded",
           "daily_new_confirmed_cases_of_covid_19_per_million_people",
-          "daily_new_confirmed_deaths_due_to_covid_19_per_million_people",
           "total_confirmed_cases_of_covid_19_per_million_people",
           "population_with_access_to_improved_sanitation_x",
           "debt_relief","stringency_index",
