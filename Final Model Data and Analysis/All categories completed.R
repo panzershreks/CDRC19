@@ -35,6 +35,7 @@ all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_co
   
 View(all_categories_complete)
 
+colnames(all_categories_complete)
 # Automated VIF function 
 
 # Using score threshold of 5 
@@ -80,7 +81,6 @@ lm_formula_paster <- function(resp_var, expl_var) {
 
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 
-# NEED TO ADD THIS 
 expl <- c("age_standardised_diabetes_prevalence_male",
           "cardiovascular_diseases_ihme_2017",
           "meningitis_ihme_2017",
@@ -102,16 +102,15 @@ expl <- c("age_standardised_diabetes_prevalence_male",
           "days_since_10_daily_new_confirmed_deaths_recorded",
           "case_fatality_rate_of_covid_19_only_observations_with_100_cases",
           "days_since_30_daily_new_confirmed_cases_recorded",
-        # "total_confirmed_deaths_due_to_covid_19",
+          "total_confirmed_deaths_due_to_covid_19",
           "daily_new_confirmed_cases_of_covid_19_per_million_people",
           "daily_new_confirmed_deaths_due_to_covid_19_per_million_people",
           "total_confirmed_cases_of_covid_19_per_million_people",
           "population_with_access_to_improved_sanitation_x",
           "debt_relief",
           "stringency_index",
-          "yll_rates_from_anthropogenic_air_pollution_per_100_000",
-          "deaths_from_fossil_pollution_as_a_share_of_total_anthropogenic_air_pollution_deaths", 
           "deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths",
+          "yll_rates_from_anthropogenic_air_pollution_per_100_000",
           "income_classification_world_bank_2017",
           "gdp_growth_from_previous_year_2020_q2",
           "gdp",
@@ -119,6 +118,7 @@ expl <- c("age_standardised_diabetes_prevalence_male",
           "percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016",
           "multidimensional_poverty_headcount_ratio_alkire_and_robles_2016",
           "Infant.mortality.rate")
+      
 
 after_drop <- gvif_drop(resp, expl, all_categories_complete)
 final_formula <- lm_formula_paster(resp, after_drop)
@@ -134,6 +134,5 @@ par(mfrow = c(2, 2))
 plot(step_all_categories)
 
 
-colnames(all_categories_complete)
 
 
