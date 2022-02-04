@@ -8,4 +8,4 @@ clean_fully_merged <- subset(clean_fully_merged, select = -1)
 clean_fully_merged <- clean_fully_merged[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
     145, 151, 156, 171,173,177,178, 186,193),]
 
-clean_fully_merged <- subset(clean_fully_merged, select = 1)
+list_of_countries <- subset(clean_fully_merged, select = 1)
