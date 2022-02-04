@@ -18,8 +18,8 @@ healthcare_sigvars_completed <- subset(healthcare_sigvars_completed, select = -1
 matthew_sig_var_complete <- read_csv("Final Model Data and Analysis/Categories Complete/matthew_sig_var_complete.csv")
 matthew_sig_var_complete <- subset(matthew_sig_var_complete, select = -1)
 
-rf_covid_imputed_data_variables <- read_csv("Final Model Data and Analysis/Categories Complete/rf_covid_imputed_data_variables.csv")
-rf_covid_imputed_data_variables <- subset(rf_covid_imputed_data_variables, select = -1)
+covid_imputed_data_variables <- read_csv("Final Model Data and Analysis/Categories Complete/covid_imputed_data_variables.csv")
+covid_imputed_data_variables <- subset(covid_imputed_data_variables, select = -1)
 
 rf_enviroment_imputed_data_variables <- read_csv("Final Model Data and Analysis/Categories Complete/rf_enviroment_imputed_data_variables.csv")
 rf_enviroment_imputed_data_variables <- subset(rf_enviroment_imputed_data_variables, select = -1)
@@ -30,12 +30,10 @@ econ_significant <- subset(econ_significant, select = -1)
 Completed_data_demorgraphic_ <- read_csv("Final Model Data and Analysis/Categories Complete/Completed data(demorgraphic).csv")
 Completed_data_demorgraphic_ <- subset(Completed_data_demorgraphic_, select = -1)
 
-all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_completed, rf_covid_imputed_data_variables, 
+all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_completed, covid_imputed_data_variables, 
                                  rf_enviroment_imputed_data_variables, econ_significant,Completed_data_demorgraphic_)
   
-View(all_categories_complete)
-
-colnames(all_categories_complete)
+View(covid_imputed_data_variables)
 # Automated VIF function 
 
 # Using score threshold of 5 
@@ -78,7 +76,6 @@ lm_formula_paster <- function(resp_var, expl_var) {
   return (form)
 }
 
-
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 
 expl <- c("age_standardised_diabetes_prevalence_male",
@@ -102,9 +99,7 @@ expl <- c("age_standardised_diabetes_prevalence_male",
           "days_since_10_daily_new_confirmed_deaths_recorded",
           "case_fatality_rate_of_covid_19_only_observations_with_100_cases",
           "days_since_30_daily_new_confirmed_cases_recorded",
-          "total_confirmed_deaths_due_to_covid_19",
           "daily_new_confirmed_cases_of_covid_19_per_million_people",
-          "daily_new_confirmed_deaths_due_to_covid_19_per_million_people",
           "total_confirmed_cases_of_covid_19_per_million_people",
           "population_with_access_to_improved_sanitation_x",
           "debt_relief",
@@ -126,6 +121,8 @@ final_model <- lm(final_formula, all_categories_complete)
 vif(final_model)
 
 step_all_categories <- step(final_model)
+
+# Check Adjusted R-squared 
 summary(step_all_categories)
 
 # We now plot our model assumptions:
@@ -133,6 +130,10 @@ summary(step_all_categories)
 par(mfrow = c(2, 2))
 plot(step_all_categories)
 
+# Can plot residuals against variables in model to look for patterns e.g. quadratic 
 
+# Or, interactions between variables so may need to include interaction term in model 
+
+# 
 
 
