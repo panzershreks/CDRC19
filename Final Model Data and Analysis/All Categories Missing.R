@@ -98,7 +98,7 @@ rf_enviroment_clean_data_variables <- subset(rf_enviroment_clean_data_variables,
 
 all_cat_with_missing <- cbind(matthew_sig_var_w_missing, econ_significant_pre_random_forest, healthcare_sigvars_missing, Not_Completed_data_demorgraphic_, covid_clean_data_variables, rf_enviroment_clean_data_variables)
 
-write.csv(all_cat_with_missing,"all_cat_with_missing.csv", row.names = TRUE)
+# write.csv(all_cat_with_missing,"all_cat_with_missing.csv", row.names = TRUE)
 
 
 # We will now inspect the missing data in the combined significant variables.
@@ -156,6 +156,8 @@ summary(step_all_cat_imputed)
 
 
 
+par(mfrow = c(2, 2))
+plot(step_all_cat_imputed)
 
 
 
