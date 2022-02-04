@@ -102,6 +102,6 @@ summary(disease_data$prevalence_of_obesity_female_who_2019)
 obesity_plot <- ggplot(aes(prevalence_of_obesity_male_who_2019,prevalence_of_obesity_female_who_2019),data = disease_data) + geom_point() + 
   ggtitle("Obesity Prevelance") + xlab("Prevelance of Obesity in Males") + ylab("Prevelance of Obesity in Females") + 
   geom_smooth(method = "lm",se = FALSE)
-ggsave(obesity_plot, file="obesity_plot.png", height = 5, width=12)
+# ggsave(obesity_plot, file="obesity_plot.png", height = 5, width=12)
 ?geom_smooth
 obesity_plot

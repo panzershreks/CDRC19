@@ -44,41 +44,6 @@ lm_formula_paster <- function(resp_var, expl_var) {
   return (form)
 }
 
-data(iris)
-
-resp <- "Sepal.Length"
-expl <- c("Sepal.Width", "Petal.Length", "Petal.Width", "Species")
-
-after_drop <- gvif_drop(resp, expl, iris)
-final_formula <- lm_formula_paster(resp, after_drop)
-final_model <- lm(final_formula, iris)
-vif(final_model)
-
-# If we did this manually (when categorical variable is present)
-model1 <- lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width+Species, iris)
-vif(model1) 
-# remove Petal.Length
-model2 <- lm(Sepal.Length~Sepal.Width+Petal.Width+Species, iris)
-vif(model2)
-# remove Petal.Width
-model3 <- lm(Sepal.Length~Sepal.Width+Species, iris)
-vif(model3) # final model
-
-
-resp2 <- "Sepal.Length"
-expl2 <- c("Sepal.Width", "Petal.Length", "Petal.Width")
-
-after_drop2 <- gvif_drop(resp2, expl2, iris)
-final_formula2 <- lm_formula_paster(resp2, after_drop2)
-final_model2 <- lm(final_formula2, iris)
-vif(final_model2)
-
-# (when there are no categorical variables)
-modelA <- lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, iris)
-vif(modelA)
-# remove Petal.Length
-modelB <- lm(Sepal.Length~Sepal.Width+Petal.Width, iris)
-vif(modelB) # final model
 
 
 
