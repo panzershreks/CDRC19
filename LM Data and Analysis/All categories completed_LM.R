@@ -12,30 +12,29 @@ library(missForest)
 
 ## Combining dataframes that are imputed BEFORE collation 
 
-healthcare_sigvars_completed <- read_csv("Final Model Data and Analysis/Categories Complete/healthcare_sigvars_completed.csv")
+healthcare_sigvars_completed <- read_csv("LM Data and Analysis/Categories Complete/healthcare_sigvars_completed.csv")
 healthcare_sigvars_completed <- subset(healthcare_sigvars_completed, select = -1)
 
-matthew_sig_var_complete <- read_csv("Final Model Data and Analysis/Categories Complete/matthew_sig_var_complete.csv")
+matthew_sig_var_complete <- read_csv("LM Data and Analysis/Categories Complete/matthew_sig_var_complete.csv")
 matthew_sig_var_complete <- subset(matthew_sig_var_complete, select = -1)
 
-covid_imputed_data_variables <- read_csv("Final Model Data and Analysis/Categories Complete/covid_imputed_data_variables.csv")
+enviroment_imputed_data_variables <- read_csv("LM Data and Analysis/Categories Complete/enviroment_imputed_data_variables.csv")
+enviroment_imputed_data_variables <- subset(enviroment_imputed_data_variables, select = -1)
+
+covid_imputed_data_variables <- read_csv("LM Data and Analysis/Categories Complete/covid_imputed_data_variables.csv")
 covid_imputed_data_variables <- subset(covid_imputed_data_variables, select = -1)
 
-rf_enviroment_imputed_data_variables <- read_csv("Final Model Data and Analysis/Categories Complete/rf_enviroment_imputed_data_variables.csv")
-rf_enviroment_imputed_data_variables <- subset(rf_enviroment_imputed_data_variables, select = -1)
-
-econ_significant <- read_csv("Final Model Data and Analysis/Categories Complete/econ_significant.csv")
+econ_significant <- read_csv("LM Data and Analysis/Categories Complete/econ_significant.csv")
 econ_significant <- subset(econ_significant, select = -1)
 
-Completed_data_demorgraphic_ <- read_csv("Final Model Data and Analysis/Categories Complete/Completed data(demorgraphic).csv")
+Completed_data_demorgraphic_ <- read_csv("LM Data and Analysis/Categories Complete/Completed data(demorgraphic).csv")
 Completed_data_demorgraphic_ <- subset(Completed_data_demorgraphic_, select = -1)
 
 all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_completed, covid_imputed_data_variables, 
-                                 rf_enviroment_imputed_data_variables, econ_significant,Completed_data_demorgraphic_)
+                                 enviroment_imputed_data_variables, econ_significant,Completed_data_demorgraphic_)
 
 View(all_categories_complete)
 
-colnames(all_categories_complete)
 # Automated VIF function 
 
 # Using score threshold of 5 
@@ -80,33 +79,9 @@ lm_formula_paster <- function(resp_var, expl_var) {
 
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 
-expl <- c("total_confirmed_deaths_due_to_covid_19_per_million_people",                                     
-          "healthy_diet_cost_percent_cannot_afford",                                                    
-          "cost_of_calorie_sufficient_diet_2017_usd_per_day",                                              
-          "healthy_diet_cost_percent_of_1_20_poverty_line",                                                
-          "life_satisfaction_in_cantril_ladder_world_happiness_report_2019",                               
-          "age_standardised_diabetes_prevalence_male",                                                     
-          "cardiovascular_diseases_ihme_2017",                                                             
-          "meningitis_ihme_2017",                                                                          
-          "prevalence_of_obesity_female_who_2019",                                                         
-          "kidney_disease_ihme_2017",                                                                      
-          "diabetes_blood_and_endocrine_disease_ihme_2017",                                                
-          "all_causes_disability_adjusted_life_years_who_2015",                                            
-          "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd",                    
-          "long_term_care_beds_per_1_000_population_oecd",                                                 
-          "publicly_owned_hospitals_per_million_population_oecd",                                          
-          "surgical_specialists_per_1_000_population_oecd",                                                
-          "income_support",                                                                                
-          "containment_index",                                                                             
-          "deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths",                  
-          "yll_rates_from_anthropogenic_air_pollution_per_100_000",                                        
-          "income_classification_world_bank_2017",                                                         
-          "gdp_growth_from_previous_year_2020_q2",                                                         
-          "gdp",                                                                                           
-          "national_poverty_lines_jolliffe_and_prydz_2016",                                                
-          "percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016",
-          "multidimensional_poverty_headcount_ratio_alkire_and_robles_2016",                               
-          "Infant.mortality.rate")
+resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
+expl <- colnames(all_categories_complete)
+expl <- expl[-1]
 
 
 after_drop <- gvif_drop(resp, expl, all_categories_complete)

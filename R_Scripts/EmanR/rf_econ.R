@@ -20,7 +20,7 @@ library(missForest)
 
 # Import data and basic pre-processing
 # convert entities to factors and all other columns to numeric, coerce to NAs
-econ_data_full <- read_csv("./../../Combined DataFrame Work/CSV Files/Clean/clean_economic.csv")
+econ_data_full <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_economic.csv")
 econ_data_full <- clean_names(econ_data_full)
 entity_col <- subset(econ_data_full, select = entity)
 econ_data_full <- subset(econ_data_full, select = -c(x1, entity))
@@ -49,7 +49,7 @@ miss_econ_df_rf <- miss_var_summary(econ_df_rf, sort_miss = TRUE)
 miss_econ_df_rf
 
 # import automate vif functions
-source("automate_vif.R") 
+source("R_Scripts/EmanR/automate_vif.R") 
 # e.g. usage
 # data(iris)
 # resp <- "Sepal.Length"
@@ -59,12 +59,19 @@ source("automate_vif.R")
 # final_model <- lm(final_formula, iris)
 # vif(final_model)
 
+names(econ_df_rf)[names(econ_df_rf) == 'mean'] <- 'mean_monthly_income'
+names(clean_econ)[names(clean_econ) == 'mean'] <- 'mean_monthly_income'
+clean_econ$gdp_growth_per_capita_from_previous_year_2020_q2 <- with(clean_econ, gdp_growth_from_previous_year_2020_q2 / pop2021)
+
+econ_df_rf$gdp_growth_per_capita_from_previous_year_2020_q2 <- with(econ_df_rf, gdp_growth_from_previous_year_2020_q2 / pop2021)
+
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
-expl <- c("mean", "pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
+expl <- c("mean_monthly_income", "pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
           "d5avgincome", "d6avgincome", "d7avgincome", "d8avgincome",
           "d9avgincome", "d10avgincome", "q1avgincome", "q2avgincome",
           "q3avgincome", "q4avgincome", "q5avgincome", "flag",
           "income_classification_world_bank_2017", "gini_index",
+          "gdp_growth_per_capita_from_previous_year_2020_q2",
           "gdp_growth_from_previous_year_2020_q2", "gdp_per_capita_ppp_2011_wdi_2016",
           "pop2021", "gini_coefficient_world_bank_2016", "gdp_per_capita","population_y", "gdp",
           "cost_of_closing_the_poverty_gap_in_int_2011_povcal_net_world_bank_2017",
@@ -79,9 +86,14 @@ expl <- c("mean", "pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avginco
 to_drop <- c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
              "d5avgincome", "d6avgincome", "d7avgincome", "d8avgincome",
              "d9avgincome", "d10avgincome", "q1avgincome", "q2avgincome",
-             "q3avgincome", "q4avgincome", "q5avgincome", "flag", "population_y")
+             "q3avgincome", "q4avgincome", "q5avgincome", "flag", "population_y",
+             "gdp_per_capita_ppp_2011_wdi_2016", "gdp", "gdp_growth_from_previous_year_2020_q2",
+             "pop2021")
 
 expl_dr <- expl[!expl %in% to_drop]
+
+
+
 
 after_drop <- gvif_drop(resp, expl_dr, econ_df_rf)
 drop_vif_formula <- lm_formula_paster(resp, after_drop)
@@ -89,14 +101,9 @@ model_drop_vif <- lm(drop_vif_formula, econ_df_rf)
 
 stepAIC <- step(model_drop_vif, direction="backward")
 stepAIC_names <- names(stepAIC$coefficients)[-1]
-stepBIC <- step(model_drop_vif, direction="backward", k=log(nrow(econ_df_rf)))
-stepBIC_names <- names(stepBIC$coefficients)[-1]
 stepAIC_names
-stepBIC_names
 
 summary(stepAIC)
-summary(stepBIC)
-anova(stepAIC, stepBIC)
 
 # AIC significant variables 
 # income_classification_world_bank_2017
@@ -112,21 +119,19 @@ anova(stepAIC, stepBIC)
 # multidimensional_poverty_headcount_ratio_alkire_and_robles_2016
 
 sig_econ_df <- subset(econ_df_rf, select=c(
-  income_classification_world_bank_2017,
-  gdp_growth_from_previous_year_2020_q2,
-  gdp,
-  national_poverty_lines_jolliffe_and_prydz_2016,
-  percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016,
-  multidimensional_poverty_headcount_ratio_alkire_and_robles_2016
+  mean_monthly_income,
+  gdp_growth_per_capita_from_previous_year_2020_q2,
+  multidimensional_poverty_headcount_ratio_alkire_and_robles_2016,
+  percentage_contribution_of_deprivations_in_living_standards_to_overall_poverty_alkire_and_robles_2016,
+  poverty_rate_50_percent_of_median_lis_key_figures_2018
 ))
 
 sig_econ_df_pre_rd <- subset(clean_econ, select=c(
-  income_classification_world_bank_2017,
-  gdp_growth_from_previous_year_2020_q2,
-  gdp,
-  national_poverty_lines_jolliffe_and_prydz_2016,
-  percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016,
-  multidimensional_poverty_headcount_ratio_alkire_and_robles_2016
+  mean_monthly_income,
+  gdp_growth_per_capita_from_previous_year_2020_q2,
+  multidimensional_poverty_headcount_ratio_alkire_and_robles_2016,
+  percentage_contribution_of_deprivations_in_living_standards_to_overall_poverty_alkire_and_robles_2016,
+  poverty_rate_50_percent_of_median_lis_key_figures_2018
 ))
 
 write.csv(sig_econ_df, file="econ_significant.csv")
