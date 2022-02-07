@@ -32,8 +32,9 @@ Completed_data_demorgraphic_ <- subset(Completed_data_demorgraphic_, select = -1
 
 all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_completed, covid_imputed_data_variables, 
                                  rf_enviroment_imputed_data_variables, econ_significant,Completed_data_demorgraphic_)
-  
-View(covid_imputed_data_variables)
+
+View(all_categories_complete)
+
 # Automated VIF function 
 
 # Using score threshold of 5 
@@ -134,6 +135,6 @@ plot(step_all_categories)
 
 # Or, interactions between variables so may need to include interaction term in model 
 
-# 
+
 
 
