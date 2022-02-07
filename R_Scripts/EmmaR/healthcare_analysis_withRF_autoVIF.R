@@ -12,15 +12,14 @@ library(missForest)
 
 # Import data 
 clean_healthcare <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_healthcare.csv")
-clean_healthcare <- subset(clean_healthcare, select = -1)
-colnames(clean_healthcare)
-# Remove first column 
 
+# Remove first column 
+clean_healthcare <- subset(clean_healthcare, select = -1)
+
+# Remove countries with no death data
 clean_healthcare <- clean_healthcare[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
                                                           145, 151, 156, 171,173,177,178, 186,193), ]
 clean_healthcare <- clean_names(clean_healthcare)
-
-View(clean_healthcare)
 
 # View missing data
 summary(clean_healthcare)
@@ -39,8 +38,6 @@ for (i in 1:78){
 
 
 # Dropping data below
-
-
 drop <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_have", 
           "share_of_people_who_agree_vaccines_are_safe", 
           "share_of_people_who_disagree_vaccines_are_safe", 
@@ -70,6 +67,8 @@ drop <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_h
           "surgical_specialists_headcount_oecd", 
           "hospital_beds_number_oecd", 
           "hospital_beds_nurse_to_bed_ratio_oecd", 
+          "health", 
+          "old_age",
           "public_expenditure_on_health_per_capita_in_developing_countries_ppp_world_bank_wdi_2017", 
           "how_much_we_think_we_spend_on_health_expenditure_ipsos_2016",
           "how_much_we_actually_spend_on_health_expenditure_ipsos_2016", 
@@ -85,22 +84,17 @@ drop <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_h
           "number_of_confirmed_measles_cases_who_2017", 
           "number_of_confirmed_diphtheria_cases_who_2017", 
           "estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017", 
-          "estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017", 
-          "old_age", 
-          "health")
-
-
+          "estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017")
 
 # Create 'healthcare_d1' without variables with > 50% missing data + justified reason for removing
 healthcare_sub <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
 healthcare_sub <- subset(healthcare_sub, select = -1)
 
-colnames(healthcare_sub)
 # Missing plot - does not look very readable
 healthcare_missing <- vis_miss(healthcare_sub, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
 healthcare_missing
 
-
+# Random forest   
 set.seed(100)
 
 healthcare_rf <- as.matrix(healthcare_sub)
@@ -109,6 +103,8 @@ healthcare_rf_temp <- missForest(healthcare_rf, maxiter = 5)
 healthcare_rf_completed <- healthcare_rf_temp$ximp
 
 healthcare_rf_completed <- data.frame(healthcare_rf_completed)
+
+View(healthcare_rf_completed)
 
 # Compute correlation 
 
@@ -131,7 +127,7 @@ View(healthcare_corr)
 #[32] "healthy_life_expectancy_ihme"                                                            
 #[33] "life_expectancy_ihme" 
 
-healthcare_rf_completed <- subset(healthcare_rf_completed, select = -c(32, 33))
+# healthcare_rf_completed <- subset(healthcare_rf_completed, select = -c(32, 33))
 
 # Automated VIF function 
 
