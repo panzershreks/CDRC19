@@ -56,3 +56,6 @@ after_drop <- gvif_drop(resp, expl, iris)
 final_formula <- lm_formula_paster(resp, after_drop)
 final_model <- glm(final_formula, iris, family = Gamma(link = "log"))
 vif(final_model)
+
+
+
