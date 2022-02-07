@@ -12,30 +12,29 @@ library(missForest)
 
 ## Combining dataframes that are imputed BEFORE collation 
 
-healthcare_sigvars_completed <- read_csv("Final Model Data and Analysis/Categories Complete/healthcare_sigvars_completed.csv")
+healthcare_sigvars_completed <- read_csv("LM Data and Analysis/Categories Complete/healthcare_sigvars_completed.csv")
 healthcare_sigvars_completed <- subset(healthcare_sigvars_completed, select = -1)
 
-matthew_sig_var_complete <- read_csv("Final Model Data and Analysis/Categories Complete/matthew_sig_var_complete.csv")
+matthew_sig_var_complete <- read_csv("LM Data and Analysis/Categories Complete/matthew_sig_var_complete.csv")
 matthew_sig_var_complete <- subset(matthew_sig_var_complete, select = -1)
 
-covid_imputed_data_variables <- read_csv("Final Model Data and Analysis/Categories Complete/covid_imputed_data_variables.csv")
+enviroment_imputed_data_variables <- read_csv("LM Data and Analysis/Categories Complete/enviroment_imputed_data_variables.csv")
+enviroment_imputed_data_variables <- subset(enviroment_imputed_data_variables, select = -1)
+
+covid_imputed_data_variables <- read_csv("LM Data and Analysis/Categories Complete/covid_imputed_data_variables.csv")
 covid_imputed_data_variables <- subset(covid_imputed_data_variables, select = -1)
 
-rf_enviroment_imputed_data_variables <- read_csv("Final Model Data and Analysis/Categories Complete/rf_enviroment_imputed_data_variables.csv")
-rf_enviroment_imputed_data_variables <- subset(rf_enviroment_imputed_data_variables, select = -1)
-
-econ_significant <- read_csv("Final Model Data and Analysis/Categories Complete/econ_significant.csv")
+econ_significant <- read_csv("LM Data and Analysis/Categories Complete/econ_significant.csv")
 econ_significant <- subset(econ_significant, select = -1)
 
-Completed_data_demorgraphic_ <- read_csv("Final Model Data and Analysis/Categories Complete/Completed data(demorgraphic).csv")
+Completed_data_demorgraphic_ <- read_csv("LM Data and Analysis/Categories Complete/Completed data(demorgraphic).csv")
 Completed_data_demorgraphic_ <- subset(Completed_data_demorgraphic_, select = -1)
 
 all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_completed, covid_imputed_data_variables, 
-                                 rf_enviroment_imputed_data_variables, econ_significant,Completed_data_demorgraphic_)
+                                 enviroment_imputed_data_variables, econ_significant,Completed_data_demorgraphic_)
 
 View(all_categories_complete)
 
-colnames(all_categories_complete)
 # Automated VIF function 
 
 # Using score threshold of 5 
@@ -96,10 +95,8 @@ expl <- c("total_confirmed_deaths_due_to_covid_19_per_million_people",
           "long_term_care_beds_per_1_000_population_oecd",                                                 
           "publicly_owned_hospitals_per_million_population_oecd",                                          
           "surgical_specialists_per_1_000_population_oecd",                                                
-          "income_support",                                                                                
-          "containment_index",                                                                             
-          "deaths_from_anthropogenic_pollution_as_a_share_of_total_air_pollution_deaths",                  
-          "yll_rates_from_anthropogenic_air_pollution_per_100_000",                                        
+          "yll_rates_from_all_air_pollution_per_100_000", 
+          "death_rates_from_all_air_pollution_per_100_000",
           "income_classification_world_bank_2017",                                                         
           "gdp_growth_from_previous_year_2020_q2",                                                         
           "gdp",                                                                                           
