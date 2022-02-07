@@ -1,6 +1,7 @@
 # Getting the data
 
 library(readr)
+library("janitor")
 
 clean_fully_merged <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_fully_merged.csv")
 clean_fully_merged <- clean_names(clean_fully_merged)
@@ -60,7 +61,9 @@ combined_all_missing <- cbind(response_variable, food_all_missing,
                               disease_all_missing, world_stats_all_missing, 
                               economic_all_missing, covid_all_missing,
                               healthcare_all_missing, demorgraphic_all_missing)
-  
+
+
+# write.csv(combined_all_missing,"combined_all_missing.csv", row.names = TRUE)
 
 
 

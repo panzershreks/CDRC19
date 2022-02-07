@@ -4,6 +4,16 @@ library(readr)
 library("janitor")
 library('missForest')
 
+# We read in the imputed data
+
+combined_imputed <- read_csv("GLM Data and Analysis/Combined CSV/combined_imputed.csv")
+combined_imputed <- clean_names(combined_imputed)
+combined_imputed <- subset(combined_imputed, select = -1)
+
+
+
+# We now run the GLM Model Function:
+
 #' Iteratively drop variables based on GVIF
 #' @param resp_var str of response variable
 #' @param expl_var list of str of explanatory variables
@@ -47,15 +57,20 @@ lm_formula_paster <- function(resp_var, expl_var) {
   return (form)
 }
 
-data(iris)
 
-resp <- "Sepal.Length"
-expl <- c("Sepal.Width", "Petal.Length", "Petal.Width", "Species")
 
-after_drop <- gvif_drop(resp, expl, iris)
+resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
+expl <- colnames(combined_imputed)
+expl <- expl[-1]
+
+
+after_drop <- gvif_drop(resp, expl, combined_imputed)
 final_formula <- lm_formula_paster(resp, after_drop)
-final_model <- glm(final_formula, iris, family = Gamma(link = "log"))
+final_model <- glm(final_formula, combined_imputed, family = Gamma(link = "log"))
 vif(final_model)
+
+after_drop
+
 
 
 
