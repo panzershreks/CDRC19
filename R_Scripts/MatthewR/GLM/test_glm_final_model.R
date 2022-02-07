@@ -113,8 +113,21 @@ all_cat_imputed_sig_model <- glm(total_confirmed_deaths_due_to_covid_19_per_mill
                                    surgical_specialists_per_1_000_population_oecd +
                                    income_support, data = all_cat_imputed_now_imputed, family = Gamma(link = "log"))
 
-par(mfrow = c(2, 2))
+#par(mfrow = c(2, 2))
 plot(all_cat_imputed_sig_model)
+
+summary(all_cat_imputed_sig_model)
+
+
+plot(all_cat_imputed_sig_model$fitted.values, all_cat_imputed_now_imputed$total_confirmed_deaths_due_to_covid_19_per_million_people)
+
+cor(all_cat_imputed_sig_model$fitted.values, all_cat_imputed_now_imputed$total_confirmed_deaths_due_to_covid_19_per_million_people)
+
+
+fitted(all_cat_imputed_sig_model)
+residuals(all_cat_imputed_sig_model)
+
+
 
 
 
