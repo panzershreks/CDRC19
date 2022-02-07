@@ -100,8 +100,21 @@ plot(disease_test_model)
 
 all_cat_imputed_now_imputed <- read_csv("LM Data and Analysis/Categories with Missing/all_cat_imputed_now_imputed.csv")
 
+# we put into the model only the variables which were significant in the final lm model before.
 
+all_cat_imputed_sig_model <- glm(total_confirmed_deaths_due_to_covid_19_per_million_people ~
+                                   healthy_diet_cost_percent_of_1_20_poverty_line +
+                                   age_standardised_diabetes_prevalence_male +
+                                   meningitis_ihme_2017 + prevalence_of_obesity_female_who_2019 +
+                                   diabetes_blood_and_endocrine_disease_ihme_2017 +
+                                   gdp_growth_per_capita_from_previous_year_2020_q2 +
+                                   poverty_rate_50_percent_of_median_lis_key_figures_2018 +
+                                   publicly_owned_hospitals_per_million_population_oecd +
+                                   surgical_specialists_per_1_000_population_oecd +
+                                   income_support, data = all_cat_imputed_now_imputed, family = Gamma(link = "log"))
 
+par(mfrow = c(2, 2))
+plot(all_cat_imputed_sig_model)
 
 
 
