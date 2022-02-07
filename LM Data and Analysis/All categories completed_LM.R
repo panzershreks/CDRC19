@@ -79,31 +79,9 @@ lm_formula_paster <- function(resp_var, expl_var) {
 
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 
-expl <- c("total_confirmed_deaths_due_to_covid_19_per_million_people",                                     
-          "healthy_diet_cost_percent_cannot_afford",                                                    
-          "cost_of_calorie_sufficient_diet_2017_usd_per_day",                                              
-          "healthy_diet_cost_percent_of_1_20_poverty_line",                                                
-          "life_satisfaction_in_cantril_ladder_world_happiness_report_2019",                               
-          "age_standardised_diabetes_prevalence_male",                                                     
-          "cardiovascular_diseases_ihme_2017",                                                             
-          "meningitis_ihme_2017",                                                                          
-          "prevalence_of_obesity_female_who_2019",                                                         
-          "kidney_disease_ihme_2017",                                                                      
-          "diabetes_blood_and_endocrine_disease_ihme_2017",                                                
-          "all_causes_disability_adjusted_life_years_who_2015",                                            
-          "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd",                    
-          "long_term_care_beds_per_1_000_population_oecd",                                                 
-          "publicly_owned_hospitals_per_million_population_oecd",                                          
-          "surgical_specialists_per_1_000_population_oecd",                                                
-          "yll_rates_from_all_air_pollution_per_100_000", 
-          "death_rates_from_all_air_pollution_per_100_000",
-          "income_classification_world_bank_2017",                                                         
-          "gdp_growth_from_previous_year_2020_q2",                                                         
-          "gdp",                                                                                           
-          "national_poverty_lines_jolliffe_and_prydz_2016",                                                
-          "percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016",
-          "multidimensional_poverty_headcount_ratio_alkire_and_robles_2016",                               
-          "Infant.mortality.rate")
+resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
+expl <- colnames(all_categories_complete)
+expl <- expl[-1]
 
 
 after_drop <- gvif_drop(resp, expl, all_categories_complete)
