@@ -132,4 +132,4 @@ par(mfrow = c(2, 2))
 plot(step_all_cat_imputed)
 
 
-
+all_cat_imputed$meningitis_ihme_2017
