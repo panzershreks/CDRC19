@@ -45,6 +45,45 @@ glm_mod_gamma_log <- glm(formula = lm_step_formula,
 par(mfrow = c(2, 2))
 plot(glm_mod_gamma_log, main="Gamma, Link=log")
 
+glm_mod_quasipois <- glm(formula = lm_step_formula,
+                         family = quasipoisson,
+                         data = all_categories_complete)
+par(mfrow = c(2, 2))
+plot(glm_mod_quasipois, main="quasipois")
+
+glm_mod_quasipois_inv <- glm(formula = lm_step_formula,
+                             family = quasipoisson(link = "inverse"),
+                             data = all_categories_complete)
+par(mfrow = c(2, 2))
+plot(glm_mod_quasipois_inv, main="quasipois, Link=inverse")
+
+glm(formula = lm_step_formula,
+    family = Gamma,
+    data = all_categories_complete)
+
+step(glm_mod_gamma_log)
+
+foo <- glm(formula = total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+      healthy_diet_cost_percent_cannot_afford + life_satisfaction_in_cantril_ladder_world_happiness_report_2019 + 
+      prevalence_of_obesity_female_who_2019 + publicly_owned_hospitals_per_million_population_oecd + 
+      surgical_specialists_per_1_000_population_oecd + income_support + 
+      gdp_growth_per_capita_from_previous_year_2020_q2 + poverty_rate_50_percent_of_median_lis_key_figures_2018, 
+    family = Gamma(link = "log"), data = all_categories_complete)
+par(mfrow = c(2, 2))
+plot(foo, main="foo")
+
+par(mfrow = c(1, 1))
+plot(x=fitted(foo), y=all_categories_complete$total_confirmed_deaths_due_to_covid_19_per_million_people,xlab='Predicted Values',
+     ylab='Actual Values',
+     main='Predicted vs. Actual Values')
+
+
+rf_mod <- randomForest(formula = total_confirmed_deaths_due_to_covid_19_per_million_people ~ 
+               healthy_diet_cost_percent_cannot_afford + life_satisfaction_in_cantril_ladder_world_happiness_report_2019 + 
+               prevalence_of_obesity_female_who_2019 + publicly_owned_hospitals_per_million_population_oecd + 
+               surgical_specialists_per_1_000_population_oecd + income_support + 
+               gdp_growth_per_capita_from_previous_year_2020_q2 + poverty_rate_50_percent_of_median_lis_key_figures_2018,
+             data = all_categories_complete)
 
 
 
