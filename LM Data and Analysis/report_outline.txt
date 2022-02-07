@@ -1,0 +1,50 @@
+Introduction
+
+Motivation and Background
+
+Data collection
+  - data sources
+
+Covid-19 death rate response variables
+
+Missing Data (summary statistics)
+  - Category A
+  - Category B
+
+imputation
+  - about imputation
+  - random forest imputation and correlation (VIF)
+    - why this imputation method, using GVIF for factor variables etc.
+    - category A
+    - category B
+  - other imputation methods (MICE, pmm, cart)
+
+model selection
+  - stepwise selection, forward? backward? AIC? BIC?
+    - category A (mention correlation between variables in imputed datasets at this point
+    - category B
+
+robustness?
+  - combining significant categories
+  - imputing using these categories
+  - model comparison
+  - robustness discussion
+
+final model
+  - properly write out model
+  - model checking
+    - epsilon are independent
+    - epsilon have constant variance
+    - epsilon are normally distributed (not very important)
+
+results
+  - summary statistics
+  - discussion
+
+further investigation
+  - noscomial infections
+  - bayesian?
+  - further results
+
+conclusion
+  - possible further avenues of research/investigation
