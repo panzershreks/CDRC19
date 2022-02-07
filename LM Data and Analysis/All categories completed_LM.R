@@ -35,6 +35,8 @@ all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_co
 
 View(all_categories_complete)
 
+all_categories_complete$income_support <- as.factor(all_categories_complete$income_support)
+
 # Automated VIF function 
 
 # Using score threshold of 5 
@@ -102,6 +104,8 @@ plot(step_all_categories)
 # Can plot residuals against variables in model to look for patterns e.g. quadratic 
 
 # Or, interactions between variables so may need to include interaction term in model 
+
+
 
 
 
