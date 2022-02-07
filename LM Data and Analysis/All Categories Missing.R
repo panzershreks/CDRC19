@@ -6,7 +6,6 @@ library(naniar)
 library(ggplot2)
 library('missForest')
 library(car)
-
 library(datasets)
 library(car)
 
@@ -111,17 +110,16 @@ vis_miss(all_cat_with_missing, sort_miss = TRUE) + theme(axis.text.x = element_t
 set.seed(100)
 all_cat_rf <- missForest(as.matrix(all_cat_with_missing))
 all_cat_imputed <- as.data.frame.matrix(all_cat_rf$ximp)
-
+# write.csv(all_cat_imputed,"all_cat_imputed_now_imputed.csv", row.names = TRUE)
 
 # We see that we have no missing data now.
 vis_miss(all_cat_imputed, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
 
 
-
 # We will now do model selection, and we begin by using VIF
 
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
-expl <- c("healthy_diet_cost_percent_cannot_afford","cost_of_calorie_sufficient_diet_2017_usd_per_day","healthy_diet_cost_percent_of_1_20_poverty_line","life_satisfaction_in_cantril_ladder_world_happiness_report_2019","age_standardised_diabetes_prevalence_male","cardiovascular_diseases_ihme_2017","meningitis_ihme_2017","prevalence_of_obesity_female_who_2019","kidney_disease_ihme_2017","diabetes_blood_and_endocrine_disease_ihme_2017","income_classification_world_bank_2017","gdp_growth_from_previous_year_2020_q2","gdp","national_poverty_lines_jolliffe_and_prydz_2016","percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016","multidimensional_poverty_headcount_ratio_alkire_and_robles_2016","all_causes_disability_adjusted_life_years_who_2015","beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd","long_term_care_beds_per_1_000_population_oecd","publicly_owned_hospitals_per_million_population_oecd","surgical_specialists_per_1_000_population_oecd","infant_mortality_rate","income_support","containment_index","yll_rates_from_all_air_pollution_per_100_000","death_rates_from_all_air_pollution_per_100_000")
+expl <- c("healthy_diet_cost_percent_cannot_afford","cost_of_calorie_sufficient_diet_2017_usd_per_day","healthy_diet_cost_percent_of_1_20_poverty_line","life_satisfaction_in_cantril_ladder_world_happiness_report_2019","age_standardised_diabetes_prevalence_male","cardiovascular_diseases_ihme_2017","meningitis_ihme_2017","prevalence_of_obesity_female_who_2019","kidney_disease_ihme_2017","diabetes_blood_and_endocrine_disease_ihme_2017","mean_monthly_income","gdp_growth_per_capita_from_previous_year_2020_q2","multidimensional_poverty_headcount_ratio_alkire_and_robles_2016","percentage_contribution_of_deprivations_in_living_standards_to_overall_poverty_alkire_and_robles_2016","poverty_rate_50_percent_of_median_lis_key_figures_2018","all_causes_disability_adjusted_life_years_who_2015","beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd","long_term_care_beds_per_1_000_population_oecd","publicly_owned_hospitals_per_million_population_oecd","surgical_specialists_per_1_000_population_oecd","infant_mortality_rate","income_support","containment_index","yll_rates_from_all_air_pollution_per_100_000","death_rates_from_all_air_pollution_per_100_000")
 after_drop <- gvif_drop(resp, expl, all_cat_imputed)
 final_formula <- lm_formula_paster(resp, after_drop)
 final_model <- lm(final_formula, all_cat_imputed)
@@ -129,8 +127,6 @@ vif(final_model)
 
 step_all_cat_imputed <- step(final_model)
 summary(step_all_cat_imputed)
-
-
 
 par(mfrow = c(2, 2))
 plot(step_all_cat_imputed)
