@@ -19,7 +19,7 @@ combined_imputed <- subset(combined_imputed, select = -1)
 #' @param expl_var list of str of explanatory variables
 #' @param vif_max num for max VIF allowed (not GVIF)
 #' @return list of str of explanatory variables after dropping
-gvif_drop <- function(resp_var, expl_var, data, vif_max=5) {
+gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
   gvif_max <- vif_max ^ 0.5
   lm_formula <- lm_formula_paster(resp_var, expl_var)
   model <- glm(lm_formula, data, family = Gamma(link ="log"))
@@ -71,6 +71,7 @@ vif(final_model)
 
 after_drop
 
+step_final_model <- step(final_model)
 
-
+summary(step_final_model)
 
