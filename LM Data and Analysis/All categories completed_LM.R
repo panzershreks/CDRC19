@@ -35,6 +35,7 @@ all_categories_complete <- cbind(matthew_sig_var_complete, healthcare_sigvars_co
 
 View(all_categories_complete)
 
+
 all_categories_complete$income_support <- as.factor(all_categories_complete$income_support)
 
 # Automated VIF function 

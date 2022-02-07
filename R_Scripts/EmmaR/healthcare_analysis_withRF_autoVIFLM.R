@@ -36,7 +36,6 @@ for (i in 1:78){
 }
 
 
-
 # Dropping data below
 drop <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_have", 
           "share_of_people_who_agree_vaccines_are_safe", 
@@ -84,7 +83,8 @@ drop <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_h
           "number_of_confirmed_measles_cases_who_2017", 
           "number_of_confirmed_diphtheria_cases_who_2017", 
           "estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017", 
-          "estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017")
+          "estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017", 
+          "percentage_of_persons_without_health_insurance_percent")
 
 # Create 'healthcare_d1' without variables with > 50% missing data + justified reason for removing
 healthcare_sub <- clean_healthcare[,!(names(clean_healthcare) %in% drop)]
@@ -92,23 +92,24 @@ healthcare_sub <- subset(healthcare_sub, select = -1)
 
 # Missing plot - does not look very readable
 healthcare_missing <- vis_miss(healthcare_sub, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
-healthcare_missing
 
 # Random forest   
 set.seed(100)
 
 healthcare_rf <- as.matrix(healthcare_sub)
-healthcare_rf_temp <- missForest(healthcare_rf, maxiter = 5)
+
+healthcare_rf_temp <- missForest(healthcare_rf, ntree = 50, maxiter = 5)
 
 healthcare_rf_completed <- healthcare_rf_temp$ximp
 
 healthcare_rf_completed <- data.frame(healthcare_rf_completed)
 
-View(healthcare_rf_completed)
+
+colnames(healthcare_rf_completed)
 
 # Compute correlation 
 
-corr_data <- healthcare_rf_completed[,2:50]  
+corr_data <- healthcare_rf_completed[,2:29]  
 
 healthcare_corr <- vis_cor(corr_data) + theme(axis.text.x = element_text(angle = 90)) + 
   ggtitle("Healthcare Variables Correlation Plot")
@@ -124,10 +125,10 @@ healthcare_corr <- read_csv("R_Scripts/EmmaR/healthcare_corr.csv")
 View(healthcare_corr)
 
 # Remove any variables with corr = 1
-#[32] "healthy_life_expectancy_ihme"                                                            
-#[33] "life_expectancy_ihme" 
+#[25] "healthy_life_expectancy_ihme"                                                            
+#[26] "life_expectancy_ihme" 
 
-# healthcare_rf_completed <- subset(healthcare_rf_completed, select = -c(32, 33))
+healthcare_rf_completed <- subset(healthcare_rf_completed, select = -c(25, 26))
 
 # Automated VIF function 
 
@@ -172,16 +173,11 @@ lm_formula_paster <- function(resp_var, expl_var) {
 }
 
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
-expl <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_have",             
-        "share_of_people_who_agree_vaccines_are_safe",                                             
-        "share_of_people_who_disagree_vaccines_are_safe",                                          
-        "share_of_people_who_agree_vaccines_are_effective",                                       
-        "share_of_people_who_disagree_vaccines_are_effective",                                   
-        "share_of_people_who_agree_vaccines_are_important_for_children_to_have",                  
+
+expl <- c("standard_deviation_of_life_satisfaction",
         "all_causes_disability_adjusted_life_years_who_2015",                                      
         "share_of_population_covered_by_health_insurance_ilo_2014",                               
         "current_health_expenditure_per_capita_ppp_current_international",                        
-        "health_expenditure_per_capita_ppp_world_bank_2016",                                       
         "haq_index_ihme_2017",                                                                    
         "beds_in_for_profit_privately_owned_hospitals_per_1_000_population_oecd",                  
         "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd",              
@@ -192,7 +188,6 @@ expl <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_h
         "general_hospitals_per_million_population_oecd",                                          
         "hospitals_per_million_population_oecd",                                                   
         "long_term_care_beds_per_1_000_population_oecd",                                           
-        "long_term_care_beds_per_1_000_population_aged_65_oecd",                                   
         "midwives_per_1_000_live_births_oecd",                                                    
         "not_for_profit_privately_owned_hospitals_per_million_population_oecd",                    
         "nurses_per_1_000_population_oecd",                                                        
@@ -202,23 +197,7 @@ expl <- c("share_of_people_who_disagree_vaccines_are_important_for_children_to_h
         "publicly_owned_hospitals_per_million_population_oecd",                                    
         "surgical_specialists_per_1_000_population_oecd",                                          
         "hospital_beds_per_1_000_population_oecd",                                                
-        "years_lived_with_disability_ihme",                                                        
-        "public_expenditure_on_health_per_capita_in_developing_countries_ppp_world_bank_wdi_2017", 
-        "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure",
-        "public_expenditure_on_health_percent_gdp_owid_extrapolated_series",                       
-        "total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors",         
-        "bcg_immunization_coverage_among_1_year_olds_who_2017",                                    
-        "hepatitis_b_hep_b3_immunization_coverage_among_1_year_olds_who_2017",                    
-        "dtp3_immunization_coverage_among_1_year_olds_who_2017",                                   
-        "polio_pol3_immunization_coverage_among_1_year_olds_who_2017",                             
-        "measles_mcv_immunization_coverage_among_1_year_olds_who_2017",                            
-        "number_of_confirmed_tetanus_cases_who_2017",                                              
-        "number_confirmed_polio_cases_who_2017",                                                 
-        "number_of_confirmed_pertussis_cases_who_2017",                                            
-        "number_of_confirmed_measles_cases_who_2017",                                              
-        "number_of_confirmed_diphtheria_cases_who_2017",                                           
-        "estimated_deaths_due_to_tuberculosis_per_100_000_population_excluding_hiv_who_2017",     
-        "estimated_number_of_deaths_due_to_tuberculosis_excluding_hiv_who_2017")
+        "total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors")
 
 
 after_drop <- gvif_drop(resp, expl, healthcare_rf_completed)
@@ -234,16 +213,13 @@ summary(step_healthcare)
 par(mfrow = c(2, 2))
 plot(step_healthcare)
 
-# Dataframe with all significant variables (before imputation)
+# Dataframe with all variables in step function before imputation 
 
-healthcare_sigvars_missing <- subset(clean_healthcare, select = c("share_of_people_who_disagree_vaccines_are_important_for_children_to_have",
-                                                          "share_of_people_who_disagree_vaccines_are_safe", 
-                                                          "share_of_people_who_agree_vaccines_are_effective", 
-                                                          "general_hospitals_per_million_population_oecd", 
-                                                          "not_for_profit_privately_owned_hospitals_per_million_population_oecd", 
-                                                          "psychiatric_care_beds_per_1_000_population_oecd", 
-                                                          "publicly_owned_hospitals_per_million_population_oecd", 
-                                                          "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure")) 
+healthcare_sigvars_missing <- subset(clean_healthcare, select = c("all_causes_disability_adjusted_life_years_who_2015", 
+                                                                "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd", 
+                                                                "long_term_care_beds_per_1_000_population_oecd", 
+                                                                "publicly_owned_hospitals_per_million_population_oecd", 
+                                                                "surgical_specialists_per_1_000_population_oecd")) 
 
 
 View(healthcare_sigvars_missing)
@@ -265,6 +241,3 @@ View(healthcare_sigvars_completed)
 
 # Including variables that are significant at and 5% and greater than level, with imputed values
 write.csv(healthcare_sigvars_completed, file = "healthcare_sigvars_completed.csv", row.names = TRUE)
-
-
-
