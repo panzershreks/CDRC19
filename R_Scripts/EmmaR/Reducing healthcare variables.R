@@ -78,7 +78,7 @@ healthcare_all_mis <- subset(healthcare_sub, select = -1)
 
 View(healthcare_all_mis)
 
-write.csv(healthcare_all_mis, file = "healthcare_all_mis", row.names = TRUE)
+write.csv(healthcare_all_mis, file = "healthcare_all_mis.csv", row.names = TRUE)
 
 
 
