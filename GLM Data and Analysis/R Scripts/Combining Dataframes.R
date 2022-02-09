@@ -35,35 +35,35 @@ to_drop <-c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
 economic_all_missing = economic_all_missing[,!(names(economic_all_missing)%in% to_drop)]
 
 
-#write.csv(economic_all_missing,"economic_all_missing.csv", row.names = TRUE)
-#write.csv(disease_all_missing,"disease_data_complete.csv", row.names = TRUE)
-#write.csv(food_all_missing,"food_all_missing.csv", row.names = TRUE)
-#write.csv(world_stats_all_missing,"world_stats_all_missing.csv", row.names = TRUE)
-#write.csv(response_variable,"response_variable.csv", row.names = TRUE)
+# write.csv(economic_all_missing,"GLM Data and Analysis//Category CSV//economic_all_missing.csv", row.names = TRUE)
+# write.csv(disease_all_missing,"GLM Data and Analysis//Category CSV//disease_data_complete.csv", row.names = TRUE)
+# write.csv(food_all_missing,"GLM Data and Analysis//Category CSV//food_all_missing.csv", row.names = TRUE)
+# write.csv(world_stats_all_missing,"GLM Data and Analysis//Category CSV//world_stats_all_missing.csv", row.names = TRUE)
+# write.csv(response_variable,"GLM Data and Analysis//Category CSV//response_variable.csv", row.names = TRUE)
 
 # We now combine them all into one dataframe
 
 # we need to read the other dataframes in now:
 
-covid_all_missing <- read_csv("GLM Data and Analysis/covid_all_missing.csv")
+covid_all_missing <- read_csv("GLM Data and Analysis/Category CSV/covid_all_missing.csv")
 covid_all_missing <- clean_names(covid_all_missing)
 covid_all_missing <- subset(covid_all_missing, select = -1)
 
-healthcare_all_missing <- read_csv("GLM Data and Analysis/healthcare_all_missing.csv")
+healthcare_all_missing <- read_csv("GLM Data and Analysis/Category CSV/healthcare_all_missing.csv")
 healthcare_all_missing <- clean_names(healthcare_all_missing)
 healthcare_all_missing <- subset(healthcare_all_missing, select = -1)
 
-demographic_all_missing <- read_csv("GLM Data and Analysis/demographic_all_missing.csv")
+demographic_all_missing <- read_csv("GLM Data and Analysis/Category CSV/demographic_all_missing.csv")
 demographic_all_missing <- clean_names(demographic_all_missing)
 
 
 combined_all_missing <- cbind(response_variable, food_all_missing, 
                               disease_all_missing, world_stats_all_missing, 
                               economic_all_missing, covid_all_missing,
-                              healthcare_all_missing, demorgraphic_all_missing)
+                              healthcare_all_missing, demographic_all_missing)
 
 
-# write.csv(combined_all_missing,"combined_all_missing.csv", row.names = TRUE)
+# write.csv(combined_all_missing,"GLM Data and Analysis//Combined CSV//combined_all_missing.csv", row.names = TRUE)
 
 
 

@@ -58,7 +58,6 @@ lm_formula_paster <- function(resp_var, expl_var) {
 }
 
 
-
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 expl <- colnames(combined_imputed)
 expl <- expl[-1]
@@ -74,4 +73,6 @@ after_drop
 step_final_model <- step(final_model)
 
 summary(step_final_model)
+
+plot(step_final_model)
 

@@ -9,4 +9,14 @@ library(car)
 library(datasets)
 library(car)
 
+combined_all_missing <- read_csv("GLM Data and Analysis/Combined CSV/combined_all_missing.csv")
+combined_all_missing <- clean_names(combined_all_missing)
+combined_all_missing <- subset(combined_all_missing, select = -1)
+
+# We now use random forests to impute the missing data
+set.seed(100)
+combined_imputed_rf <- missForest(as.matrix(combined_all_missing))
+combined_imputed <- as.data.frame.matrix(combined_imputed_rf$ximp)
+
+# write.csv(combined_imputed,"GLM Data and Analysis//Combined CSV//combined_imputed.csv", row.names = TRUE)
 
