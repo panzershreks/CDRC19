@@ -1,5 +1,3 @@
-# GLM Matthew Categories
-
 library(readr)
 library("janitor")
 library(naniar)
@@ -16,11 +14,11 @@ combined_all_missing <- subset(combined_all_missing, select = -1)
 # disease = 19 -> 46
 # food/water = 2 -> 18 + world stats = 47
 
-disease_missing <- subset(combined_all_missing, select = c(1,19:46))
+food_missing <- subset(combined_all_missing, select = c(1:18, 47))
 
 set.seed(100)
-disease_rf <- missForest(as.matrix(disease_missing))
-disease_imputed <- as.data.frame.matrix(disease_rf$ximp)
+food_rf <- missForest(as.matrix(food_missing))
+food_imputed <- as.data.frame.matrix(food_rf$ximp)
 
 # We now run the GLM Model Function:
 
@@ -69,13 +67,13 @@ lm_formula_paster <- function(resp_var, expl_var) {
 
 
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
-expl <- colnames(disease_imputed)
+expl <- colnames(food_imputed)
 expl <- expl[-1]
 
 
-after_drop <- gvif_drop(resp, expl, disease_imputed)
+after_drop <- gvif_drop(resp, expl, food_imputed)
 final_formula <- lm_formula_paster(resp, after_drop)
-final_model <- glm(final_formula, disease_imputed, family = Gamma(link = "log"))
+final_model <- glm(final_formula, food_imputed, family = Gamma(link = "log"))
 vif(final_model)
 
 after_drop
@@ -85,12 +83,3 @@ step_final_model <- step(final_model)
 summary(step_final_model)
 
 plot(step_final_model)
-
-
-
-
-
-
-
-
-
