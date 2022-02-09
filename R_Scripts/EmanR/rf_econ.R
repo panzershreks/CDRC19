@@ -92,10 +92,10 @@ to_drop <- c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
 
 expl_dr <- expl[!expl %in% to_drop]
 
+plot(x=econ_df_rf$gdp_growth_from_previous_year_2020_q2, y=econ_df_rf$gdp)
 
 
-
-after_drop <- gvif_drop(resp, expl_dr, econ_df_rf)
+fafter_drop <- gvif_drop(resp, expl_dr, econ_df_rf)
 drop_vif_formula <- lm_formula_paster(resp, after_drop)
 model_drop_vif <- lm(drop_vif_formula, econ_df_rf)
 
