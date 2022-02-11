@@ -152,6 +152,22 @@ summary(step_drop_vif)
 
 plot(step_drop_vif)
 
+sig_econ_df <- subset(econ_df_rf, select=c(
+  mean_monthly_income,
+  gdp_growth_per_capita_from_previous_year_2020_q2,
+  multidimensional_poverty_headcount_ratio_alkire_and_robles_2016,
+  poverty_rate_50_percent_of_median_lis_key_figures_2018
+))
+
+sig_econ_df_pre_rd <- subset(clean_econ, select=c(
+  mean_monthly_income,
+  gdp_growth_per_capita_from_previous_year_2020_q2,
+  multidimensional_poverty_headcount_ratio_alkire_and_robles_2016,
+  poverty_rate_50_percent_of_median_lis_key_figures_2018
+))
+
+# write.csv(sig_econ_df, file="econ_significant_complete.csv")
+# write.csv(sig_econ_df_pre_rd, file="econ_significant_miss.csv")
 
 
 
