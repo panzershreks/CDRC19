@@ -30,4 +30,19 @@ demorgraphic_Missing_significant_glm <- subset(demorgraphic_Missing_significant_
 
 # ADD ECON 
 
+all_categories_missing_GLM <- cbind(healthcare_sigvars_missing_GLM, 
+                                    food_missing_sig_var, 
+                                    disease_missing_sig_var, 
+                                    glm_enviroment_clean_data_variables, 
+                                    glm_covid_clean_data_variables, 
+                                    demorgraphic_Missing_significant_glm)
+
+View(all_categories_missing_GLM)
+
+# Random Forest 
+
+# GLM 
+
+
+
 
