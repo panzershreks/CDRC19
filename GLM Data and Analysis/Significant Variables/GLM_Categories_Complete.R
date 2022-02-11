@@ -84,11 +84,9 @@ lm_formula_paster <- function(resp_var, expl_var) {
   return (form)
 }
 
-
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 expl <- colnames(all_categories_complete_GLM)
 expl <- expl[-1]
-
 
 after_drop <- gvif_drop(resp, expl, all_categories_complete_GLM)
 final_formula <- lm_formula_paster(resp, after_drop)

@@ -40,6 +40,10 @@ all_categories_missing_GLM <- cbind(healthcare_sigvars_missing_GLM,
 
 # Random Forest 
 
+set.seed(100)
+
+all_categories_missing_GLM_rf <- missForest(as.matrix(all_categories_missing_GLM))
+all_categories_missing_GLM_imputed <- as.data.frame.matrix(all_categories_missing_GLM_rf$ximp)
 
 # We now run the GLM Model Function:
 
