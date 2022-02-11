@@ -90,7 +90,7 @@ expl <- expl[-1]
 
 after_drop <- gvif_drop(resp, expl, all_categories_complete_GLM)
 final_formula <- lm_formula_paster(resp, after_drop)
-final_model <- glm(final_formula, combined_imputed, family = Gamma(link = "log"))
+final_model <- glm(final_formula, all_categories_complete_GLM, family = Gamma(link = "log"))
 vif(final_model)
 
 after_drop
