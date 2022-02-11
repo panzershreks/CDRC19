@@ -22,7 +22,6 @@ set.seed(100)
 healthcare_all_rf <- missForest(as.matrix(healthcare_all_missing_clean))
 healthcare_imputed_rf <- as.data.frame.matrix(healthcare_all_rf$ximp)
 
-
 # GLM Model VIF Function :
 
 #' Iteratively drop variables based on GVIF
@@ -72,7 +71,6 @@ resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 expl <- colnames(healthcare_imputed_rf)
 expl <- expl[-1]
 
-
 after_drop <- gvif_drop(resp, expl, healthcare_imputed_rf)
 final_formula <- lm_formula_paster(resp, after_drop)
 final_model <- glm(final_formula, healthcare_imputed_rf, family = Gamma(link = "log"))
@@ -86,3 +84,29 @@ summary(step_final_model)
 
 plot(step_final_model)
 
+# Take variables from step function and create new dataframe (these have missing values )
+healthcare_sigvars_missing_GLM <- subset(healthcare_all_missing_clean, select = c("total_confirmed_deaths_due_to_covid_19_per_million_people", 
+                                                                                "all_causes_disability_adjusted_life_years_who_2015", 
+                                                                                "share_of_population_covered_by_health_insurance_ilo_2014", 
+                                                                                "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd", 
+                                                                                "beds_in_publicly_owned_hospitals_per_1_000_population_oecd", 
+                                                                                "nurses_per_1_000_population_oecd", 
+                                                                                "psychiatric_care_beds_per_1_000_population_oecd", 
+                                                                                "publicly_owned_hospitals_per_million_population_oecd", 
+                                                                                "surgical_specialists_per_1_000_population_oecd", 
+                                                                                "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure", 
+                                                                                "total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors")) 
+colnames(healthcare_sigvars_missing_GLM)
+
+# Then run random forest imputation 
+
+set.seed(100)
+
+healthcare_sigvars_rf_GLM <- missForest(as.matrix(healthcare_sigvars_missing_GLM))
+healthcare_sigvars_imputed_rf_GLM <- as.data.frame.matrix(healthcare_sigvars_rf_GLM$ximp)
+
+View(healthcare_sigvars_imputed_rf_GLM)
+
+healthcare_sigvars_imputed_rf_GLM <- subset(healthcare_sigvars_imputed_rf_GLM, select = -1)
+
+View(healthcare_sigvars_imputed_rf_GLM)
