@@ -49,9 +49,9 @@ covid_all_missing <- read_csv("GLM Data and Analysis/Category CSV/covid_all_miss
 covid_all_missing <- clean_names(covid_all_missing)
 covid_all_missing <- subset(covid_all_missing, select = -1)
 
-healthcare_all_missing <- read_csv("GLM Data and Analysis/Category CSV/healthcare_all_missing.csv")
-healthcare_all_missing <- clean_names(healthcare_all_missing)
-healthcare_all_missing <- subset(healthcare_all_missing, select = -1)
+healthcare_all_mis <- read_csv("GLM Data and Analysis/Category CSV/healthcare_all_mis.csv")
+healthcare_all_mis <- clean_names(healthcare_all_mis)
+healthcare_all_mis <- subset(healthcare_all_mis, select = -c(1,2,3))
 
 demographic_all_missing <- read_csv("GLM Data and Analysis/Category CSV/demographic_all_missing.csv")
 demographic_all_missing <- clean_names(demographic_all_missing)
