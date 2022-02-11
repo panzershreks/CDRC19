@@ -13,9 +13,13 @@ combined_all_missing <- read_csv("GLM Data and Analysis/Combined CSV/combined_al
 combined_all_missing <- clean_names(combined_all_missing)
 combined_all_missing <- subset(combined_all_missing, select = -1)
 
+combined_all_missing$income_support <- as.factor(combined_all_missing$income_support)
+combined_all_missing$debt_relief <- as.factor(combined_all_missing$debt_relief)
+combined_all_missing$income_classification_world_bank_2017 <- as.factor(combined_all_missing$income_classification_world_bank_2017)
+
 # We now use random forests to impute the missing data
 set.seed(100)
-combined_imputed_rf <- missForest(as.matrix(combined_all_missing))
+combined_imputed_rf <- missForest(as.data.frame(combined_all_missing))
 combined_imputed <- as.data.frame.matrix(combined_imputed_rf$ximp)
 
 # write.csv(combined_imputed,"GLM Data and Analysis//Combined CSV//combined_imputed.csv", row.names = TRUE)

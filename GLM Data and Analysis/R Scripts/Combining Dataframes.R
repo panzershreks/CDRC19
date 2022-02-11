@@ -25,12 +25,18 @@ response_variable <- clean_fully_merged[,57]
 
 
 economic_all_missing <- subset(clean_fully_merged, select = c(238:273))
-to_drop <-c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
-  "d5avgincome", "d6avgincome", "d7avgincome", "d8avgincome",
-  "d9avgincome", "d10avgincome", "q1avgincome", "q2avgincome",
-  "q3avgincome", "q4avgincome", "q5avgincome", "flag", "population_y",
-  "gdp_per_capita_ppp_2011_wdi_2016", "gdp", "gdp_growth_from_previous_year_2020_q2",
-  "pop2021")
+names(economic_all_missing)[names(economic_all_missing) == 'mean'] <- 'mean_monthly_income'
+economic_all_missing$gdp_growth_per_capita_from_previous_year_2020_q2 <- with(economic_all_missing, gdp_growth_from_previous_year_2020_q2 / pop2021)
+to_drop <- c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
+             "d5avgincome", "d6avgincome", "d7avgincome", "d8avgincome",
+             "d9avgincome", "d10avgincome", "q1avgincome", "q2avgincome",
+             "q3avgincome", "q4avgincome", "q5avgincome", "flag", "population_y",
+             "gdp_per_capita_ppp_2011_wdi_2016", "gdp", "gdp_growth_from_previous_year_2020_q2",
+             "pop2021", "gini_coefficient_world_bank_2016", 
+             "median_monthly_per_capita_expenditure_in_2011_int_povcal_net_2017",
+             "percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016",
+             "percentage_contribution_of_deprivations_in_health_to_overall_poverty_alkire_and_robles_2016",
+             "percentage_contribution_of_deprivations_in_living_standards_to_overall_poverty_alkire_and_robles_2016")
 
 economic_all_missing = economic_all_missing[,!(names(economic_all_missing)%in% to_drop)]
 
