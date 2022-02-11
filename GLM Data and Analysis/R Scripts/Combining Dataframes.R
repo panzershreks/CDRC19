@@ -60,7 +60,7 @@ demographic_all_missing <- clean_names(demographic_all_missing)
 combined_all_missing <- cbind(response_variable, food_all_missing, 
                               disease_all_missing, world_stats_all_missing, 
                               economic_all_missing, covid_all_missing,
-                              healthcare_all_missing, demographic_all_missing)
+                              healthcare_all_mis, demographic_all_missing)
 
 
 # write.csv(combined_all_missing,"GLM Data and Analysis//Combined CSV//combined_all_missing.csv", row.names = TRUE)
