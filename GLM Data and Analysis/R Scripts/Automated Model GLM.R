@@ -73,5 +73,8 @@ step_final_model <- step(final_model)
 
 summary(step_final_model)
 
+par(mfrow=c(2, 2))
 plot(step_final_model)
+
+
 
