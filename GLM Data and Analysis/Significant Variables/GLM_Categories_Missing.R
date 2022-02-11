@@ -28,14 +28,17 @@ glm_covid_clean_data_variables <- subset(glm_covid_clean_data_variables, select 
 demorgraphic_Missing_significant_glm <- read_csv("GLM Data and Analysis/Significant Variables/Categories with Missing/demorgraphic_Missing_significant_glm.csv")
 demorgraphic_Missing_significant_glm <- subset(demorgraphic_Missing_significant_glm, select = -1)
 
-# ADD ECON 
+econ_significant_miss <- read_csv("GLM Data and Analysis/Significant Variables/Categories with Missing/econ_significant_miss.csv")
+econ_significant_miss <- subset(econ_significant_miss, select = -1) 
+
 
 all_categories_missing_GLM <- cbind(healthcare_sigvars_missing_GLM, 
                                     food_missing_sig_var, 
                                     disease_missing_sig_var, 
                                     glm_enviroment_clean_data_variables, 
                                     glm_covid_clean_data_variables, 
-                                    demorgraphic_Missing_significant_glm)
+                                    demorgraphic_Missing_significant_glm, 
+                                    econ_significant_miss)
 
 
 # Random Forest 

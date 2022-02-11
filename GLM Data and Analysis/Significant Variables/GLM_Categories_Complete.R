@@ -28,16 +28,16 @@ glm_covid_imputed_data_variables <- subset(glm_covid_imputed_data_variables, sel
 demorgraphic_Completed_significant_glm <- read_csv("GLM Data and Analysis/Significant Variables/Categories Complete/demorgraphic_Completed_significant_glm.csv")
 demorgraphic_Completed_significant_glm <- subset(demorgraphic_Completed_significant_glm, select = -1)
 
-# ADD ECON 
+econ_significant_complete <- read_csv("GLM Data and Analysis/Significant Variables/Categories Complete/econ_significant_complete.csv")
+econ_significant_complete <- subset(econ_significant_complete, select = -1)
 
 all_categories_complete_GLM <- cbind(healthcare_sigvars_completed_GLM, 
                                      food_imputed_sig_var, 
                                      disease_imputed_sig_var, 
                                      glm_enviroment_imputed_data_variables, 
                                      glm_covid_imputed_data_variables, 
-                                     demorgraphic_Completed_significant_glm)
-
-View(all_categories_complete_GLM)
+                                     demorgraphic_Completed_significant_glm, 
+                                     econ_significant_complete)
 
 # We now run the GLM Model Function:
 
