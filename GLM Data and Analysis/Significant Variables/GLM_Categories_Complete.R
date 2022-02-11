@@ -39,6 +39,9 @@ all_categories_complete_GLM <- cbind(healthcare_sigvars_completed_GLM,
                                      demorgraphic_Completed_significant_glm, 
                                      econ_significant_complete)
 
+all_categories_complete_GLM$debt_relief <- as.factor(all_categories_complete_GLM$debt_relief)
+all_categories_complete_GLM$income_support <- as.factor(all_categories_complete_GLM$income_support)
+
 # We now run the GLM Model Function:
 
 #' Iteratively drop variables based on GVIF
@@ -99,7 +102,7 @@ step_final_model <- step(final_model)
 
 summary(step_final_model)
 
-plot(step_final_model)
+plot(step_final_model, main="GLM_Categories_Complete")
 
 
 

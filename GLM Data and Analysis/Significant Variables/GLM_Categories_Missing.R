@@ -40,13 +40,18 @@ all_categories_missing_GLM <- cbind(healthcare_sigvars_missing_GLM,
                                     demorgraphic_Missing_significant_glm, 
                                     econ_significant_miss)
 
+all_categories_missing_GLM$debt_relief <- as.factor(all_categories_missing_GLM$debt_relief)
+all_categories_missing_GLM$income_support <- as.factor(all_categories_missing_GLM$income_support)
 
 # Random Forest 
 
 set.seed(100)
 
-all_categories_missing_GLM_rf <- missForest(as.matrix(all_categories_missing_GLM))
+all_categories_missing_GLM_rf <- missForest(as.data.frame(all_categories_missing_GLM))
 all_categories_missing_GLM_imputed <- as.data.frame.matrix(all_categories_missing_GLM_rf$ximp)
+
+all_categories_missing_GLM_imputed$debt_relief <- as.factor(all_categories_missing_GLM_imputed$debt_relief)
+all_categories_missing_GLM_imputed$income_support <- as.factor(all_categories_missing_GLM_imputed$income_support)
 
 # We now run the GLM Model Function:
 
@@ -99,9 +104,9 @@ expl <- colnames(all_categories_missing_GLM)
 expl <- expl[-1]
 
 
-after_drop <- gvif_drop(resp, expl, all_categories_missing_GLM)
+after_drop <- gvif_drop(resp, expl, all_categories_missing_GLM_imputed)
 final_formula <- lm_formula_paster(resp, after_drop)
-final_model <- glm(final_formula, all_categories_missing_GLM, family = Gamma(link = "log"))
+final_model <- glm(final_formula, all_categories_missing_GLM_imputed, family = Gamma(link = "log"))
 vif(final_model)
 
 after_drop
@@ -110,7 +115,7 @@ step_final_model <- step(final_model)
 
 summary(step_final_model)
 
-plot(step_final_model)
+plot(step_final_model, main="GLM_Categories_Missing")
 
 
 
