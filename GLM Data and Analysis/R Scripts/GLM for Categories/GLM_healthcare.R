@@ -96,17 +96,9 @@ healthcare_sigvars_missing_GLM <- subset(healthcare_all_missing_clean, select = 
                                                                                 "surgical_specialists_per_1_000_population_oecd", 
                                                                                 "out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure", 
                                                                                 "total_gross_official_disbursements_for_medical_research_and_basic_heath_sectors")) 
-colnames(healthcare_sigvars_missing_GLM)
+View(healthcare_sigvars_missing_GLM)
 
-# Then run random forest imputation 
+#write.csv(healthcare_sigvars_missing_GLM, file = "healthcare_sigvars_missing_GLM.csv", row.names = TRUE)
 
-set.seed(100)
+# Subset after imputation now 
 
-healthcare_sigvars_rf_GLM <- missForest(as.matrix(healthcare_sigvars_missing_GLM))
-healthcare_sigvars_imputed_rf_GLM <- as.data.frame.matrix(healthcare_sigvars_rf_GLM$ximp)
-
-View(healthcare_sigvars_imputed_rf_GLM)
-
-healthcare_sigvars_imputed_rf_GLM <- subset(healthcare_sigvars_imputed_rf_GLM, select = -1)
-
-View(healthcare_sigvars_imputed_rf_GLM)
