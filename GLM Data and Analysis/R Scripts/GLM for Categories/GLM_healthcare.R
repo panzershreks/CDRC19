@@ -85,7 +85,8 @@ summary(step_final_model)
 plot(step_final_model)
 
 # Take variables from step function and create new dataframe (these have missing values )
-healthcare_sigvars_missing_GLM <- subset(healthcare_all_missing_clean, select = c("all_causes_disability_adjusted_life_years_who_2015", 
+healthcare_sigvars_missing_GLM <- subset(healthcare_all_missing_clean, select = c("total_confirmed_deaths_due_to_covid_19_per_million_people",
+                                                                                "all_causes_disability_adjusted_life_years_who_2015", 
                                                                                 "share_of_population_covered_by_health_insurance_ilo_2014", 
                                                                                 "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd", 
                                                                                 "beds_in_publicly_owned_hospitals_per_1_000_population_oecd", 
@@ -100,7 +101,8 @@ write.csv(healthcare_sigvars_missing_GLM, file = "healthcare_sigvars_missing_GLM
 
 # Subset after imputation now 
 
-healthcare_sigvars_completed_GLM <- subset(healthcare_imputed_rf, select = c("all_causes_disability_adjusted_life_years_who_2015", 
+healthcare_sigvars_completed_GLM <- subset(healthcare_imputed_rf, select = c("total_confirmed_deaths_due_to_covid_19_per_million_people",
+                                                                    "all_causes_disability_adjusted_life_years_who_2015",
                                                                     "share_of_population_covered_by_health_insurance_ilo_2014", 
                                                                     "beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd", 
                                                                     "beds_in_publicly_owned_hospitals_per_1_000_population_oecd", 
