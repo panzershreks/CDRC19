@@ -16,6 +16,7 @@ combined_all_missing <- subset(combined_all_missing, select = -1)
 
 food_missing <- subset(combined_all_missing, select = c(1:18, 47))
 
+
 set.seed(100)
 food_rf <- missForest(as.matrix(food_missing))
 food_imputed <- as.data.frame.matrix(food_rf$ximp)
@@ -83,3 +84,22 @@ step_final_model <- step(final_model)
 summary(step_final_model)
 
 plot(step_final_model)
+
+# We now want to take the variables output from the step function and put them into a dataframe.
+# First we do this for the imputed data
+
+food_imputed_sig_var <- subset(food_imputed, select = c(2,3,7,9,13,14,15,19))
+
+write.csv(food_imputed_sig_var,"GLM Data and Analysis//Significant Variables//Categories Complete//food_imputed_sig_var.csv", row.names = TRUE)
+
+# Now we do this for the data brefore random forests
+
+
+food_missing_sig_var <- subset(food_missing, select = c(2,3,7,9,13,14,15,19))
+write.csv(food_missing_sig_var,"GLM Data and Analysis//Significant Variables//Categories with Missing//food_missing_sig_var.csv", row.names = TRUE)
+
+
+
+
+
+
