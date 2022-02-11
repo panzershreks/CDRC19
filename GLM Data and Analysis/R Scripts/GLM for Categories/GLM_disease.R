@@ -84,7 +84,20 @@ step_final_model <- step(final_model)
 
 summary(step_final_model)
 
-plot(step_final_model)
+# We now want to take the variables output from the step function and put them into a dataframe.
+# First we do this for the imputed data
+
+disease_imputed_sig_var <- subset(disease_imputed, select = c(2,8,18,21,24,29))
+
+write.csv(disease_imputed_sig_var,"GLM Data and Analysis//Significant Variables//Categories Complete//disease_imputed_sig_var.csv", row.names = TRUE)
+
+
+# Now we do this for the data brefore random forests
+
+
+disease_missing_sig_var <- subset(disease_missing, select = c(2,8,18,21,24,29))
+
+write.csv(disease_missing_sig_var,"GLM Data and Analysis//Significant Variables//Categories with Missing//disease_missing_sig_var.csv", row.names = TRUE)
 
 
 
