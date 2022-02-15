@@ -6,10 +6,15 @@ library(car)
 #' @param expl_var list of str of explanatory variables
 #' @param vif_max num for max VIF allowed (not GVIF)
 #' @return list of str of explanatory variables after dropping
-gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
+gvif_drop <- function(resp_var, expl_var, data, vif_max=10, glmtype=1, maxit=25) {
   gvif_max <- vif_max ^ 0.5
   lm_formula <- lm_formula_paster(resp_var, expl_var)
-  model <- lm(lm_formula, data)
+  if (glmtype == 2){
+    model <- glm2(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
+  } else {
+    model <- glm(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
+  }
+  
   vif_mod <- car::vif(model)
   try(gvif <- vif_mod, silent = TRUE)
   try(gvif <- vif_mod[,3], silent = TRUE)
@@ -19,7 +24,11 @@ gvif_drop <- function(resp_var, expl_var, data, vif_max=10) {
   while (max(gvif) > gvif_max) {
     expl_var <- expl_var[-(which.max(gvif))]
     lm_formula <- lm_formula_paster(resp_var, expl_var)
-    model <- lm(lm_formula, data)
+    if (glmtype == 2){
+      model <- glm2(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
+    } else {
+      model <- glm(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
+    }
     vif_mod <- car::vif(model)
     try(gvif <- vif_mod, silent = TRUE)
     try(gvif <- vif_mod[,3], silent = TRUE)
