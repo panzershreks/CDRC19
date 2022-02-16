@@ -10,6 +10,10 @@ library(naniar)
 library(visdat)
 library(missForest)
 
+source("R_Scripts/EmanR/step2.R")
+source("R_Scripts/EmanR/automate_vif.R")
+
+# load data and combine
 healthcare_sigvars_missing_GLM <- read_csv("GLM Data and Analysis/Significant Variables/Categories with Missing/healthcare_sigvars_missing_GLM.csv")
 healthcare_sigvars_missing_GLM <- subset(healthcare_sigvars_missing_GLM, select = -1)
 
@@ -30,7 +34,6 @@ demorgraphic_Missing_significant_glm <- subset(demorgraphic_Missing_significant_
 
 econ_significant_miss <- read_csv("GLM Data and Analysis/Significant Variables/Categories with Missing/econ_significant_miss.csv")
 econ_significant_miss <- subset(econ_significant_miss, select = -1) 
-
 
 all_categories_missing_GLM <- cbind(healthcare_sigvars_missing_GLM, 
                                     food_missing_sig_var, 
@@ -53,71 +56,29 @@ all_categories_missing_GLM_imputed <- as.data.frame.matrix(all_categories_missin
 all_categories_missing_GLM_imputed$debt_relief <- as.factor(all_categories_missing_GLM_imputed$debt_relief)
 all_categories_missing_GLM_imputed$income_support <- as.factor(all_categories_missing_GLM_imputed$income_support)
 
-# We now run the GLM Model Function:
-
-#' Iteratively drop variables based on GVIF
-#' @param resp_var str of response variable
-#' @param expl_var list of str of explanatory variables
-#' @param vif_max num for max VIF allowed (not GVIF)
-#' @return list of str of explanatory variables after dropping
-gvif_drop <- function(resp_var, expl_var, data, vif_max=7) {
-  gvif_max <- vif_max ^ 0.5
-  lm_formula <- lm_formula_paster(resp_var, expl_var)
-  model <- glm(lm_formula, data, family = Gamma(link ="log"))
-  vif_mod <- vif(model)
-  try(gvif <- vif_mod, silent = TRUE)
-  try(gvif <- vif_mod[,3], silent = TRUE)
-  if (is.null(dim(vif_mod))) {
-    gvif_max <- vif_max
-  }
-  while (max(gvif) > gvif_max) {
-    expl_var <- expl_var[-(which.max(gvif))]
-    lm_formula <- lm_formula_paster(resp_var, expl_var)
-    model <- glm(lm_formula, data, family = Gamma(link ="log"))
-    vif_mod <- vif(model)
-    try(gvif <- vif_mod, silent = TRUE)
-    try(gvif <- vif_mod[,3], silent = TRUE)
-    if (is.null(dim(vif_mod))) {
-      gvif_max <- vif_max
-    }
-  }
-  return (expl_var)
-}
-
-#' create a lm formula from list of variables
-#' helper function for gvif_drop
-#' @param resp_var str of response variable
-#' @param expl_var list of str of explanatory variables
-#' @return str of formula using the variables provided
-lm_formula_paster <- function(resp_var, expl_var) {
-  form <- paste0(resp_var, "~")
-  for (var in head(expl_var, -1)) {
-    form <- paste0(form, var, "+")
-  }
-  form <- paste0(form, tail(expl_var, 1))
-  return (form)
-}
-
-
+# define response and explanatory variables
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 expl <- colnames(all_categories_missing_GLM)
 expl <- expl[-1]
 
 
-after_drop <- gvif_drop(resp, expl, all_categories_missing_GLM_imputed)
+after_drop <- gvif_drop(resp, expl, all_categories_missing_GLM_imputed, vif_max=5, glmtype=2, maxit=100)
 final_formula <- lm_formula_paster(resp, after_drop)
-final_model <- glm(final_formula, all_categories_missing_GLM_imputed, family = Gamma(link = "log"))
+final_model <- glm2(final_formula, all_categories_missing_GLM_imputed, family = Gamma(link = "log"), maxit=100)
 vif(final_model)
 
 after_drop
 
-step_final_model <- step(final_model)
+step_final_model <- step2.glm(resp, after_drop, all_categories_missing_GLM_imputed, "AICc", Gamma(link="log"), maxit=1000)
 
 summary(step_final_model)
 
+# diagnostic plots
+par(mfrow = c(2, 2))
 plot(step_final_model, main="GLM_Categories_Missing")
 
-
+# included variables in model
+all.vars(formula(step_final_model)[-1])
 
 
 
