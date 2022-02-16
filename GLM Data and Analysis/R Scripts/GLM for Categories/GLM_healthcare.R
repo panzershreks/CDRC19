@@ -25,6 +25,10 @@ set.seed(100)
 healthcare_all_rf <- missForest(as.matrix(healthcare_all_missing_clean))
 healthcare_imputed_rf <- as.data.frame.matrix(healthcare_all_rf$ximp)
 
+write.csv(healthcare_imputed_rf,
+          file = "healthcare_all_imputed.csv",
+          row.names = TRUE)
+
 # define response and explanatory variables
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 expl <- colnames(healthcare_imputed_rf)
