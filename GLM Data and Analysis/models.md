@@ -88,3 +88,25 @@ Mean.BMI..female.                                                               
 gdp_growth_per_capita_from_previous_year_2020_q2                                         0.020546 * 
 ```
 ![GLM Categories Missing](GLM_Categories_Missing.png)
+
+# Significant variables accross models
+### Variables that are significant in all 3 models
+```
+ratio_of_diabetes_to_overweight_prevalence
+deaths_no_access_to_handwashing_facility_sex_both_age_70_number
+income_support
+nurses_per_1_000_population_oecd
+out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure
+```
+### Variables that are significant in 2 models
+```
+cost_of_nutrient_adequate_diet_2017_usd_per_day
+nutrient_adequate_diet_cost_percent_of_average_food_expenditure
+calorie_sufficient_diet_cost_number_cannot_afford
+life_satisfaction_in_cantril_ladder_world_happiness_report_2019
+publicly_owned_hospitals_per_million_population_oecd
+surgical_specialists_per_1_000_population_oecd
+healthy_diet_cost_percent_of_1_20_poverty_line
+meningitis_ihme_2017
+gdp_growth_per_capita_from_previous_year_2020_q2
+```
