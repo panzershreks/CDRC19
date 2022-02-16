@@ -23,12 +23,12 @@ cum_death_plot <- ggplot(data = world_data, aes(Date, Cumulative_Deaths)) + geom
        x = "Date", y = "Cumulative Worldwide Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
 
 smooth_new_death_plot <- ggplot(data = world_data, aes(Date, Smooth_New_Deaths)) + geom_bar(stat = "identity", fill = "aquamarine3") +
-  labs(title = "New Deaths",
+  labs(title = "New Deaths (Smoothed)",
        x = "Date", y = "New Worldwide Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y") 
 
 death_world <- grid.arrange(cum_death_plot, smooth_new_death_plot, top = textGrob("Worldwide Covid-19 Deaths", gp=gpar(col="red", fontface = "bold", fontsize = 15)))
 
-# ggsave(death_world, filename = "R_Scripts//MatthewR//Report Graphs//deaths_world.png", height = 8, width = 14, units = "in")
+ggsave(death_world, filename = "R_Scripts//MatthewR//Report Graphs//deaths_world.png", height = 8, width = 14, units = "in")
 
 
 # We now want to do the same for the UK
@@ -43,8 +43,8 @@ cum_death_plot <- ggplot(data = uk_data, aes(Date, Cumulative_Deaths)) + geom_ba
        x = "Date", y = "Cumulative UK Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
 
 smooth_new_death_plot <- ggplot(data = uk_data, aes(Date, Smooth_New_Deaths)) + geom_bar(stat = "identity", fill = "aquamarine3") +
-  labs(title = "New Deaths",
-       x = "Date", y = "New UK Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y") 
+  labs(title = "New Deaths (Smoothed)",
+       x = "Date", y = "New UK Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
 
 death_uk <- grid.arrange(cum_death_plot, smooth_new_death_plot, top = textGrob("United Kingdom Covid-19 Deaths", gp=gpar(col="red", fontface = "bold", fontsize = 15)))
 
