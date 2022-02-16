@@ -89,7 +89,7 @@ gdp_growth_per_capita_from_previous_year_2020_q2                                
 ```
 ![GLM Categories Missing](GLM_Categories_Missing.png)
 
-# Significant variables accross models
+# Significant variables across models
 ### Variables that are significant in all 3 models
 ```
 ratio_of_diabetes_to_overweight_prevalence
