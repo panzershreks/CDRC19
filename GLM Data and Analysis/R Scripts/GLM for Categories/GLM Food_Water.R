@@ -41,7 +41,7 @@ step_AICc_mod <- step2.glm(resp, after_drop, food_imputed, "AICc", Gamma(link="l
 summary(step_AICc_mod)
 
 par(mfrow = c(2, 2))
-plot(step_final_model)
+plot(step_AICc_mod)
 
 all.vars(formula(step_AICc_mod)[-1])
 
