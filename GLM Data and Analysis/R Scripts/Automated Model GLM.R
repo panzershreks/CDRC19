@@ -45,6 +45,7 @@ plot(step_AIC_mod, main="AIC_model")
 plot(step_BIC_mod, main="BIC_model")
 plot(step_AICc_mod, main="AICc_model")
 
+# selected variables for each model
 all.vars(formula(step_AIC_mod)[-1])
 # [1] "cost_of_nutrient_adequate_diet_2017_usd_per_day"                                         
 # [2] "cost_of_healthy_diet_2017_usd_per_day"                                                   
