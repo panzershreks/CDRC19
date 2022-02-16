@@ -66,7 +66,7 @@ summary(step_final_model)
 
 # diagnostic plots
 par(mfrow = c(2, 2))
-plot(step_final_model, main="GLM_Categories_Complete")
+plot(step_final_model, main="GLM_Categories_Complete, AICc")
 
 # included variable names in model
 all.vars(formula(step_final_model)[-1])

@@ -43,7 +43,7 @@ summary(step_AICc_mod)
 par(mfrow = c(2,2))
 plot(step_AIC_mod, main="AIC_model")
 plot(step_BIC_mod, main="BIC_model")
-plot(step_AICc_mod, main="AICc_model")
+plot(step_AICc_mod, main="Automated Model GLM, AICc")
 
 # selected variables for each model
 all.vars(formula(step_AIC_mod)[-1])
