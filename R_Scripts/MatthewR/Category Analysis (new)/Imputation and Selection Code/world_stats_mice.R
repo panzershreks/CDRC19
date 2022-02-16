@@ -46,11 +46,10 @@ summary_w_missing <- ggplot(data = clean_world_stats, aes(x = life_satisfaction_
 
 clean_world_stats_new_name <- clean_world_stats
 colnames(clean_world_stats_new_name) <- c("Country", "Total Confirmed Deaths per Million", "Life Satisfaction Indicator")
-missing_data_plot <- vis_miss(clean_world_stats_new_name, sort_miss = TRUE) +theme(axis.text.x = element_text(angle = 90))
+missing_data_plot <- vis_miss(clean_world_stats_new_name, sort_miss = TRUE) +theme(axis.text.x = element_text(angle = 90)) + ggtitle("World Statistics Missing Data")
 miss_var_summary(clean_world_stats)
-# missing_data_plot
 
-# ggsave(missing_data_plot, file="w_s_missing_data.png")
+#ggsave(missing_data_plot, file="R_Scripts//MatthewR//Report Graphs//Plots//w_s_missing_data.png")
 
 
 # We now want to impute the missing data, we set seed to make results reproducable.
@@ -105,13 +104,16 @@ ws_mice_5 <- ggplot(data = world_stats_5, aes(x = life_satisfaction_in_cantril_l
 
 ws_iumputed_summary <- grid.arrange(ws_mice_1, ws_mice_2, ws_mice_3, ws_mice_4, ws_mice_5, nrow = 3,
                                     left = "Total Confirmed Deaths due to Covid-19 per Million People",
-                                    top = textGrob("Life Satisfaction and Covid-19 Death Rates (Imputed)", gp=gpar(col="red", fontface = "bold", fontsize = 15)),
+                                    top = textGrob("Life Satisfaction and Covid-19 Death Rates (Imputed)", gp=gpar(col="black", fontface = "bold", fontsize = 15)),
                                     bottom = "Life Satisfaction Indicator")
 
 
 # ggsave(ws_iumputed_summary, file="w_s_imputed_sum.png")
 
+#ggsave(ws_iumputed_summary, filename = "R_Scripts//MatthewR//Report Graphs//w_s_imputed_sum.png", height = 8, width = 14, units = "in")
 
+
+summary(world_stats_1)
 
 
 

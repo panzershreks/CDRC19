@@ -40,8 +40,8 @@ clean_combined_f_ws <- cbind(clean_food_water, clean_world_stats)
 # We explore the missing values across the datasets.
 
 
-food_missing_vis <- vis_miss(clean_combined_f_ws, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
-# ggsave(food_missing_vis, file="food_missing_vis.png", height = 8, width = 8)
+food_missing_vis <- vis_miss(clean_combined_f_ws, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))+ ggtitle("Food and Water Missing Data")
+#ggsave(food_missing_vis, file="R_Scripts//MatthewR//Report Graphs//food_missing_vis.png", height = 8, width = 8) 
 food_missing_vis
 
 # We now impute our missing data using random forests.
@@ -63,10 +63,9 @@ food_data <- as.data.frame.matrix(food_data)
 
 Mcor <- food_data
 f_ws_cor_matrix <- vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
-  ggtitle("Correlation Matrix")
+  ggtitle("Food and Water Correlation Matrix")
 
 f_ws_cor_matrix
-
 
 CorMatrix <- round(cor(food_data),2)
 #write.csv(CorMatrix,"food_cor_rf.csv", row.names = TRUE)

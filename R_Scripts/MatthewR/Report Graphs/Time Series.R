@@ -26,7 +26,7 @@ smooth_new_death_plot <- ggplot(data = world_data, aes(Date, Smooth_New_Deaths))
   labs(title = "New Deaths (Smoothed)",
        x = "Date", y = "New Worldwide Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y") 
 
-death_world <- grid.arrange(cum_death_plot, smooth_new_death_plot, top = textGrob("Worldwide Covid-19 Deaths", gp=gpar(col="red", fontface = "bold", fontsize = 15)))
+death_world <- grid.arrange(cum_death_plot, smooth_new_death_plot, top = textGrob("Worldwide Covid-19 Deaths", gp=gpar(col="black", fontface = "bold", fontsize = 15)))
 
 ggsave(death_world, filename = "R_Scripts//MatthewR//Report Graphs//deaths_world.png", height = 8, width = 14, units = "in")
 
@@ -46,7 +46,7 @@ smooth_new_death_plot <- ggplot(data = uk_data, aes(Date, Smooth_New_Deaths)) + 
   labs(title = "New Deaths (Smoothed)",
        x = "Date", y = "New UK Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
 
-death_uk <- grid.arrange(cum_death_plot, smooth_new_death_plot, top = textGrob("United Kingdom Covid-19 Deaths", gp=gpar(col="red", fontface = "bold", fontsize = 15)))
+death_uk <- grid.arrange(cum_death_plot, smooth_new_death_plot, top = textGrob("United Kingdom Covid-19 Deaths", gp=gpar(col="black", fontface = "bold", fontsize = 15)))
 
 ggsave(death_uk, filename = "R_Scripts//MatthewR//Report Graphs//deaths_uk.png", height = 8, width = 14, units = "in")
 

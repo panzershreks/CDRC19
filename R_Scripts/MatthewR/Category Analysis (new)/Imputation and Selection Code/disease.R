@@ -26,8 +26,8 @@ clean_disease <- clean_disease[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,13
 
 # We explore the missing values across the dataset.
 
-disease_missing_vis <- vis_miss(clean_disease, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90))
-# ggsave(disease_missing_vis, file="disease_missing_vis.png", height = 8, width = 8)
+disease_missing_vis <- vis_miss(clean_disease, sort_miss = TRUE) + theme(axis.text.x = element_text(angle = 90)) + ggtitle("Disease Missing Data")
+# ggsave(disease_missing_vis, file="R_Scripts//MatthewR//Report Graphs//disease_missing_vis.png", height = 8, width = 8)
 
 
 # We now impute our missing data using random forests.
@@ -45,7 +45,9 @@ disease_data <- as.data.frame.matrix(disease_rf$ximp)
 
 Mcor <- disease_data
 dis_cor_matrix <- vis_cor(Mcor) + theme(axis.text.x = element_text(angle = 90)) + 
-  ggtitle("Correlation Matrix")
+  ggtitle("Disease Correlation Matrix")
+dis_cor_matrix
+
 
 CorMatrix <- round(cor(disease_data),2)
 #write.csv(CorMatrix,"disease_cor.csv", row.names = TRUE)
