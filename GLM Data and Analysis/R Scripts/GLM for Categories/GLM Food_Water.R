@@ -5,6 +5,9 @@ library(ggplot2)
 library('missForest')
 library(car)
 
+source("R_Scripts/EmanR/step2.R")
+source("R_Scripts/EmanR/automate_vif.R")
+
 combined_all_missing <- read_csv("GLM Data and Analysis/Combined CSV/combined_all_missing.csv")
 combined_all_missing <- clean_names(combined_all_missing)
 combined_all_missing <- subset(combined_all_missing, select = -1)
@@ -16,87 +19,62 @@ combined_all_missing <- subset(combined_all_missing, select = -1)
 
 food_missing <- subset(combined_all_missing, select = c(1:18, 47))
 
-
+# impute
 set.seed(100)
 food_rf <- missForest(as.matrix(food_missing))
 food_imputed <- as.data.frame.matrix(food_rf$ximp)
 
-# We now run the GLM Model Function:
-
-#' Iteratively drop variables based on GVIF
-#' @param resp_var str of response variable
-#' @param expl_var list of str of explanatory variables
-#' @param vif_max num for max VIF allowed (not GVIF)
-#' @return list of str of explanatory variables after dropping
-gvif_drop <- function(resp_var, expl_var, data, vif_max=7) {
-  gvif_max <- vif_max ^ 0.5
-  lm_formula <- lm_formula_paster(resp_var, expl_var)
-  model <- glm(lm_formula, data, family = Gamma(link ="log"))
-  vif_mod <- vif(model)
-  try(gvif <- vif_mod, silent = TRUE)
-  try(gvif <- vif_mod[,3], silent = TRUE)
-  if (is.null(dim(vif_mod))) {
-    gvif_max <- vif_max
-  }
-  while (max(gvif) > gvif_max) {
-    expl_var <- expl_var[-(which.max(gvif))]
-    lm_formula <- lm_formula_paster(resp_var, expl_var)
-    model <- glm(lm_formula, data, family = Gamma(link ="log"))
-    vif_mod <- vif(model)
-    try(gvif <- vif_mod, silent = TRUE)
-    try(gvif <- vif_mod[,3], silent = TRUE)
-    if (is.null(dim(vif_mod))) {
-      gvif_max <- vif_max
-    }
-  }
-  return (expl_var)
-}
-
-#' create a lm formula from list of variables
-#' helper function for gvif_drop
-#' @param resp_var str of response variable
-#' @param expl_var list of str of explanatory variables
-#' @return str of formula using the variables provided
-lm_formula_paster <- function(resp_var, expl_var) {
-  form <- paste0(resp_var, "~")
-  for (var in head(expl_var, -1)) {
-    form <- paste0(form, var, "+")
-  }
-  form <- paste0(form, tail(expl_var, 1))
-  return (form)
-}
-
-
+# define response and explanatory variables
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
 expl <- colnames(food_imputed)
 expl <- expl[-1]
 
 
-after_drop <- gvif_drop(resp, expl, food_imputed)
+after_drop <- gvif_drop(resp, expl, food_imputed, vif_max=5, glmtype=1, maxit=100) # glm and glm2 both converge
 final_formula <- lm_formula_paster(resp, after_drop)
 final_model <- glm(final_formula, food_imputed, family = Gamma(link = "log"))
 vif(final_model)
 
 after_drop
 
-step_final_model <- step(final_model)
+step_AICc_mod <- step2.glm(resp, after_drop, food_imputed, "AICc", Gamma(link="log"), maxit=100)
+summary(step_AICc_mod)
 
-summary(step_final_model)
-
+par(mfrow = c(2, 2))
 plot(step_final_model)
+
+all.vars(formula(step_AICc_mod)[-1])
 
 # We now want to take the variables output from the step function and put them into a dataframe.
 # First we do this for the imputed data
 
-food_imputed_sig_var <- subset(food_imputed, select = c(2,3,7,9,13,14,15,19))
+food_imputed_sig_var <- subset(food_imputed, select=c(
+  cost_of_calorie_sufficient_diet_2017_usd_per_day,
+  cost_of_nutrient_adequate_diet_2017_usd_per_day,
+  healthy_diet_cost_percent_of_1_20_poverty_line,
+  nutrient_adequate_diet_cost_percent_of_average_food_expenditure,
+  healthy_diet_cost_percent_cannot_afford,
+  calorie_sufficient_diet_cost_number_cannot_afford,
+  nutrient_adequate_diet_cost_number_cannot_afford,
+  life_satisfaction_in_cantril_ladder_world_happiness_report_2019
+))
 
-write.csv(food_imputed_sig_var,"GLM Data and Analysis//Significant Variables//Categories Complete//food_imputed_sig_var.csv", row.names = TRUE)
+write.csv(food_imputed_sig_var,"GLM Data and Analysis/Significant Variables/Categories Complete/food_imputed_sig_var.csv", row.names = TRUE)
 
-# Now we do this for the data brefore random forests
+# Now we do this for the data before random forests
 
+food_missing_sig_var <- subset(food_missing, select=c(
+  cost_of_calorie_sufficient_diet_2017_usd_per_day,
+  cost_of_nutrient_adequate_diet_2017_usd_per_day,
+  healthy_diet_cost_percent_of_1_20_poverty_line,
+  nutrient_adequate_diet_cost_percent_of_average_food_expenditure,
+  healthy_diet_cost_percent_cannot_afford,
+  calorie_sufficient_diet_cost_number_cannot_afford,
+  nutrient_adequate_diet_cost_number_cannot_afford,
+  life_satisfaction_in_cantril_ladder_world_happiness_report_2019
+))
 
-food_missing_sig_var <- subset(food_missing, select = c(2,3,7,9,13,14,15,19))
-write.csv(food_missing_sig_var,"GLM Data and Analysis//Significant Variables//Categories with Missing//food_missing_sig_var.csv", row.names = TRUE)
+write.csv(food_missing_sig_var,"GLM Data and Analysis/Significant Variables/Categories with Missing/food_missing_sig_var.csv", row.names = TRUE)
 
 
 
