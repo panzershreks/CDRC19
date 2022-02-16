@@ -19,6 +19,9 @@ library(olsrr)
 library(missForest)
 library(caret)
 
+source("R_Scripts/EmanR/step2.R")
+source("R_Scripts/EmanR/automate_vif.R")
+
 # Import data and basic pre-processing
 # convert entities to factors and all other columns to numeric, coerce to NAs
 econ_data_full <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_economic.csv")
@@ -41,43 +44,30 @@ clean_econ$flag <- as.factor(clean_econ$flag)
 missing_vars_tbl <- miss_var_summary(clean_econ, sort_miss = TRUE)
 missing_vars_tbl
 
+# impute data
 set.seed(100)
 econ_rf <- missForest(data.frame(clean_econ))
 
 # We save our imputed dataset as a dataframe
 econ_df_rf <- as.data.frame.matrix(econ_rf$ximp)
 
+# define factor variables
 econ_df_rf$income_classification_world_bank_2017 <- as.factor(econ_df_rf$income_classification_world_bank_2017)
 econ_df_rf$flag <- as.factor(econ_df_rf$flag)
 
 miss_econ_df_rf <- miss_var_summary(econ_df_rf, sort_miss = TRUE)
 miss_econ_df_rf
 
+# transform vars
 names(econ_df_rf)[names(econ_df_rf) == 'mean'] <- 'mean_monthly_income'
 names(clean_econ)[names(clean_econ) == 'mean'] <- 'mean_monthly_income'
 clean_econ$gdp_growth_per_capita_from_previous_year_2020_q2 <- with(clean_econ, gdp_growth_from_previous_year_2020_q2 / pop2021)
 
 econ_df_rf$gdp_growth_per_capita_from_previous_year_2020_q2 <- with(econ_df_rf, gdp_growth_from_previous_year_2020_q2 / pop2021)
 
+# define response and explanatory variables
 resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
-expl <- c("mean_monthly_income", "pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
-          "d5avgincome", "d6avgincome", "d7avgincome", "d8avgincome",
-          "d9avgincome", "d10avgincome", "q1avgincome", "q2avgincome",
-          "q3avgincome", "q4avgincome", "q5avgincome", "flag",
-          "income_classification_world_bank_2017", "gini_index",
-          "gdp_growth_per_capita_from_previous_year_2020_q2",
-          "gdp_growth_from_previous_year_2020_q2", "gdp_per_capita_ppp_2011_wdi_2016",
-          "pop2021", "gini_coefficient_world_bank_2016", "gdp_per_capita","population_y", "gdp",
-          "cost_of_closing_the_poverty_gap_in_int_2011_povcal_net_world_bank_2017",
-          "national_poverty_lines_jolliffe_and_prydz_2016",
-          "multidimensional_poverty_headcount_ratio_alkire_and_robles_2016", 
-          "percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016",
-          "percentage_contribution_of_deprivations_in_health_to_overall_poverty_alkire_and_robles_2016",
-          "percentage_contribution_of_deprivations_in_living_standards_to_overall_poverty_alkire_and_robles_2016",
-          "mean_monthly_per_capita_expenditure_in_2011_int_povcal_net_2017",
-          "median_monthly_per_capita_expenditure_in_2011_int_povcal_net_2017",
-          "poverty_rate_50_percent_of_median_lis_key_figures_2018")
-
+expl <- colnames(econ_df_rf)[-1]
 to_drop <- c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
              "d5avgincome", "d6avgincome", "d7avgincome", "d8avgincome",
              "d9avgincome", "d10avgincome", "q1avgincome", "q2avgincome",
@@ -88,61 +78,14 @@ to_drop <- c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
              "percentage_contribution_of_deprivations_in_education_to_overall_poverty_alkire_and_robles_2016",
              "percentage_contribution_of_deprivations_in_health_to_overall_poverty_alkire_and_robles_2016",
              "percentage_contribution_of_deprivations_in_living_standards_to_overall_poverty_alkire_and_robles_2016")
-
 expl_dr <- expl[!expl %in% to_drop]
 
-# We now run the GLM Model Function:
-
-#' Iteratively drop variables based on GVIF
-#' @param resp_var str of response variable
-#' @param expl_var list of str of explanatory variables
-#' @param vif_max num for max VIF allowed (not GVIF)
-#' @return list of str of explanatory variables after dropping
-gvif_drop <- function(resp_var, expl_var, data, vif_max=7) {
-  gvif_max <- vif_max ^ 0.5
-  lm_formula <- lm_formula_paster(resp_var, expl_var)
-  model <- glm(lm_formula, data, family = Gamma(link ="log"), maxit=100)
-  vif_mod <- vif(model)
-  try(gvif <- vif_mod, silent = TRUE)
-  try(gvif <- vif_mod[,3], silent = TRUE)
-  if (is.null(dim(vif_mod))) {
-    gvif_max <- vif_max
-  }
-  while (max(gvif) > gvif_max) {
-    expl_var <- expl_var[-(which.max(gvif))]
-    lm_formula <- lm_formula_paster(resp_var, expl_var)
-    model <- glm(lm_formula, data, family = Gamma(link ="log"), maxit=100)
-    vif_mod <- vif(model)
-    try(gvif <- vif_mod, silent = TRUE)
-    try(gvif <- vif_mod[,3], silent = TRUE)
-    if (is.null(dim(vif_mod))) {
-      gvif_max <- vif_max
-    }
-  }
-  return (expl_var)
-}
-
-#' create a lm formula from list of variables
-#' helper function for gvif_drop
-#' @param resp_var str of response variable
-#' @param expl_var list of str of explanatory variables
-#' @return str of formula using the variables provided
-lm_formula_paster <- function(resp_var, expl_var) {
-  form <- paste0(resp_var, "~")
-  for (var in head(expl_var, -1)) {
-    form <- paste0(form, var, "+")
-  }
-  form <- paste0(form, tail(expl_var, 1))
-  return (form)
-}
-
-after_drop <- gvif_drop(resp, expl_dr, econ_df_rf, vif_max=7)
+after_drop <- gvif_drop(resp, expl_dr, econ_df_rf, vif_max=5)
 drop_vif_formula <- lm_formula_paster(resp, after_drop)
 model_drop_vif <- glm(drop_vif_formula, econ_df_rf, family = Gamma(link = "log"), maxit=100)
 vif(model_drop_vif)
 
-step_drop_vif <- step(model_drop_vif)
-
+step_drop_vif <- step2.glm(resp, after_drop, econ_df_rf, "AICc", Gamma(link="log"), maxit=100)
 summary(step_drop_vif)
 
 # mean_monthly_income
@@ -150,6 +93,7 @@ summary(step_drop_vif)
 # multidimensional_poverty_headcount_ratio_alkire_and_robles_2016
 # poverty_rate_50_percent_of_median_lis_key_figures_2018  
 
+par(mfrow = c(2, 2))
 plot(step_drop_vif)
 
 sig_econ_df <- subset(econ_df_rf, select=c(
@@ -166,8 +110,8 @@ sig_econ_df_pre_rd <- subset(clean_econ, select=c(
   poverty_rate_50_percent_of_median_lis_key_figures_2018
 ))
 
-# write.csv(sig_econ_df, file="econ_significant_complete.csv")
-# write.csv(sig_econ_df_pre_rd, file="econ_significant_miss.csv")
+write.csv(sig_econ_df, file="GLM Data and Analysis/Significant Variables/Categories Complete/econ_significant_complete.csv")
+write.csv(sig_econ_df_pre_rd, file="GLM Data and Analysis/Significant Variables/Categories with Missing/econ_significant_miss.csv")
 
 
 
