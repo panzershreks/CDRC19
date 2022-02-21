@@ -10,8 +10,8 @@ combined_all_missing <- subset(combined_all_missing, select = -1)
 
 
 
-combined_all_missing <- subset(combined_all_missing, select = -c(2:12, 14:16, 18, 21:31, 45, 46, 52, 54, 56, 57, 62, 
-                                                                 67:73, 75:77, 80:82, 85, 88, 89, 91, 93, 94, 96:102))
+combined_all_missing <- subset(combined_all_missing, select = -c(2:12, 14:16, 18, 21:43, 45, 46, 52, 54, 56, 57, 62, 
+                                                                 67:73, 75:77, 80:82, 85, 88, 89, 91:94, 96:102))
 
 
 write.csv(combined_all_missing,"GLM Take 2//subset_of_total.csv", row.names = TRUE)
