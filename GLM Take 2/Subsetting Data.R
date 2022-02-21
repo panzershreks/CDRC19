@@ -1,0 +1,23 @@
+library(readr)
+combined_all_missing <- read_csv("GLM Take 2/combined_all_missing.csv")
+combined_all_missing <- subset(combined_all_missing, select = -1)
+
+
+
+# List to remove from the dataframes
+
+# removing 2:12, 14:16, 18, 21:31, 45, 46, 52, 54, 56, 57, 62, 67:73, 75:77, 80:82, 85, 88, 89, 91, 93, 94, 96:101
+
+
+
+combined_all_missing <- subset(combined_all_missing, select = -c(2:12, 14:16, 18, 21:31, 45, 46, 52, 54, 56, 57, 62, 
+                                                                 67:73, 75:77, 80:82, 85, 88, 89, 91, 93, 94, 96:102))
+
+
+write.csv(combined_all_missing,"GLM Take 2//subset_of_total.csv", row.names = TRUE)
+
+
+
+
+
+
