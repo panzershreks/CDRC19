@@ -14,6 +14,7 @@ list_of_countries <- subset(clean_fully_merged, select = 1)
 
 
 # Models... these are the outliers
+# what variables are causing this to happen
 
 
 list_of_countries[33,]

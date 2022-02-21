@@ -48,15 +48,8 @@ smooth_new_death_plot <- ggplot(data = uk_data, aes(Date, Smooth_New_Deaths)) + 
 
 death_uk <- grid.arrange(cum_death_plot, smooth_new_death_plot, top = textGrob("United Kingdom Covid-19 Deaths", gp=gpar(col="black", fontface = "bold", fontsize = 15)))
 
-ggsave(death_uk, filename = "R_Scripts//MatthewR//Report Graphs//deaths_uk.png", height = 8, width = 14, units = "in")
+#ggsave(death_uk, filename = "R_Scripts//MatthewR//Report Graphs//deaths_uk.png", height = 8, width = 14, units = "in")
 
-
-
-
-
-
-
-
-
+smooth_new_death_plot
 
 
