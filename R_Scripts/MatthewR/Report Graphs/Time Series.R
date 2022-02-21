@@ -60,4 +60,3 @@ ggsave(death_uk, filename = "R_Scripts//MatthewR//Report Graphs//deaths_uk.png",
 
 
 
-
