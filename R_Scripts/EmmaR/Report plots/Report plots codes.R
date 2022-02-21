@@ -46,8 +46,6 @@ View(miss_table_entity)
 write.csv(miss_table_entity, file = "miss_table_healthcare_entity.csv")
 
 
-
-
 # Compute correlation plot
 
 corr <-healthcare_all_imputed
