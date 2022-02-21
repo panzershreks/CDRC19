@@ -36,11 +36,15 @@ View(missing_table)
 
 miss_table_entity <- healthcare_all_mis_with_entity %>%
   group_by(entity) %>%
-  miss_case_summary()
+  miss_case_summary(order = TRUE) %>%
+  order(miss_table_entity$pct_miss, decreasing = TRUE)
+
+miss_table_entity <- miss_table_entity[order(miss_table_entity$pct_miss, decreasing = FALSE),]
+
 View(miss_table_entity)
 
+write.csv(miss_table_entity, file = "miss_table_healthcare_entity.csv")
 
-xtable(miss_table_entity, type = "latex", file = "miss_table_entity_healthcare.tex")
 
 
 
