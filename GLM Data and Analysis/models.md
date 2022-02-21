@@ -6,6 +6,9 @@
 4. variables were iteratively removed till all had a VIF < 5
 5. backwards selection was performed using AICc
 
+```
+total_confirmed_deaths_due_to_covid_19_per_million_people~cost_of_nutrient_adequate_diet_2017_usd_per_day+cost_of_healthy_diet_2017_usd_per_day+nutrient_adequate_diet_cost_percent_of_average_food_expenditure+calorie_sufficient_diet_cost_number_cannot_afford+ratio_of_diabetes_to_overweight_prevalence+deaths_no_access_to_handwashing_facility_sex_both_age_70_number+cardiovascular_diseases_ihme_2017+respiratory_disease_ihme_2017+life_satisfaction_in_cantril_ladder_world_happiness_report_2019+gini_index+income_support+beds_in_not_for_profit_privately_owned_hospitals_per_1_000_population_oecd+nurses_per_1_000_population_oecd+psychiatrists_per_1_000_population_oecd+out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure
+```
 Model p-values:
 ```
 cost_of_nutrient_adequate_diet_2017_usd_per_day                                          0.007493 ** 
@@ -38,6 +41,10 @@ Relevant diagnostic plots:
 6. variables were iteratively removed till all had a VIF < 5
 7. backwards selection was performed using AICc
 
+```
+total_confirmed_deaths_due_to_covid_19_per_million_people~nurses_per_1_000_population_oecd+publicly_owned_hospitals_per_million_population_oecd+surgical_specialists_per_1_000_population_oecd+out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+healthy_diet_cost_percent_of_1_20_poverty_line+life_satisfaction_in_cantril_ladder_world_happiness_report_2019+ratio_of_diabetes_to_overweight_prevalence+deaths_no_access_to_handwashing_facility_sex_both_age_70_number+kidney_disease_ihme_2017+meningitis_ihme_2017+income_support+debt_relief+gdp_growth_per_capita_from_previous_year_2020_q2
+```
+
 Model p-values:
 ```
 nurses_per_1_000_population_oecd                                                         0.000646 ***
@@ -68,6 +75,10 @@ Relevant diagnostic plots:
 6. data was imputed using random forest
 7. variables were iteratively removed till all had a VIF < 5
 8. backwards selection was performed using AICc
+
+```
+total_confirmed_deaths_due_to_covid_19_per_million_people~nurses_per_1_000_population_oecd+publicly_owned_hospitals_per_million_population_oecd+surgical_specialists_per_1_000_population_oecd+out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure+cost_of_nutrient_adequate_diet_2017_usd_per_day+healthy_diet_cost_percent_of_1_20_poverty_line+nutrient_adequate_diet_cost_percent_of_average_food_expenditure+calorie_sufficient_diet_cost_number_cannot_afford+ratio_of_diabetes_to_overweight_prevalence+deaths_no_access_to_handwashing_facility_sex_both_age_70_number+meningitis_ihme_2017+income_support+Mean.BMI..female.+gdp_growth_per_capita_from_previous_year_2020_q2
+```
 
 Model p-values:
 ```
