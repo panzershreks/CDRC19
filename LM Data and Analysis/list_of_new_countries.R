@@ -17,11 +17,10 @@ list_of_countries <- subset(clean_fully_merged, select = 1)
 # what variables are causing this to happen
 
 
-list_of_countries[33,]
-list_of_countries[75,]
-list_of_countries[100,]
-list_of_countries[109,]
-list_of_countries[159,]
+list_of_countries[110,]
+list_of_countries[149,]
+list_of_countries[27,]
+list_of_countries[163,]
 
 
 
