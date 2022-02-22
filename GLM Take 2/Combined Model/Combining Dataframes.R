@@ -23,7 +23,6 @@ world_stats_all_missing <- subset(clean_fully_merged, select = c(350))
 
 response_variable <- clean_fully_merged[,57]
 
-
 economic_all_missing <- subset(clean_fully_merged, select = c(238:273))
 names(economic_all_missing)[names(economic_all_missing) == 'mean'] <- 'mean_monthly_income'
 economic_all_missing$gdp_growth_per_capita_from_previous_year_2020_q2 <- with(economic_all_missing, gdp_growth_from_previous_year_2020_q2 / pop2021)
@@ -41,11 +40,11 @@ to_drop <- c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
 economic_all_missing = economic_all_missing[,!(names(economic_all_missing)%in% to_drop)]
 
 
-# write.csv(economic_all_missing,"GLM Data and Analysis//Category CSV//economic_all_missing.csv", row.names = TRUE)
-# write.csv(disease_all_missing,"GLM Data and Analysis//Category CSV//disease_data_complete.csv", row.names = TRUE)
-# write.csv(food_all_missing,"GLM Data and Analysis//Category CSV//food_all_missing.csv", row.names = TRUE)
-# write.csv(world_stats_all_missing,"GLM Data and Analysis//Category CSV//world_stats_all_missing.csv", row.names = TRUE)
-# write.csv(response_variable,"GLM Data and Analysis//Category CSV//response_variable.csv", row.names = TRUE)
+#write.csv(economic_all_missing,"GLM Data and Analysis//Category CSV//economic_all_missing.csv", row.names = TRUE)
+#write.csv(disease_all_missing,"GLM Data and Analysis//Category CSV//disease_data_complete.csv", row.names = TRUE)
+#write.csv(food_all_missing,"GLM Data and Analysis//Category CSV//food_all_missing.csv", row.names = TRUE)
+#write.csv(world_stats_all_missing,"GLM Data and Analysis//Category CSV//world_stats_all_missing.csv", row.names = TRUE)
+#write.csv(response_variable,"GLM Data and Analysis//Category CSV//response_variable.csv", row.names = TRUE)
 
 # We now combine them all into one dataframe
 
@@ -62,11 +61,14 @@ healthcare_all_mis <- subset(healthcare_all_mis, select = -c(1,2,3))
 demographic_all_missing <- read_csv("GLM Data and Analysis/Category CSV/demographic_all_missing.csv")
 demographic_all_missing <- clean_names(demographic_all_missing)
 
+enviroment_all_missing <- read_csv("GLM Data and Analysis/Category CSV/enviroment_all_missing.csv")
+enviroment_all_missing <- clean_names(enviroment_all_missing)
+enviroment_all_missing <- subset(enviroment_all_missing, select = -1)
 
 combined_all_missing <- cbind(response_variable, food_all_missing, 
                               disease_all_missing, world_stats_all_missing, 
                               economic_all_missing, covid_all_missing,
-                              healthcare_all_mis, demographic_all_missing)
+                              healthcare_all_mis, demographic_all_missing, enviroment_all_missing)
 
 
 # write.csv(combined_all_missing,"GLM Take 2/Combined Model/combined_all_missing.csv", row.names = TRUE)
