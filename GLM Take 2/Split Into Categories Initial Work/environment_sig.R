@@ -57,36 +57,36 @@ full_imputed_environment <- cbind(covid_deaths, environment_rf_df)
 
 # import column names we want to keep
 keep_cols <- colnames(read_csv(file = "GLM Take 2/Combined Model/subset_of_total.csv"))[-1]
+keep_cols <- c(keep_cols, "yll_rates_from_all_air_pollution_per_100_000", "death_rates_from_all_air_pollution_per_100_000")
 
 # remove junk vars
 keep_index <- which(colnames(full_imputed_environment) %in% keep_cols)
 subset_environment <- subset(full_imputed_environment, select=keep_index)
-##ALL VARIABLES WERE REMOVED
 
-#### drop by VIF
-###resp <- colnames(subset_environment)[1]
-###expl <- colnames(subset_environment)[-1]
-###after_drop <- gvif_drop(resp, expl, subset_environment, vif_max=5)
-###drop_vif_formula <- lm_formula_paster(resp, after_drop)
-###model_drop_vif <- glm(drop_vif_formula, subset_environment, family=Gamma(link="log"))
-###vif(model_drop_vif)
-###
-#### backwards selection using AICc
-###step_drop_vif <- step2.glm(resp, after_drop, subset_environment, "AICc", Gamma(link="log"), maxit=100)
-###summary(step_drop_vif)
-###
-#### plots
-###par(mfrow = c(2, 2))
-###plot(step_drop_vif)
-###par(mfrow = c(1, 1))
-###plot(fitted(step_drop_vif), subset_environment$total_confirmed_deaths_due_to_covid_19_per_million_people)
-###
-#### save CSVs
-###sig_vars <- all.vars(formula(step_drop_vif)[-1])
-###sig_environment_imputed <- subset(full_imputed_environment, select=sig_vars)
-###sig_environment_missing <- subset(clean_environment_no_res, select=sig_vars)
-###write.csv(sig_environment_imputed, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_environment_imputed.csv", row.names=FALSE)
-###write.csv(sig_environment_missing, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_environment_imputed.csv", row.names=FALSE)
+# drop by VIF
+resp <- colnames(subset_environment)[1]
+expl <- colnames(subset_environment)[-1]
+after_drop <- gvif_drop(resp, expl, subset_environment, vif_max=5)
+drop_vif_formula <- lm_formula_paster(resp, after_drop)
+model_drop_vif <- glm(drop_vif_formula, subset_environment, family=Gamma(link="log"))
+vif(model_drop_vif)
+
+# backwards selection using AICc
+step_drop_vif <- step2.glm(resp, after_drop, subset_environment, "AICc", Gamma(link="log"), maxit=100)
+summary(step_drop_vif)
+
+# plots
+par(mfrow = c(2, 2))
+plot(step_drop_vif)
+par(mfrow = c(1, 1))
+plot(fitted(step_drop_vif), subset_environment$total_confirmed_deaths_due_to_covid_19_per_million_people)
+
+# save CSVs
+sig_vars <- all.vars(formula(step_drop_vif)[-1])
+sig_environment_imputed <- subset(full_imputed_environment, select=sig_vars)
+sig_environment_missing <- subset(clean_environment_no_res, select=sig_vars)
+write.csv(sig_environment_imputed, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_environment_imputed.csv", row.names=FALSE)
+write.csv(sig_environment_missing, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_environment_imputed.csv", row.names=FALSE)
 
 
 
