@@ -86,7 +86,7 @@ sig_vars <- all.vars(formula(step_drop_vif)[-1])
 sig_environment_imputed <- subset(full_imputed_environment, select=sig_vars)
 sig_environment_missing <- subset(clean_environment_no_res, select=sig_vars)
 write.csv(sig_environment_imputed, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_environment_imputed.csv", row.names=FALSE)
-write.csv(sig_environment_missing, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_environment_imputed.csv", row.names=FALSE)
+write.csv(sig_environment_missing, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_environment_missing.csv", row.names=FALSE)
 
 
 
