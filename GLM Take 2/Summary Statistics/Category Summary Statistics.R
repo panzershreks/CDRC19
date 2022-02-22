@@ -63,10 +63,6 @@ corPlot(disease_data, labels = c('Pop. Without Sanitation Access', 'Male Diabete
 dev.off()
 
 
-# Environmental Data
-
-econ_data
-
 
 
 
