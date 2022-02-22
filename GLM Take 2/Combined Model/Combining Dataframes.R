@@ -69,7 +69,7 @@ combined_all_missing <- cbind(response_variable, food_all_missing,
                               healthcare_all_mis, demographic_all_missing)
 
 
-# write.csv(combined_all_missing,"GLM Take 2//combined_all_missing.csv", row.names = TRUE)
+# write.csv(combined_all_missing,"GLM Take 2/Combined Model/combined_all_missing.csv", row.names = TRUE)
 
 
 

@@ -1,5 +1,5 @@
 library(readr)
-combined_all_missing <- read_csv("GLM Take 2/combined_all_missing.csv")
+combined_all_missing <- read_csv("GLM Take 2/Combined Model/combined_all_missing.csv")
 combined_all_missing <- subset(combined_all_missing, select = -1)
 
 
@@ -14,7 +14,7 @@ combined_all_missing <- subset(combined_all_missing, select = -c(2:12, 14:16, 18
                                                                  67:73, 75:77, 80:83, 85, 88, 89, 91:94, 96:102))
 
 
-write.csv(combined_all_missing,"GLM Take 2//subset_of_total.csv", row.names = TRUE)
+write.csv(combined_all_missing,"GLM Take 2/Combined Model/subset_of_total.csv", row.names = TRUE)
 
 
 
