@@ -28,18 +28,29 @@ cor(food_data$healthy_diet_cost_percent_cannot_afford, food_data$life_satisfacti
 plot(food_data$healthy_diet_cost_percent_cannot_afford, response$total_confirmed_deaths_due_to_covid_19_per_million_people)
 plot(food_data$life_satisfaction_in_cantril_ladder_world_happiness_report_2019, response$total_confirmed_deaths_due_to_covid_19_per_million_people)
 
-food_1 <- ggplot(data = data.frame(x =food_data$healthy_diet_cost_percent_cannot_afford, 
-                         y = response$total_confirmed_deaths_due_to_covid_19_per_million_people), 
-       aes(x=x, y=y)) + geom_point() + ggtitle("Diet and Covid-19 Deaths") + xlab("Healthy Diet Cost Percent Cannot Afford") + 
-  ylab("Total Confirmed Deaths due to Covid-19 per Million People") + geom_smooth(method = "lm", se = FALSE)
 
-food_2 <- ggplot(data = data.frame(x =food_data$life_satisfaction_in_cantril_ladder_world_happiness_report_2019, 
-                                   y = response$total_confirmed_deaths_due_to_covid_19_per_million_people), 
-                 aes(x=x, y=y)) + geom_point() + ggtitle("Life Satisfaction and Covid-19 Deaths") + xlab("Life Satisfaction Indicator") + 
-  ylab("Total Confirmed Deaths due to Covid-19 per Million People") + geom_smooth(method = "lm", se = FALSE)
 
-#ggsave(food_1, filename = "GLM Take 2//Summary Statistics//Report Graphs//food_1.png", height = 4, width = 14, units = "in")
-#ggsave(food_2, filename = "GLM Take 2//Summary Statistics//Report Graphs//food_2.png", height = 4, width = 14, units = "in")
+
+food_1 <- ggplot(food_data, aes(x=healthy_diet_cost_percent_cannot_afford)) + 
+  geom_histogram(fill="aquamarine3", color="black") + 
+  geom_vline(aes(xintercept=mean(healthy_diet_cost_percent_cannot_afford)), color="blue", linetype="dashed", size=1) + 
+  ggtitle("Access to Healthy Diets around the World") + xlab("Healthy Diet Cost Percent Cannot Afford") + ylab("Count")
+
+food_2 <- ggplot(food_data, aes(x=life_satisfaction_in_cantril_ladder_world_happiness_report_2019)) + 
+  geom_histogram(fill="aquamarine3", color="black") + 
+  geom_vline(aes(xintercept=mean(life_satisfaction_in_cantril_ladder_world_happiness_report_2019)), color="blue", linetype="dashed", size=1) + 
+  ggtitle("Life Satisfaction") + xlab("Life Satisfaction Indicator") + ylab("Count")
+
+
+food_plot <- ggarrange(food_1, food_2 , labels = c("A", "B"),
+                         ncol = 2, nrow = 1)
+
+ggsave(food_plot, filename = "GLM Take 2//Summary Statistics//Report Graphs//food_plot.png", height = 6, width = 14, units = "in")
+
+sd(food_data$healthy_diet_cost_percent_cannot_afford)
+sd(food_data$life_satisfaction_in_cantril_ladder_world_happiness_report_2019)
+
+
 # Disease Data
 
 disease_data
@@ -62,6 +73,20 @@ disease_cor <- corPlot(disease_data, labels = c('Pop. Without Sanitation Access'
 #corPlot(disease_data, labels = c('Pop. Without Sanitation Access', 'Male Diabetes Prev.', 'Female Diabetes Prev.', 'Obesity Prev.'), 
        # main = "Disease Correlation", MAR = 9, diag = FALSE, cex = 2, xlas = 2)
 #dev.off()
+
+dis_Cor <- cor(disease_data)
+colnames(dis_Cor) <- c('Pop. w/out Sanitation Acc.', ' Males Diabetes Prev.', 'Female Diabetes Prev', 'Obesity Prev.')
+rownames(dis_Cor) <- c('Pop. w/out Sanitation Acc.', ' Males Diabetes Prev.', 'Female Diabetes Prev', 'Obesity Prev.')
+
+
+disease_cor <- corrplot(dis_Cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Disease Correlation", mar = c(0,0,3,0), diag = FALSE)
+file_path = "GLM Take 2//Summary Statistics//Report Graphs//disease_cor.png"
+png(height = 1000, width = 1000,file = file_path)
+corrplot(dis_Cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Disease Correlation", mar = c(0,0,3,0),diag = FALSE)
+dev.off()
+
+
+
 
 # Environmental Data
 
@@ -99,6 +124,76 @@ covid_plot <- ggarrange(covid_1, covid_2 , labels = c("A", "B"),
 
 #ggsave(covid_plot, filename = "GLM Take 2//Summary Statistics//Report Graphs//covid_plot.png", height = 6, width = 14, units = "in")
 
+
+cor(covid_data$stringency_index, covid_data$containment_index)
+
+# Demographic Data
+
+summary(demog_data)
+dem_Cor <- cor(demog_data)
+colnames(dem_Cor) <- c('Child Mortality Rate', 'Life Expec.', 'Total Pop.')
+rownames(dem_Cor) <- c('Child Mortality Rate', 'Life Expec.', 'Total Pop.')
+
+file_path = "GLM Take 2//Summary Statistics//Report Graphs//dem_Cor.png"
+png(height = 1000, width = 1000,file = file_path)
+corrplot(dem_Cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Demographic Correlation", mar = c(0,0,3,0), diag = FALSE)
+dev.off()
+
+
+# Econ Variables
+
+econ_data
+econ_data$income_classification_world_bank_2017 <- as.factor(econ_data$income_classification_world_bank_2017)
+
+summary(econ_data)
+
+econ_1 <- ggplot(econ_data, aes(x=income_classification_world_bank_2017)) + geom_histogram(stat = 'count', fill="aquamarine3", color="black") +
+  ggtitle("Income Classification") + xlab("Income") + ylab("Count")
+
+#ggsave(econ_1, filename = "GLM Take 2//Summary Statistics//Report Graphs//econ_1.png", height = 6, width = 14, units = "in")
+
+numeric_econ_data <- subset(econ_data, select = -2)
+econ_Cor <- cor(numeric_econ_data)
+colnames(econ_Cor) <- c('Mean Monthly Income', 'Gini Index', 'GDP/Capita','Nat. Pov. Lines', 'Mean Monthly/Capita Exp.')
+rownames(econ_Cor) <- c('Mean Monthly Income', 'Gini Index', 'GDP/Capita','Nat. Pov. Lines', 'Mean Monthly/Capita Exp.')
+
+file_path = "GLM Take 2//Summary Statistics//Report Graphs//econ_Cor.png"
+png(height = 1000, width = 1000,file = file_path)
+corrplot(econ_Cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Economic Data Correlation", mar = c(0,0,3,0), diag = FALSE)
+dev.off()
+
+# Health Data
+
+
+health_data
+
+health_cor <- cor(health_data)
+colnames(health_cor) <- c('All Causes Disab. Adj. Life Years','Share of Pop. covered by Health Ins.', 
+                          'Health Exp./Capita', 'HAQ Index', 'Hosp./million', 'Nurses/1000','Physicians/1000', 'Hosp. beds/1000',
+                          'Out of pocket exp./capita on healthcare','Total disbursements for medical reserach')
+rownames(health_cor) <- c('All Causes Disab. Adj. Life Years','Share of Pop. covered by Health Ins.', 
+                          'Health Exp./Capita', 'HAQ Index', 'Hosp./million', 'Nurses/1000','Physicians/1000', 'Hosp. beds/1000',
+                          'Out of pocket exp./capita on healthcare','Total disbursements for medical reserach')
+
+file_path = "GLM Take 2//Summary Statistics//Report Graphs//health_cor.png"
+png(height = 1000, width = 1000,file = file_path)
+corrplot(health_cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Health Data Correlation", mar = c(0,0,3,0), diag = FALSE)
+dev.off()
+
+health_1 <- ggplot(health_data, aes(x=haq_index_ihme_2017)) + 
+  geom_histogram(fill="aquamarine3", color="black") + 
+  geom_vline(aes(xintercept=mean(haq_index_ihme_2017)), color="blue", linetype="dashed", size=1) + 
+  ggtitle("Healthcare Access and Quality Index") + xlab("HAQ Index") + ylab("Count")
+
+health_2 <- ggplot(health_data, aes(x=hospital_beds_per_1_000_population_oecd)) + 
+  geom_histogram(fill="aquamarine3", color="black") + 
+  geom_vline(aes(xintercept=mean(hospital_beds_per_1_000_population_oecd)), color="blue", linetype="dashed", size=1) + 
+  ggtitle("Available Hospital Beds") + xlab("Hospital Beds per 1000 population") + ylab("Count")
+
+health_plot <- ggarrange(health_1, health_2 , labels = c("A", "B"),
+                       ncol = 2, nrow = 1)
+
+ggsave(health_plot, filename = "GLM Take 2//Summary Statistics//Report Graphs//health_plot.png", height = 6, width = 14, units = "in")
 
 
 
