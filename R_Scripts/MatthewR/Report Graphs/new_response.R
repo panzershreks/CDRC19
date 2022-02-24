@@ -54,5 +54,9 @@ covid_summary_plot <- grid.arrange(cp_1, cp_2, cp_3, cp_4, left = "Total Confirm
 
 #ggsave(covid_summary_plot, filename = "R_Scripts//MatthewR//Report Graphs//death_summary.png", height = 8, width = 14, units = "in")
 
+death_dist <- ggplot(clean_world_stats, aes(x=total_confirmed_deaths_due_to_covid_19_per_million_people)) + 
+  geom_histogram(fill="aquamarine3", color="black") + 
+  geom_vline(aes(xintercept=mean(total_confirmed_deaths_due_to_covid_19_per_million_people, na.rm = TRUE)), color="blue", linetype="dashed", size=1) + 
+  ggtitle("Covid-19 Death Rates Distribution") + xlab("Total Confirmed Covid-19 Deaths per Million") + ylab("Count")
 
-
+ggsave(death_dist, filename = "R_Scripts//MatthewR//Report Graphs//death_dist.png", height = 8, width = 14, units = "in")
