@@ -24,7 +24,7 @@ out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_exp
 ```
 
 Relevant diagnostic plots:
-![fullModImp](fullModImp.png)
+![FullModImp](FullModImp.png)
 
 Plot of fitted values:
 ![fullModImpFitted](fullModImpFitted.png)
