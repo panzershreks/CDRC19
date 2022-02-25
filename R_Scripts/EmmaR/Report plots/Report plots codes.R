@@ -55,4 +55,4 @@ healthcare_corr <- vis_cor(corr) + theme(axis.text.x = element_text(angle = 90))
 
 healthcare_corr
 
-cor(healthcare_all_imputed$all)
+cor(healthcare_all_imputed$nurses)
