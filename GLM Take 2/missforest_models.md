@@ -1,5 +1,5 @@
 
-# GLM Models with MissForest Imputed Data
+# GLM Models with MissForest Imputation
 ## For "Full Model Imputation"
 
 1. "junk" variables in each category was removed
