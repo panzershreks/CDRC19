@@ -37,7 +37,7 @@ combined_imputed_res <- subset(combined_imputed_res, select = -c(2:12, 14:16, 18
                                                                  67:73, 75:77, 80:83, 85, 88, 89, 91:94, 96:102, 104:108, 111:114))
 
 
-write.csv(combined_imputed_res,"GLM Take 2//Combined Model//combined_imputed_response.csv", row.names = TRUE)
+#write.csv(combined_imputed_res,"GLM Take 2//Combined Model//combined_imputed_response.csv", row.names = TRUE)
 
 
 combined_imputed_res$income_support <- as.factor(combined_imputed_res$income_support)
@@ -66,4 +66,10 @@ par(mfrow = c(2,2))
 plot(step_AICc_mod, main="Automated Model GLM, AICc")
 
 par(mfrow=c(1,1))
-plot(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people)
+plot(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people) + 
+  text(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people, 
+       row.names(list_of_countries), cex=0.6, pos=4, col="red")
+
+summary(combined_imputed_res$prevalence_of_obesity_both_sexes_who_2019)
+
+
