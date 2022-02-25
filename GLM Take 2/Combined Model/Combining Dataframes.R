@@ -40,11 +40,11 @@ to_drop <- c("pop", "d1avgincome", "d2avgincome", "d3avgincome", "d4avgincome",
 economic_all_missing = economic_all_missing[,!(names(economic_all_missing)%in% to_drop)]
 
 
-#write.csv(economic_all_missing,"GLM Data and Analysis//Category CSV//economic_all_missing.csv", row.names = TRUE)
-#write.csv(disease_all_missing,"GLM Data and Analysis//Category CSV//disease_data_complete.csv", row.names = TRUE)
-#write.csv(food_all_missing,"GLM Data and Analysis//Category CSV//food_all_missing.csv", row.names = TRUE)
-#write.csv(world_stats_all_missing,"GLM Data and Analysis//Category CSV//world_stats_all_missing.csv", row.names = TRUE)
-#write.csv(response_variable,"GLM Data and Analysis//Category CSV//response_variable.csv", row.names = TRUE)
+write.csv(economic_all_missing,"GLM Data and Analysis//Category CSV//economic_all_missing.csv", row.names = TRUE)
+write.csv(disease_all_missing,"GLM Data and Analysis//Category CSV//disease_data_complete.csv", row.names = TRUE)
+write.csv(food_all_missing,"GLM Data and Analysis//Category CSV//food_all_missing.csv", row.names = TRUE)
+write.csv(world_stats_all_missing,"GLM Data and Analysis//Category CSV//world_stats_all_missing.csv", row.names = TRUE)
+write.csv(response_variable,"GLM Data and Analysis//Category CSV//response_variable.csv", row.names = TRUE)
 
 # We now combine them all into one dataframe
 
@@ -71,7 +71,7 @@ combined_all_missing <- cbind(response_variable, food_all_missing,
                               healthcare_all_mis, demographic_all_missing, enviroment_all_missing)
 
 
-# write.csv(combined_all_missing,"GLM Take 2/Combined Model/combined_all_missing.csv", row.names = TRUE)
+write.csv(combined_all_missing,"GLM Take 2/Combined Model/combined_all_missing.csv", row.names = TRUE)
 
 
 

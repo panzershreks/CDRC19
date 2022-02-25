@@ -37,7 +37,7 @@ combined_imputed_res <- subset(combined_imputed_res, select = -c(2:12, 14:16, 18
                                                                  67:73, 75:77, 80:83, 85, 88, 89, 91:94, 96:102, 104:108, 111:114))
 
 
-#write.csv(combined_imputed_res,"GLM Take 2//Combined Model//combined_imputed_response.csv", row.names = TRUE)
+write.csv(combined_imputed_res,"GLM Take 2//Combined Model//combined_imputed_response.csv", row.names = TRUE)
 
 
 combined_imputed_res$income_support <- as.factor(combined_imputed_res$income_support)
