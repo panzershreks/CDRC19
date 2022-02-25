@@ -10,6 +10,15 @@ library('missForest')
 library(glm2)
 library(MuMIn)
 
+clean_fully_merged <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_fully_merged.csv")
+clean_fully_merged <- clean_names(clean_fully_merged)
+clean_fully_merged <- subset(clean_fully_merged, select = -1)
+
+clean_fully_merged <- clean_fully_merged[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
+                                            145, 151, 156, 171,173,177,178, 186,193),]
+
+list_of_countries <- subset(clean_fully_merged, select = 1)
+
 source("R_Scripts/EmanR/step2.R")
 source("R_Scripts/EmanR/automate_vif.R")
 
@@ -70,6 +79,6 @@ plot(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_c
   text(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people, 
        row.names(list_of_countries), cex=0.6, pos=4, col="red")
 
-summary(combined_imputed_res$prevalence_of_obesity_both_sexes_who_2019)
+
 
 
