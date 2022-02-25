@@ -462,8 +462,8 @@ missing_data_summary
 
 
 
-
-
+response <- covid_df$`Total confirmed deaths due to COVID-19 per million people`
+response
 
 
 

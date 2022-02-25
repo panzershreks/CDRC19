@@ -72,3 +72,9 @@ death_nz_aus <- grid.arrange(aus_plot, nz_plot, top = textGrob("Covid-19 Deaths 
 
 #ggsave(death_nz_aus, filename = "R_Scripts//MatthewR//Report Graphs//deaths_nz_aus.png", height = 8, width = 14, units = "in")
 
+
+
+
+deaths_per_million <- data.frame(owid_covid_data$date,owid_covid_data$location, owid_covid_data$total_deaths,owid_covid_data$total_deaths_per_million)
+
+
