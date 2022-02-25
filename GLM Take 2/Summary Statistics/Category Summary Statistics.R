@@ -45,7 +45,7 @@ food_2 <- ggplot(food_data, aes(x=life_satisfaction_in_cantril_ladder_world_happ
 food_plot <- ggarrange(food_1, food_2 , labels = c("A", "B"),
                          ncol = 2, nrow = 1)
 
-ggsave(food_plot, filename = "GLM Take 2//Summary Statistics//Report Graphs//food_plot.png", height = 6, width = 14, units = "in")
+#ggsave(food_plot, filename = "GLM Take 2//Summary Statistics//Report Graphs//food_plot.png", height = 6, width = 14, units = "in")
 
 sd(food_data$healthy_diet_cost_percent_cannot_afford)
 sd(food_data$life_satisfaction_in_cantril_ladder_world_happiness_report_2019)
@@ -122,9 +122,9 @@ covid_2 <- ggplot(covid_data, aes(x=debt_relief)) + geom_histogram(stat = 'count
 covid_plot <- ggarrange(covid_1, covid_2 , labels = c("A", "B"),
                          ncol = 2, nrow = 1)
 
-#ggsave(covid_plot, filename = "GLM Take 2//Summary Statistics//Report Graphs//covid_plot.png", height = 6, width = 14, units = "in")
+ggsave(covid_plot, filename = "GLM Take 2//Summary Statistics//Report Graphs//covid_plot.png", height = 6, width = 14, units = "in")
 
-
+summary(covid_data$stringency_index)
 cor(covid_data$stringency_index, covid_data$containment_index)
 
 # Demographic Data

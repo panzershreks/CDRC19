@@ -48,7 +48,8 @@ summary(step_drop_vif)
 par(mfrow = c(2, 2))
 plot(step_drop_vif)
 par(mfrow = c(1, 1))
-plot(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_million_people)
+plot(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_million_people) + 
+  title("Fitted Values and Covid-19 Death Rates")
 
 
 
