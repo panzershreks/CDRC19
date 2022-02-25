@@ -32,7 +32,7 @@ combined_imputed <- rfImpute(x = as.data.frame(rf_predictrors), y = total_confir
 combined_imputed_res <- subset(combined_imputed, select = -c(2:12, 14:16, 18, 21:43, 45, 46, 52, 54, 56, 57, 62, 
                                                                  67:73, 75:77, 80:83, 85, 88, 89, 91:94, 96:102, 104:108, 111:114))
 
-write.csv(combined_imputed_res,"GLM (Random Forest (2nd))//Combined Model//combined_imputed.csv", row.names = TRUE)
+write.csv(combined_imputed_res,"GLM (Random Forest (2nd))//Combined Model//rf_combined_imputed.csv", row.names = TRUE)
 
 
 combined_imputed_res$income_support <- as.factor(combined_imputed_res$income_support)
