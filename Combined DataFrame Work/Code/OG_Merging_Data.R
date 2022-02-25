@@ -1,5 +1,4 @@
 # Trying to sort the data into a better data.frame.
-# df
 
 library("ggplot2")
 library("tidyverse")
@@ -91,8 +90,9 @@ miss_var_summary(world_stats)
 
 COVID_Government_Response_OxBSG_ <- read_csv("Working_Data/covid/COVID Government Response (OxBSG).csv")
 COVID_Government_Response_OxBSG_ <- subset(COVID_Government_Response_OxBSG_, select=-c(vaccine_eligibility))
-updated_COVID_Government_Response_OxBSG_ <- na.omit(COVID_Government_Response_OxBSG_) %>% group_by(Entity) %>% fill(everything(), .direction = "updown")%>% slice_max(Year)
+updated_COVID_Government_Response_OxBSG_ <- subset(COVID_Government_Response_OxBSG_, Year == "301")
 c1 <- subset(updated_COVID_Government_Response_OxBSG_, select=-c(Year))
+c1 <- subset(c1, Entity!="Comoros")
 
 
 COVID_testing_time_series_data <- read_csv("Working_Data/covid/COVID testing time series data.csv")
@@ -449,22 +449,19 @@ missing_data_summary
 
 
 
-# write.csv(fully_merged_df,"fully_merged_df.csv", row.names = TRUE)
+write.csv(fully_merged_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//fully_merged_df.csv", row.names = TRUE)
 
-# write.csv(covid_df,"covid_df.csv", row.names = TRUE)
-# write.csv(demographic_df,"demographic_df.csv", row.names = TRUE)
-# write.csv(disease_df,"disease_df.csv", row.names = TRUE)
-# write.csv(economic_df,"economic_df.csv", row.names = TRUE)
-# write.csv(environment_df,"environment_df.csv", row.names = TRUE)
-# write.csv(food_water_df,"food_water_df.csv", row.names = TRUE)
-# write.csv(healthcare_df,"healthcare_df.csv", row.names = TRUE)
-# write.csv(world_stats,"world_stats.csv", row.names = TRUE)
-
-
+write.csv(covid_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//covid_df.csv", row.names = TRUE)
+write.csv(demographic_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//demographic_df.csv", row.names = TRUE)
+write.csv(disease_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//disease_df.csv", row.names = TRUE)
+write.csv(economic_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//economic_df.csv", row.names = TRUE)
+write.csv(environment_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//environment_df.csv", row.names = TRUE)
+write.csv(food_water_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//food_water_df.csv", row.names = TRUE)
+write.csv(healthcare_df,"Combined DataFrame Work//CSV Files//Not Clean By Category//healthcare_df.csv", row.names = TRUE)
+write.csv(world_stats,"Combined DataFrame Work//CSV Files//Not Clean By Category//world_stats.csv", row.names = TRUE)
 
 
-response <- covid_df$`Total confirmed deaths due to COVID-19 per million people`
-response
+
 
 
 

@@ -7,7 +7,7 @@ library(car)
 library(visdat)
 library(plyr)
 
-fully_merged_df <- read_csv("Combined DataFrame Work/CSV Files//Not Clean By Category CSV Files/fully_merged_df.csv")
+fully_merged_df <- read_csv("Combined DataFrame Work//CSV Files//Not Clean By Category//fully_merged_df.csv")
 
 fully_merged_df <- subset(fully_merged_df, select = -1)
 
@@ -70,7 +70,7 @@ clean_fully_merged_df <- subset(clean_fully_merged_df, Entity != "Czech Republic
 clean_fully_merged_df <- rbind(clean_fully_merged_df, c_combined)
 clean_fully_merged_df <- rbind(clean_fully_merged_df, m_combined)
 
-# write.csv(clean_fully_merged_df,"clean_fully_merged.csv", row.names = TRUE)
+write.csv(clean_fully_merged_df,"Combined DataFrame Work//CSV Files//Clean//clean_fully_merged.csv", row.names = TRUE)
 
 # Now we do this for each category...
 # We include entity and covid death rates for each category.
@@ -85,13 +85,13 @@ clean_economic <- clean_fully_merged_df[ , c(1, 57, 238:273)]
 clean_healthcare <- clean_fully_merged_df[ , c(1, 57, 274:349)]
 clean_world_stats <- clean_fully_merged_df[ , c(1, 57, 350)]
 
-#write.csv(clean_covid,"clean_covid.csv", row.names = TRUE)
-#write.csv(clean_demographic,"clean_demographic.csv", row.names = TRUE)
-#write.csv(clean_disease,"clean_disease.csv", row.names = TRUE)
-#write.csv(clean_enviroment,"clean_enviroment.csv", row.names = TRUE)
-#write.csv(clean_food_water,"clean_food_water.csv", row.names = TRUE)
-#write.csv(clean_economic,"clean_economic.csv", row.names = TRUE)
-#write.csv(clean_healthcare,"clean_healthcare.csv", row.names = TRUE)
-#write.csv(clean_world_stats,"clean_world_stats.csv", row.names = TRUE)
+write.csv(clean_covid,"Combined DataFrame Work//CSV Files//Clean//clean_covid.csv", row.names = TRUE)
+write.csv(clean_demographic,"Combined DataFrame Work//CSV Files//Clean//clean_demographic.csv", row.names = TRUE)
+write.csv(clean_disease,"Combined DataFrame Work//CSV Files//Clean//clean_disease.csv", row.names = TRUE)
+write.csv(clean_enviroment,"Combined DataFrame Work//CSV Files//Clean//clean_enviroment.csv", row.names = TRUE)
+write.csv(clean_food_water,"Combined DataFrame Work//CSV Files//Clean//clean_food_water.csv", row.names = TRUE)
+write.csv(clean_economic,"Combined DataFrame Work//CSV Files//Clean//clean_economic.csv", row.names = TRUE)
+write.csv(clean_healthcare,"Combined DataFrame Work//CSV Files//Clean//clean_healthcare.csv", row.names = TRUE)
+write.csv(clean_world_stats,"Combined DataFrame Work//CSV Files//Clean//clean_world_stats.csv", row.names = TRUE)
 
 
