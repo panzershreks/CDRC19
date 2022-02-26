@@ -10,24 +10,18 @@ source("R_Scripts/EmanR/automate_vif.R")
 
 set.seed(100)
 
-# import column names we want to keep
-keep_cols <- colnames(read_csv(file = "GLM Take 2/Combined Model/subset_of_total.csv"))[-1]
+clean_fully_merged <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_fully_merged.csv")
+clean_fully_merged <- clean_names(clean_fully_merged)
+clean_fully_merged <- clean_fully_merged[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
+                                            145, 151, 156, 171,173,177,178, 186,193),]
+clean_fully_merged <- subset(clean_fully_merged, select = -1)
+response_variable <- clean_fully_merged[,57]
 
-# import data
-combined_all_missing <- read_csv("GLM Data and Analysis/Combined CSV/combined_all_missing.csv")
-combined_all_missing <- clean_names(combined_all_missing)
-combined_all_missing <- subset(combined_all_missing, select = -1)
+food_all_missing <- subset(clean_fully_merged, select = c(221:237))
+world_stats_all_missing <- subset(clean_fully_merged, select = c(350))
+food_missing_no_res <- cbind(food_all_missing, world_stats_all_missing)
 
-# now subset disease variables and response
-# response = column 1
-# disease = 19 -> 46
-# food/water = 2 -> 18 + world stats = 47
 
-food_missing <- subset(combined_all_missing, select = c(1:18, 47))
-
-# remove response for imputation
-covid_deaths <- subset(food_missing, select=1)
-food_missing_no_res <- subset(food_missing, select=-1)
 
 # impute
 food_rf <- missForest(data.frame(food_missing_no_res))
@@ -36,7 +30,7 @@ any(is.na(food_rf_df)) # check that no NAs
 write.csv(food_rf_df, file="GLM Take 2/Split Into Categories Initial Work/Category Imputed Full CSV/food_full_imputed.csv", row.names=FALSE)
 
 # insert response column
-full_imputed_food <- cbind(covid_deaths, food_rf_df)
+full_imputed_food <- cbind(response_variable, food_rf_df)
 
 # remove junk vars
 keep_index <- which(colnames(full_imputed_food) %in% keep_cols)

@@ -10,29 +10,24 @@ source("R_Scripts/EmanR/automate_vif.R")
 
 set.seed(100)
 
-combined_all_missing <- read_csv("GLM Data and Analysis/Combined CSV/combined_all_missing.csv")
-combined_all_missing <- clean_names(combined_all_missing)
-combined_all_missing <- subset(combined_all_missing, select = -1)
+clean_fully_merged <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_fully_merged.csv")
+clean_fully_merged <- clean_names(clean_fully_merged)
+clean_fully_merged <- clean_fully_merged[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
+                                            145, 151, 156, 171,173,177,178, 186,193),]
+clean_fully_merged <- subset(clean_fully_merged, select = -1)
+response_variable <- clean_fully_merged[,57]
 
-# now subset disease variables and response
-# response = column 1
-# disease = 19 -> 46
-# food/water = 2 -> 18 + world stats = 47
+disease_missing <- subset(clean_fully_merged, select = c(144:171))
 
-disease_missing <- subset(combined_all_missing, select = c(1,19:46))
-
-# remove response for imputation
-covid_deaths <- subset(disease_missing, select=1)
-disease_missing_no_res <- subset(disease_missing, select=-1)
 
 # impute
-disease_rf <- missForest(data.frame(disease_missing_no_res))
+disease_rf <- missForest(data.frame(disease_missing))
 disease_rf_df <- as.data.frame(disease_rf$ximp)
 any(is.na(disease_rf_df)) # check that no NAs
 write.csv(disease_rf_df, file="GLM Take 2/Split Into Categories Initial Work/Category Imputed Full CSV/disease_full_imputed.csv", row.names=FALSE)
 
 # insert response column
-full_imputed_disease <- cbind(covid_deaths, disease_rf_df)
+full_imputed_disease <- cbind(response_variable, disease_rf_df)
 
 # import column names we want to keep
 keep_cols <- colnames(read_csv(file = "GLM Take 2/Combined Model/subset_of_total.csv"))[-1]
@@ -62,7 +57,7 @@ plot(fitted(step_drop_vif), subset_disease$total_confirmed_deaths_due_to_covid_1
 # save CSVs
 sig_vars <- all.vars(formula(step_drop_vif)[-1])
 sig_disease_imputed <- subset(full_imputed_disease, select=sig_vars)
-sig_disease_missing <- subset(disease_missing_no_res, select=sig_vars)
+sig_disease_missing <- subset(disease_missing, select=sig_vars)
 write.csv(sig_disease_imputed, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_disease_imputed.csv", row.names=FALSE)
 write.csv(sig_disease_missing, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_disease_missing.csv", row.names=FALSE)
 

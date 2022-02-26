@@ -15,16 +15,17 @@ source("R_Scripts/EmanR/automate_vif.R")
 
 set.seed(100)
 
+clean_fully_merged <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_fully_merged.csv")
+clean_fully_merged <- clean_names(clean_fully_merged)
+clean_fully_merged <- clean_fully_merged[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
+                                            145, 151, 156, 171,173,177,178, 186,193),]
+clean_fully_merged <- subset(clean_fully_merged, select = -1)
+response_variable <- clean_fully_merged[,57]
+
 healthcare_all_mis <- read_csv("GLM Data and Analysis/Category CSV/healthcare_all_mis.csv")
+healthcare_all_mis <- clean_names(healthcare_all_mis)
+clean_healthcare_no_res <- subset(healthcare_all_mis, select = -c(1,2,3))
 
-# Remove first column 
-healthcare_all_missing_clean <- subset(healthcare_all_mis, select = -c(1,2))
-
-healthcare_all_missing_clean <- clean_names(healthcare_all_missing_clean)
-
-# remove response for imputation
-covid_deaths <- subset(healthcare_all_missing_clean, select=1)
-clean_healthcare_no_res <- subset(healthcare_all_missing_clean, select=-1)
 
 # impute
 healthcare_rf <- missForest(data.frame(clean_healthcare_no_res))
@@ -33,7 +34,7 @@ any(is.na(healthcare_rf_df)) # check that no NAs
 write.csv(healthcare_rf_df, file="GLM Take 2/Split Into Categories Initial Work/Category Imputed Full CSV/healthcare_full_imputed.csv", row.names=FALSE)
 
 # insert response column
-full_imputed_healthcare <- cbind(covid_deaths, healthcare_rf_df)
+full_imputed_healthcare <- cbind(response_variable, healthcare_rf_df)
 
 # import column names we want to keep
 keep_cols <- colnames(read_csv(file = "GLM Take 2/Combined Model/subset_of_total.csv"))[-1]

@@ -18,11 +18,13 @@ econ_df$income_classification_world_bank_2017 <- as.factor(econ_df$income_classi
 environment_df <- data.frame(read_csv(file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_environment_imputed.csv"))
 food_df <- data.frame(read_csv(file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_food_imputed.csv"))
 healthcare_df <- data.frame(read_csv(file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_healthcare_imputed.csv"))
+demog_df <- data.frame(read_csv("GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_demorgraphic_imputed.csv"))
+
 
 entity_response_df <- data.frame(read_csv(file="GLM Take 2/Split Into Categories Initial Work/entity_and_response.csv"))
 entity_col <- subset(entity_response_df, select=1)
 response_col <- subset(entity_response_df, select=2)
-full_df <- cbind(response_col, covid_df, disease_df, econ_df, environment_df, food_df, healthcare_df)
+full_df <- cbind(response_col, covid_df, disease_df, econ_df, environment_df, food_df, healthcare_df, demog_df)
 
 # drop by VIF
 resp <- colnames(full_df)[1]

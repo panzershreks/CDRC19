@@ -18,8 +18,11 @@ econ_df$income_classification_world_bank_2017 <- as.factor(econ_df$income_classi
 environment_df <- data.frame(read_csv(file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_environment_missing.csv"))
 food_df <- data.frame(read_csv(file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_food_missing.csv"))
 healthcare_df <- data.frame(read_csv(file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_healthcare_missing.csv"))
+demog_df <- data.frame(read_csv("GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_demorgraphic_missing.csv"))
 
-cat_combined <- cbind(covid_df, disease_df, econ_df, environment_df, food_df, healthcare_df)
+
+
+cat_combined <- cbind(covid_df, disease_df, econ_df, environment_df, food_df, healthcare_df,demog_df)
 
 # impute
 cat_combined_rf <- missForest(data.frame(cat_combined))
