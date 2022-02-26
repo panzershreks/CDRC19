@@ -15,18 +15,22 @@ step2.glm <- function(resp, expl, data, criterion, family, maxit=25) {
   mod_og <- glm2(formula=formula_og, data=data, family=family, maxit=maxit)
   aic_og <- aic_helper(mod_og, criterion)
   aic_l <- c()
-  for (i in 1:length(expl)) {
-    expl_tmp <- expl[-i]
-    formula_tmp <- lm_formula_paster(resp, expl_tmp)
-    mod_tmp <- glm2(formula=formula_tmp, data=data, family=family, maxit=maxit)
-    aic_tmp <- aic_helper(mod_tmp, criterion)
-    aic_l <- c(aic_l, aic_tmp)
-  }
-  if (min(aic_l) < aic_og) {
-    rm_index <- which.min(aic_l)
-    print(paste0("REMOVE: ", expl[rm_index]))
-    expl <- expl[-rm_index]
-    step2.glm(resp, expl, data, criterion, family, maxit)
+  if (length(expl) > 1) {
+    for (i in 1:length(expl)) {
+      expl_tmp <- expl[-i]
+      formula_tmp <- lm_formula_paster(resp, expl_tmp)
+      mod_tmp <- glm2(formula=formula_tmp, data=data, family=family, maxit=maxit)
+      aic_tmp <- aic_helper(mod_tmp, criterion)
+      aic_l <- c(aic_l, aic_tmp)
+    }
+    if (min(aic_l) < aic_og) {
+      rm_index <- which.min(aic_l)
+      print(paste0("REMOVE: ", expl[rm_index]))
+      expl <- expl[-rm_index]
+      step2.glm(resp, expl, data, criterion, family, maxit)
+    } else {
+      return(mod_og)
+    }
   } else {
     return(mod_og)
   }
