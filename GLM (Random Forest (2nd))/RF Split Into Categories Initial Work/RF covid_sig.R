@@ -47,7 +47,7 @@ covid_rf_df <- subset(covid_rf_df, select = -1)
 
 write.csv(covid_rf_df, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Imputed Full CSV/RF_covid_full_imputed.csv", row.names=FALSE)
 
-full_imputed_covid <- covid_rf_df
+full_imputed_covid <- cbind(response_variable, covid_rf_df)
 
 # remove junk vars
 keep_cols <- colnames(read_csv(file = "GLM Take 2/Combined Model/subset_of_total.csv"))[-1]

@@ -46,11 +46,11 @@ demo_rf_df <- subset(demo_rf_df, select = -1)
 
 write.csv(demo_rf_df, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Imputed Full CSV/RF_demographic_full_imputed.csv", row.names=FALSE)
 
-full_imputed_demographic <- demo_rf_df
+full_imputed_demographic <- cbind(response_variable,demo_rf_df)
 
 # remove junk vars
 keep_cols <- colnames(read_csv(file = "GLM Take 2/Combined Model/subset_of_total.csv"))[-1]
-keep_index <- which(colnames(demographic_all_missing) %in% keep_cols)
+keep_index <- which(colnames(full_imputed_demographic) %in% keep_cols)
 subset_demog <- subset(full_imputed_demographic, select=keep_index)
 
 # drop by VIF
