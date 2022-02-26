@@ -100,12 +100,15 @@ Plot of fitted values:
 income_support
 prevalence_of_obesity_both_sexes_who_2019
 out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure
+age_standardised_diabetes_prevalence_male/age_standardised_diabetes_prevalence_female
+
 ```
 
 ## Variables in 2 models
 ```
-age_standardised_diabetes_prevalence_male/age_standardised_diabetes_prevalence_female
+
 income_classification_world_bank_2017
 all_causes_disability_adjusted_life_years_who_2015
 hospital_beds_per_1_000_population_oecd
+nurses_per_1_000_population
 ```
