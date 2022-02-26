@@ -104,11 +104,14 @@ for (bootstrap_iteration in 1:n_bootstrap_samples) {
   bootstrap_sample_no_res_rf <- missForest(data.frame(bootstrap_sample_no_res))
   bootstrap_sample_no_res_rf_df <- as.data.frame(bootstrap_sample_no_res_rf$ximp)
   full_model_df <- cbind(bootstrap_response, bootstrap_sample_no_res_rf_df)
+  # Remove Unwanted Vars
+  keep_index_full <- which(colnames(full_model_df) %in% keep_cols_all)
+  subset_full <- subset(full_model_df, select=keep_index_full)
   # Model Selection
   resp <- "total_confirmed_deaths_due_to_covid_19_per_million_people"
-  expl <- colnames(full_model_df)[-1]
-  after_drop <- gvif_drop(resp, expl, full_model_df, vif_max=5, glmtype=2, maxit=100)
-  step_full_mod <- step2.glm(resp, after_drop, full_model_df, "AICc", Gamma(link="log"), maxit=100)
+  expl <- colnames(subset_full)[-1]
+  after_drop <- gvif_drop(resp, expl, subset_full, vif_max=5, glmtype=2, maxit=100)
+  step_full_mod <- step2.glm(resp, after_drop, subset_full, "AICc", Gamma(link="log"), maxit=100)
   included_vars_full <- all.vars(formula(step_full_mod)[-1])
   ful_included_vars_bootstrap <- c(ful_included_vars_bootstrap, included_vars_full)
   print(paste0(bootstrap_iteration, " - FULL MODEL COMPLETE"))
@@ -302,7 +305,9 @@ imp_model_var_freq <- data.frame(table(imp_included_vars_bootstrap))
 miss_model_var_freq <- data.frame(table(mis_included_vars_bootstrap))
 full_model_var_freq <- data.frame(table(ful_included_vars_bootstrap))
 
-
+View(imp_model_var_freq)
+View(miss_model_var_freq)
+View(full_model_var_freq)
 
 
 
