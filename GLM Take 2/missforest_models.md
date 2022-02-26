@@ -41,18 +41,18 @@ Plot of fitted values:
 
 Model Summary
 ```
-                                                                                          Estimate  Pr(>|t|)    
-(Intercept)                                                                               3.833e+00   1.35e-07 ***
-income_support1                                                                           7.711e-01   0.000622 ***
-income_support2                                                                          -2.203e-03   0.994208    
-prevalence_of_obesity_both_sexes_who_2019                                                 3.856e-02   0.004570 ** 
-income_classification_world_bank_20172                                                    7.548e-01   0.022817 *  
-income_classification_world_bank_20173                                                    1.004e+00   0.019919 *  
-income_classification_world_bank_20174                                                    1.131e+00   0.030142 *  
-healthy_diet_cost_percent_cannot_afford                                                  -1.220e-02   0.007572 ** 
-all_causes_disability_adjusted_life_years_who_2015                                       -1.194e-05   0.107682    
-hospital_beds_per_1_000_population_oecd                                                  -1.700e-01   0.023522 *  
-out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure  8.379e-04   0.027431 *   
+                                                                                           Estimate  Pr(>|t|)    
+(Intercept)                                                                               3.896e+00  8.46e-08 ***
+income_support1                                                                           7.060e-01  0.002524 ** 
+income_support2                                                                           3.722e-01  0.220276    
+age_standardised_diabetes_prevalence_female                                              -7.199e-02  0.042662 *  
+prevalence_of_obesity_both_sexes_who_2019                                                 6.108e-02  0.000325 ***
+income_classification_world_bank_20172                                                    7.510e-01  0.032826 *  
+income_classification_world_bank_20173                                                    1.029e+00  0.018439 *  
+income_classification_world_bank_20174                                                    6.768e-01  0.208428    
+all_causes_disability_adjusted_life_years_who_2015                                       -1.885e-05  0.011751 *  
+hospital_beds_per_1_000_population_oecd                                                  -1.564e-01  0.046807 *  
+out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure  7.722e-04  0.063790 .  
 ```
 
 Relevant diagnostic plots:
@@ -74,19 +74,19 @@ Plot of fitted values:
 
 Model Summary
 ```
-                                                                                            Estimate Pr(>|t|)    
-(Intercept)                                                                               3.788e+00  1.32e-06 ***
-income_support1                                                                           5.895e-01  0.01401 *  
-income_support2                                                                          -1.141e-01  0.72241    
-age_standardised_diabetes_prevalence_female                                              -9.973e-02  0.00655 ** 
-prevalence_of_obesity_both_sexes_who_2019                                                 7.359e-02  3.12e-05 ***
-income_classification_world_bank_20172                                                    7.141e-01  0.04321 *  
-income_classification_world_bank_20173                                                    1.127e+00  0.01029 *  
-income_classification_world_bank_20174                                                    7.209e-01  0.18036    
-death_rates_from_all_air_pollution_per_100_000                                            4.827e-03  0.12545    
-all_causes_disability_adjusted_life_years_who_2015                                       -1.706e-05  0.02554 *  
-hospital_beds_per_1_000_population_oecd                                                  -2.024e-01  0.02979 *  
-out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure  7.294e-04  0.07848 .  
+                                                                                           Estimate  Pr(>|t|)    
+(Intercept)                                                                               5.097e+00  1.90e-09 ***
+income_support1                                                                           5.358e-01  0.013036 *  
+income_support2                                                                           2.910e-01  0.374284    
+age_standardised_diabetes_prevalence_female                                              -1.347e-01  0.000239 ***
+prevalence_of_obesity_both_sexes_who_2019                                                 8.202e-02  8.48e-07 ***
+income_classification_world_bank_20172                                                    5.204e-01  0.112499    
+income_classification_world_bank_20173                                                    7.293e-01  0.072952 .  
+income_classification_world_bank_20174                                                    2.123e-01  0.665380    
+all_causes_disability_adjusted_life_years_who_2015                                       -1.726e-05  0.014774 *  
+nurses_per_1_000_population_oecd                                                         -7.578e-02  0.030762 *  
+hospital_beds_per_1_000_population_oecd                                                  -1.573e-01  0.021940 *  
+out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure  9.490e-04  0.020243 * 
 ```
 
 Relevant diagnostic plots:
