@@ -76,7 +76,7 @@ food_all_missing <- cbind(food_all_missing, world_stats_all_missing)
 ############################################################################
 ############################################################################
 
-n_bootstrap_samples <- 1
+n_bootstrap_samples <- 10
 ful_included_vars_bootstrap <- c()
 imp_included_vars_bootstrap <- c()
 mis_included_vars_bootstrap <- c()
