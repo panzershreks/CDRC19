@@ -8,35 +8,43 @@ library(car)
 #' @return list of str of explanatory variables after dropping
 gvif_drop <- function(resp_var, expl_var, data, vif_max=10, glmtype=1, maxit=25) {
   gvif_max <- vif_max ^ 0.5
-  lm_formula <- lm_formula_paster(resp_var, expl_var)
-  if (glmtype == 2){
-    model <- glm2(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
-  } else {
-    model <- glm(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
-  }
-  
-  vif_mod <- car::vif(model)
-  try(gvif <- vif_mod, silent = TRUE)
-  try(gvif <- vif_mod[,3], silent = TRUE)
-  if (is.null(dim(vif_mod))) {
-    gvif_max <- vif_max
-  }
-  while (max(gvif) > gvif_max) {
-    expl_var <- expl_var[-(which.max(gvif))]
+  if (length(expl_var) > 1) {
     lm_formula <- lm_formula_paster(resp_var, expl_var)
     if (glmtype == 2){
       model <- glm2(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
     } else {
       model <- glm(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
     }
+    
     vif_mod <- car::vif(model)
     try(gvif <- vif_mod, silent = TRUE)
     try(gvif <- vif_mod[,3], silent = TRUE)
     if (is.null(dim(vif_mod))) {
       gvif_max <- vif_max
     }
+    while (max(gvif) > gvif_max) {
+      expl_var <- expl_var[-(which.max(gvif))]
+      if (length(expl_var) > 1) {
+        lm_formula <- lm_formula_paster(resp_var, expl_var)
+        if (glmtype == 2){
+          model <- glm2(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
+        } else {
+          model <- glm(lm_formula, data, family = Gamma(link ="log"), maxit=maxit)
+        }
+        vif_mod <- car::vif(model)
+        try(gvif <- vif_mod, silent = TRUE)
+        try(gvif <- vif_mod[,3], silent = TRUE)
+        if (is.null(dim(vif_mod))) {
+          gvif_max <- vif_max
+        }
+      } else {
+        return(expl_var)
+      }
+    }
+    return (expl_var)
+  } else {
+    return (expl_var)
   }
-  return (expl_var)
 }
 
 #' create a lm formula from list of variables
