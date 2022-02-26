@@ -59,6 +59,7 @@ healthcare_all_mis <- subset(healthcare_all_mis, select = -c(1,2,3))
 
 demographic_all_missing <- read_csv("GLM Data and Analysis/Category CSV/demographic_all_missing.csv")
 demographic_all_missing <- clean_names(demographic_all_missing)
+demographic_all_missing <- subset(demographic_all_missing, select=-total_population_gapminder_hyde_un)
 
 enviroment_all_missing <- read_csv("GLM Data and Analysis/Category CSV/enviroment_all_missing.csv")
 enviroment_all_missing <- clean_names(enviroment_all_missing)
