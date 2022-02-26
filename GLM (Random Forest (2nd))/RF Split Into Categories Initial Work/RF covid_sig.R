@@ -47,7 +47,6 @@ covid_rf_df <- subset(covid_rf_df, select = -1)
 
 write.csv(covid_rf_df, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Imputed Full CSV/RF_covid_full_imputed.csv", row.names=FALSE)
 
-# insert response column
 full_imputed_covid <- covid_rf_df
 
 # remove junk vars
