@@ -8,8 +8,6 @@ library(car)
 source("R_Scripts/EmanR/step2.R")
 source("R_Scripts/EmanR/automate_vif.R")
 
-set.seed(100)
-
 clean_fully_merged <- read_csv("Combined DataFrame Work/CSV Files/Clean/clean_fully_merged.csv")
 clean_fully_merged <- clean_names(clean_fully_merged)
 clean_fully_merged <- clean_fully_merged[-c(20,29,48,54,56,67,88,91,106,112,118,125,126,130,142,143,144,
@@ -21,17 +19,20 @@ food_all_missing <- subset(clean_fully_merged, select = c(221:237))
 world_stats_all_missing <- subset(clean_fully_merged, select = c(350))
 food_missing_no_res <- cbind(food_all_missing, world_stats_all_missing)
 
+# Imputation
 
-
-# impute
-food_rf <- missForest(data.frame(food_missing_no_res))
-food_rf_df <- as.data.frame(food_rf$ximp)
+total_confirmed_deaths_due_to_covid_19_per_million_people <- response_variable$total_confirmed_deaths_due_to_covid_19_per_million_people
+rf_predictrors <- food_missing_no_res
+set.seed(100)
+food_rf_df <- rfImpute(x = as.data.frame(rf_predictrors), y = total_confirmed_deaths_due_to_covid_19_per_million_people)
 any(is.na(food_rf_df)) # check that no NAs
-write.csv(food_rf_df, file="GLM Take 2/Split Into Categories Initial Work/Category Imputed Full CSV/food_full_imputed.csv", row.names=FALSE)
+food_rf_df <- subset(food_rf_df, select = -1)
 
-# insert response column
+write.csv(food_rf_df, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Imputed Full CSV/RF_food_full_imputed.csv", row.names=FALSE)
+
 full_imputed_food <- cbind(response_variable, food_rf_df)
 
+# remove junk vars
 # remove junk vars
 keep_cols <- colnames(read_csv(file = "GLM Take 2/Combined Model/subset_of_total.csv"))[-1]
 keep_index <- which(colnames(full_imputed_food) %in% keep_cols)
@@ -59,8 +60,8 @@ plot(fitted(step_drop_vif), subset_food$total_confirmed_deaths_due_to_covid_19_p
 sig_vars <- all.vars(formula(step_drop_vif)[-1])
 sig_food_imputed <- subset(full_imputed_food, select=sig_vars)
 sig_food_missing <- subset(food_missing_no_res, select=sig_vars)
-write.csv(sig_food_imputed, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Imputed CSV/sig_food_imputed.csv", row.names=FALSE)
-write.csv(sig_food_missing, file="GLM Take 2/Split Into Categories Initial Work/Category Sig Miss CSV/sig_food_missing.csv", row.names=FALSE)
+write.csv(sig_food_imputed, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Sig Imputed CSV/sig_food_imputed.csv", row.names=FALSE)
+write.csv(sig_food_missing, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Sig Miss CSV/sig_food_missing.csv", row.names=FALSE)
 
 
 
@@ -78,3 +79,17 @@ write.csv(sig_food_missing, file="GLM Take 2/Split Into Categories Initial Work/
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 
