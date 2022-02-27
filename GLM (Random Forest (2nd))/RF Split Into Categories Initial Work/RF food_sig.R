@@ -60,36 +60,6 @@ plot(fitted(step_drop_vif), subset_food$total_confirmed_deaths_due_to_covid_19_p
 sig_vars <- all.vars(formula(step_drop_vif)[-1])
 sig_food_imputed <- subset(full_imputed_food, select=sig_vars)
 sig_food_missing <- subset(food_missing_no_res, select=sig_vars)
-write.csv(sig_food_imputed, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Sig Imputed CSV/sig_food_imputed.csv", row.names=FALSE)
-write.csv(sig_food_missing, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Sig Miss CSV/sig_food_missing.csv", row.names=FALSE)
+write.csv(sig_food_imputed, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Sig Imputed CSV/RF_sig_food_imputed.csv", row.names=FALSE)
+write.csv(sig_food_missing, file="GLM (Random Forest (2nd))/RF Split Into Categories Initial Work/RF Category Sig Miss CSV/RF_sig_food_missing.csv", row.names=FALSE)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 
