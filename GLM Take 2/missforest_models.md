@@ -95,18 +95,16 @@ Relevant diagnostic plots:
 Plot of fitted values:
 ![catMisModFitted](catMisModFitted.png)
 
-## Variables in all 3 models
+## Variables in all 3 models (missForest)
 ```
 income_support
 prevalence_of_obesity_both_sexes_who_2019
 out_of_pocket_expenditure_per_capita_on_healthcare_ppp_usd_who_global_health_expenditure
 age_standardised_diabetes_prevalence_male/age_standardised_diabetes_prevalence_female
-
 ```
 
-## Variables in 2 models
+## Variables in 2 models (missForest)
 ```
-
 income_classification_world_bank_2017
 all_causes_disability_adjusted_life_years_who_2015
 hospital_beds_per_1_000_population_oecd
