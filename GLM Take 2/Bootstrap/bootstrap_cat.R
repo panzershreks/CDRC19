@@ -76,7 +76,7 @@ food_all_missing <- cbind(food_all_missing, world_stats_all_missing)
 ############################################################################
 ############################################################################
 
-n_bootstrap_samples <- 10
+n_bootstrap_samples <- 1000
 ful_included_vars_bootstrap <- c()
 imp_included_vars_bootstrap <- c()
 mis_included_vars_bootstrap <- c()
@@ -305,6 +305,10 @@ toc()
 imp_model_var_freq <- data.frame(table(imp_included_vars_bootstrap))
 miss_model_var_freq <- data.frame(table(mis_included_vars_bootstrap))
 full_model_var_freq <- data.frame(table(ful_included_vars_bootstrap))
+
+write.csv(imp_model_var_freq, file="GLM Take 2/Bootstrap/cat_imp_var_freq.csv")
+write.csv(miss_model_var_freq, file="GLM Take 2/Bootstrap/cat_mis_var_freq.csv")
+write.csv(full_model_var_freq, file="GLM Take 2/Bootstrap/cat_ful_var_freq.csv")
 
 View(imp_model_var_freq)
 View(miss_model_var_freq)
