@@ -12,4 +12,12 @@ Canada
 New Zealend
 Switzerland
 Malta
+San Marino (other way round!)
 ```
+
+Non Outliers:
+
+```
+China
+Austrailia
+Singapore

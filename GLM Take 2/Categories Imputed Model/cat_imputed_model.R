@@ -53,6 +53,18 @@ plot(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_m
   text(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_million_people, 
        row.names(list_of_countries), cex=0.6, pos=4, col="red")
 
+source("LM Data and Analysis/list_of_new_countries.R")
+# code to add country text to the plot,
+par(mfrow=c(1,1))
+plot(fitted(step_drop_vif)[c(9,134,34,78,159,4,29,46,97,110)], full_df$total_confirmed_deaths_due_to_covid_19_per_million_people[c(9,134,34,78,159,4,29,46,97,110)]) + 
+  text(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_million_people, 
+       row.names(list_of_countries), cex=0.6, pos=4, col="red")
+
+
+
+
+
+
 
 
 

@@ -78,5 +78,3 @@ plot(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_c
        row.names(list_of_countries), cex=0.6, pos=4, col="red")
 
 
-
-
