@@ -2,7 +2,6 @@
 
 The following countries were clear outliers:
 ```
-
 United States         
 Andorra             
 ```
