@@ -62,7 +62,7 @@ plot(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_m
   text(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_million_people, 
        row.names(list_of_countries), cex=0.6, pos=4, col="red")
 
-
+print(xtable(step_drop_vif, type = "latex"), file = "All Model Latex/RF_c.tex")
 
 
 

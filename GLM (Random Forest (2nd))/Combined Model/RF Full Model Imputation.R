@@ -72,4 +72,6 @@ plot(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_c
   text(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people, 
        row.names(list_of_countries), cex=0.6, pos=4, col="red")
 
+print(xtable(step_AICc_mod, type = "latex"), file = "All Model Latex/RF_a.tex")
+
 

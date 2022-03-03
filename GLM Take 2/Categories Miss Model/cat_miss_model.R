@@ -68,7 +68,7 @@ plot(fitted(step_drop_vif), full_df$total_confirmed_deaths_due_to_covid_19_per_m
 
 
 
-
+print(xtable(step_drop_vif, type = "latex"), file = "All Model Latex/MF_c.tex")
 
 
 

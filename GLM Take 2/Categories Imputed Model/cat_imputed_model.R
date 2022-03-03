@@ -62,7 +62,7 @@ plot(fitted(step_drop_vif)[c(9,134,34,78,159,4,29,46,97,110)], full_df$total_con
 
 
 
-
+print(xtable(step_drop_vif, type = "latex"), file = "All Model Latex/MF_b.tex")
 
 
 
