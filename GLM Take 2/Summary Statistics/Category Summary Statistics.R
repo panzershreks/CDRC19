@@ -3,6 +3,7 @@ library(corrplot)
 library(psych)
 library(ggplot2)
 library(ggpubr)
+library(janitor)
 # We first import the selected, imputed variables from each category.
 
 combined_imputed_response <- read_csv("GLM Take 2/Combined Model/combined_imputed_response.csv")
@@ -16,7 +17,7 @@ food_data <- subset(combined_imputed_response, select = c(2,7))
 disease_data <- subset(combined_imputed_response, select = c(3:6))
 econ_data <- subset(combined_imputed_response, select = c(8:13))
 covid_data <- subset(combined_imputed_response, select = c(14:17))
-health_data <- subset(combined_imputed_response, select = c(18:27))
+health_data <- subset(combined_imputed_response, select = c(18:26)) # total disbursements has been excluded column 27
 demog_data <- subset(combined_imputed_response, select = c(28:30))
 enviro_data <- subset(combined_imputed_response, select = c(31:32))
 
@@ -170,10 +171,10 @@ health_data
 health_cor <- cor(health_data)
 colnames(health_cor) <- c('All Causes Disab. Adj. Life Years','Share of Pop. covered by Health Ins.', 
                           'Health Exp./Capita', 'HAQ Index', 'Hosp./million', 'Nurses/1000','Physicians/1000', 'Hosp. beds/1000',
-                          'Out of pocket exp./capita on healthcare','Total disbursements for medical reserach')
+                          'Out of pocket exp./capita on healthcare')
 rownames(health_cor) <- c('All Causes Disab. Adj. Life Years','Share of Pop. covered by Health Ins.', 
                           'Health Exp./Capita', 'HAQ Index', 'Hosp./million', 'Nurses/1000','Physicians/1000', 'Hosp. beds/1000',
-                          'Out of pocket exp./capita on healthcare','Total disbursements for medical reserach')
+                          'Out of pocket exp./capita on healthcare')
 
 file_path = "GLM Take 2//Summary Statistics//Report Graphs//health_cor.png"
 png(height = 1000, width = 1000,file = file_path)
