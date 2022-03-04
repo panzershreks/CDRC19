@@ -76,9 +76,13 @@ source("LM Data and Analysis/list_of_new_countries.R")
 par(mfrow=c(1,1))
 plot(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people) + 
   text(fitted(step_AICc_mod), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people, 
-       row.names(list_of_countries), cex=0.6, pos=4, col="red")
+       row.names(list_of_countries), cex=0.6, pos=4, col="red") + abline(a=0, b=1)
+
+ratio_plot <- fitted(step_AICc_mod)/combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people
+plot(ratio_plot) + text(ratio_plot, row.names(list_of_countries), cex=0.6, pos=4, col="red") + 
+  title("Ratio of Predicted and Actual Deaths")
 
 
-print(xtable(step_AICc_mod, type = "latex"), file = "All Model Latex/MF_a.tex")
+#print(xtable(step_AICc_mod, type = "latex"), file = "All Model Latex/MF_a.tex")
 
 
