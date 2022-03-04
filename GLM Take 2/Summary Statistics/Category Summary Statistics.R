@@ -54,7 +54,8 @@ sd(food_data$life_satisfaction_in_cantril_ladder_world_happiness_report_2019)
 
 # Disease Data
 
-disease_data
+disease_data$prevalence_of_obesity_both_sexes_who_2019
+summary(disease_data)
 summary(disease_data$prevalence_of_obesity_both_sexes_who_2019)
 cor(disease_data$prevalence_of_obesity_both_sexes_who_2019, response$total_confirmed_deaths_due_to_covid_19_per_million_people)
 disease_1 <- ggplot(data = data.frame(x = disease_data$prevalence_of_obesity_both_sexes_who_2019, 

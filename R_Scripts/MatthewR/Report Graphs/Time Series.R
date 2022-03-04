@@ -78,3 +78,9 @@ death_nz_aus <- grid.arrange(aus_plot, nz_plot, top = textGrob("Covid-19 Deaths 
 deaths_per_million <- data.frame(owid_covid_data$date,owid_covid_data$location, owid_covid_data$total_deaths,owid_covid_data$total_deaths_per_million)
 
 
+
+
+
+
+
+
