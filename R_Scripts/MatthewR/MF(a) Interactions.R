@@ -23,9 +23,6 @@ interact_plot(fit_b, pred = prevalence_of_obesity_both_sexes_who_2019,
               modx = age_standardised_diabetes_prevalence_male, plot.points = TRUE, 
               main.title = "Interaction Between Obesity and Diabetes")
 
-interact_plot(fit_b, pred = age_standardised_diabetes_prevalence_male, 
-              modx = prevalence_of_obesity_both_sexes_who_2019, plot.points = TRUE, 
-              main.title = "Interaction Between Obesity and Diabetes")
 
 #print(xtable(fit_b, type = "latex"), file = "All Model Latex/MF_a_interact.tex")
 
