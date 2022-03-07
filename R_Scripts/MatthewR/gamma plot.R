@@ -1,15 +1,16 @@
 
 
+x <- seq(0, 10, by=0.01)   
+y <- dgamma(x, shape = 3) 
 
+df <- data.frame(x,y)
 
-# We generate Gamma distribution with shape 3, and rate 0.5
+#create density plot
 
-x <- rgamma(1000, shape = 3, rate = 0.5)
-
-den <- density(x)
-plot_df <- data.frame(x = den$x, y = den$y)
-
-gamma_plot <- ggplot(plot_df, aes(x, y)) + 
+gamma_plot <- ggplot(df, aes(x, y)) + 
   geom_point(size = 1, color = "aquamarine3") + 
-  labs(title = ("Theoretical Gamma Distribution"), subtitle = "Shape = 3, rate 0.5, n = 1000")
+  labs(title = ("Theoretical Gamma Distribution"), subtitle = "Shape = 3")
+
+gamma_plot
+
 ggsave(gamma_plot, filename = "R_Scripts//MatthewR//Report Graphs//gamma_plot.png", height = 8, width = 14, units = "in")
