@@ -38,6 +38,8 @@ uk_data <- subset_df %>% filter(owid_covid_data.location == 'United Kingdom')
 uk_data <- subset(uk_data, select = -c(owid_covid_data.location))
 colnames(uk_data) <- c("Date", "Cumulative_Deaths", "New_Deaths", "Smooth_New_Deaths")
 
+
+
 cum_death_plot <- ggplot(data = uk_data, aes(Date, Cumulative_Deaths)) + geom_bar(stat = "identity", fill = "aquamarine3") +
   labs(title = "Cumulative Deaths",
        x = "Date", y = "Cumulative UK Covid-19 Deaths") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
@@ -60,13 +62,13 @@ aus_data <- subset_df %>% filter(owid_covid_data.location == 'Australia')
 aus_data <- subset(aus_data, select = -c(owid_covid_data.location))
 colnames(aus_data) <- c("Date", "Cumulative_Deaths", "New_Deaths", "Smooth_New_Deaths")
 
-aus_plot <- ggplot(data = aus_data, aes(Date, Smooth_New_Deaths)) + geom_bar(stat = "identity", fill = "aquamarine3") +
+aus_plot <- ggplot(data = aus_data, aes(Date, New_Deaths)) + geom_bar(stat = "identity", fill = "aquamarine3") +
   labs(title = "Australia Covid-19 Deaths",
-       x = "Date", y = "New Daily Covid-19 Deaths (Smoothed)") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
+       x = "Date", y = "New Daily Covid-19 Deaths (Actual)") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
 
-nz_plot <- ggplot(data = nz_data, aes(Date, Smooth_New_Deaths)) + geom_bar(stat = "identity", fill = "aquamarine3") +
+nz_plot <- ggplot(data = nz_data, aes(Date, New_Deaths)) + geom_bar(stat = "identity", fill = "aquamarine3") +
   labs(title = "New Zealand Covid-19 Deaths",
-       x = "Date", y = "New Daily Covid-19 Deaths (Smoothed)") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
+       x = "Date", y = "New Daily Covid-19 Deaths (Actual)") + scale_y_continuous(labels = comma) + scale_x_date(date_breaks = "1 month", date_labels =  "%m-%y")
 
 death_nz_aus <- grid.arrange(aus_plot, nz_plot, top = textGrob("Covid-19 Deaths Comparison", gp=gpar(col="black", fontface = "bold", fontsize = 15)))
 
