@@ -40,6 +40,7 @@ data.fit['inter'] <- b3 * data.fit['X3'] + b5 * data.fit['X5'] + b6 * data.fit['
 ggplot(data.fit, aes(x=X3, y=X5, z=inter)) + geom_contour_filled(bins=20)
 
 
+
 #print(xtable(fit_b, type = "latex"), file = "All Model Latex/MF_a_interact.tex")
 
 par(mfrow = c(2,2))
@@ -60,4 +61,10 @@ plot(fitted(fit_b), combined_imputed_res$total_confirmed_deaths_due_to_covid_19_
 ratio_plot <- fitted(fit_b)/combined_imputed_res$total_confirmed_deaths_due_to_covid_19_per_million_people
 plot(ratio_plot) + text(ratio_plot, row.names(list_of_countries), cex=0.6, pos=4, col="red") + 
   title("Ratio of Predicted and Actual Deaths")
+
+
+  
+  
+  
+  
 
