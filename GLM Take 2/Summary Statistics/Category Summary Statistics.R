@@ -13,8 +13,8 @@ combined_imputed_response <- subset(combined_imputed_response, select = -1)
 # We will now subset our data into each category before doing summary statistics on it.
 
 response <- subset(combined_imputed_response, select = 1)
-food_data <- subset(combined_imputed_response, select = c(2,7))
-disease_data <- subset(combined_imputed_response, select = c(3:6))
+food_data <- subset(combined_imputed_response, select = c(2,3,7))
+disease_data <- subset(combined_imputed_response, select = c(4:6))
 econ_data <- subset(combined_imputed_response, select = c(8:13))
 covid_data <- subset(combined_imputed_response, select = c(14:17))
 health_data <- subset(combined_imputed_response, select = c(18:26)) # total disbursements has been excluded column 27
@@ -67,26 +67,25 @@ disease_1 <- ggplot(data = data.frame(x = disease_data$prevalence_of_obesity_bot
 
 cor(disease_data$age_standardised_diabetes_prevalence_male, disease_data$age_standardised_diabetes_prevalence_female)
 
-disease_cor <- corPlot(disease_data, labels = c('Pop. Without Sanitation Access', 'Male Diabetes Prev.', 'Female Diabetes Prev.', 'Obesity Prev.'), 
+#disease_cor <- corPlot(disease_data, labels = c('Male Diabetes Prev.', 'Female Diabetes Prev.', 'Obesity Prev.'), 
                        main = "Disease Correlation", MAR = 9, diag = FALSE, cex = 2, xlas = 2)
 
 
 #png(file = "GLM Take 2//Summary Statistics//Report Graphs//disease_cor.png", width = 900, height = 900)
-#corPlot(disease_data, labels = c('Pop. Without Sanitation Access', 'Male Diabetes Prev.', 'Female Diabetes Prev.', 'Obesity Prev.'), 
-       # main = "Disease Correlation", MAR = 9, diag = FALSE, cex = 2, xlas = 2)
+#corPlot(disease_data, labels = c('Male Diabetes Prev.', 'Female Diabetes Prev.', 'Obesity Prev.'), 
+        #main = "Disease Correlation", MAR = 9, diag = FALSE, cex = 2, xlas = 2)
 #dev.off()
 
 dis_Cor <- cor(disease_data)
-colnames(dis_Cor) <- c('Pop. w/out Sanitation Acc.', ' Males Diabetes Prev.', 'Female Diabetes Prev', 'Obesity Prev.')
-rownames(dis_Cor) <- c('Pop. w/out Sanitation Acc.', ' Males Diabetes Prev.', 'Female Diabetes Prev', 'Obesity Prev.')
+colnames(dis_Cor) <- c('Males Diabetes Prev.', 'Female Diabetes Prev', 'Obesity Prev.')
+rownames(dis_Cor) <- c('Males Diabetes Prev.', 'Female Diabetes Prev', 'Obesity Prev.')
 
 
 disease_cor <- corrplot(dis_Cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Disease Correlation", mar = c(0,0,3,0), diag = FALSE)
 file_path = "GLM Take 2//Summary Statistics//Report Graphs//disease_cor.png"
 png(height = 1000, width = 1000,file = file_path)
-corrplot(dis_Cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Disease Correlation", mar = c(0,0,3,0),diag = FALSE)
+corrplot(dis_Cor,addCoef.col = 'black', col = COL2('PiYG'), title = "Disease Correlation", mar = c(0,0,3,0), diag = FALSE)
 dev.off()
-
 
 
 
